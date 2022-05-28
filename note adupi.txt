@@ -1,0 +1,14 @@
+1. Jika mitra daftar sendiri, fasilitator mana yang harus memverifikasinya?
+2. Jual sampah menginput kan harga jual nya atau tidak?
+3. Maps pake google maps atau tidak?
+4. status kepemilikan gudang apa saja?
+5. status kepemilikan mesin apa saja?
+6. jenis mesin apa saja?
+7. sumber sampah apa saja?
+8. jenis masalah apa saja?
+9. jenis mitra apa saja?
+
+
+
+
+

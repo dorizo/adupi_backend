@@ -1,0 +1,46 @@
+[
+  {
+    "module": "Management User",
+    "permission": [
+      { "permission": "RROLE", "description": "Read role" },
+      { "permission": "CROLE", "description": "Create new role"},
+      { "permission": "UROLE", "description": "Update role"},
+      { "permission": "DROLE", "description": "Delete role"},
+      { "permission": "RROLEPERMISSION", "description": "Read list permission from role"},
+      { "permission": "CROLEPERMISSION", "description": "Add permission to role"},
+      { "permission": "DROLEPERMISSION", "description": "Delete permission from role"},
+      { "permission": "RUSER", "description": "Read user" },
+      { "permission": "CUSER", "description": "Create new user"},
+      { "permission": "UUSER", "description": "Update user"},
+      { "permission": "DUSER", "description": "Delete user"},
+      { "permission": "RROLEUSER", "description": "Read list role from user"},
+      { "permission": "CROLEUSER", "description": "Add role to user"},
+      { "permission": "DROLEUSER", "description": "Delete role from user"},
+      { "permission": "RUSERPERMISSION", "description": "Read list special permission from user"},
+      { "permission": "CUSERPERMISSION", "description": "Add special permission to user"},
+      { "permission": "DUSERPERMISSION", "description": "Delete special permission from user"},
+      { "permission": "RPERMISSION", "description": "Read list permission"},
+      { "permission": "RPERMISSIONWITHMODULE", "description": "Read list permission with module"},
+      { "permission": "RPERMISSIONBYMODULE", "description": "Read list permission by module"}
+
+    ]
+  },
+  {
+    "module": "Master",
+    "permission": [
+      { "permission": "RJENISSAMPAH", "description": "Lihat semua jenis sampah" },
+      { "permission": "CJENISSAMPAH", "description": "Membuat jenis sampah"},
+      { "permission": "UJENISSAMPAH", "description": "Mengubah jenis sampah"},
+      { "permission": "DJENISSAMPAH", "description": "Menghapus jenis sampah"}
+    ]
+  },
+  {
+    "module":"Fasilitator",
+    "permission": [
+      { "permission": "RFASILITATOR", "description": "Read fasilitator" },
+      { "permission": "CFASILITATOR", "description": "Create new fasilitator"},
+      { "permission": "UFASILITATOR", "description": "Update fasilitator"},
+      { "permission": "DFASILITATOR", "description": "Delete fasilitator"}
+    ]
+  }
+]
