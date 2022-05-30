@@ -20,5 +20,4 @@ app.use(
 app.use(bodyParser.json());
 app.use(router);
 // app.use(expressValidator);
-
-app.listen(5000, () => console.log("Server running at port 5000"));
+app.listen(3001, () => console.log("Server running at port 3001"));
