@@ -17,7 +17,7 @@ export const registerMitra = async (req, res, next) => {
       { transaction }
     );
 
-    await model.adupi.mitra.create(
+    const mitra = await model.adupi.mitra.create(
       {
         nama: req.body.nama,
         nik: req.body.nik,
@@ -33,6 +33,38 @@ export const registerMitra = async (req, res, next) => {
       },
       { transaction }
     );
+
+    const usaha = await model.adupi.usaha.create(
+      {
+        mitraCode: mitra.mitraCode,
+        namaUsaha: req.body.namaUsaha,
+        foto: req.body.foto,
+        noSuratIzinUsaha: req.body.noSuratIzinUsaha,
+        luasGudang: req.body.luasGudang,
+        lamaOperasional: req.body.lamaOperasional,
+        jumlahPekerja: req.body.jumlahPekerja,
+        luasGudang: req.body.luasGudang,
+        statusKepemilikanGudang: req.body.statusKepemilikanGudang,
+        wilayahCode: req.body.wilayahCodeUsaha,
+        alamat: req.body.alamatUsaha,
+      },
+      { transaction }
+    );
+
+    const mesinData = req.body.mesin;
+    let returnToInsert = [];
+    mesinData.forEach((item) => {
+      let tempMesin = {
+        mitraCode: mitra.mitraCode,
+        usahaCode: usaha.usahaCode,
+        jenisMesin: item.jenisMesin,
+        statusKepemilikanMesin: item.statusKepemilikanMesin,
+      };
+      returnToInsert.push(tempMesin);
+    });
+    const mesin = await model.adupi.mesin.bulkCreate(returnToInsert, {
+      transaction,
+    });
 
     await transaction.commit();
     return res.status(200).json({
@@ -54,3 +86,4 @@ export const registerMitra = async (req, res, next) => {
     }
   }
 };
+

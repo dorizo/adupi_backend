@@ -224,6 +224,20 @@ router.post(
   adupi.mitra.registerMitra
 );
 
+// get semua data mitra yang belum terverifikasi oleh fasilitator
+router.get(
+  "/api/v1/fasilitator/allMitra/notYetVerifByFasilitator",
+  verifyToken(["RMITRANOTYETVERIFBYFASILITATOR"]),
+  adupi.fasilitator.getMitraNotYetVerifByFasilitator
+);
+
+// verifikasi mitra oleh fasilitator
+router.get(
+  "/api/v1/fasilitator/verifMitra/:mitraCode",
+  verifyToken(["VERIFMITRABYFASILITATOR"]),
+  adupi.fasilitator.verifMitraByFasilitator
+);
+
 // fasilitator
 router.get(
   "/api/v1/fasilitator/all",

@@ -1,5 +1,6 @@
 import { model } from "../../models/index.js";
 import { Sequelize } from "sequelize";
+import mesin from "../../models/adupi/mesin.js";
 const op = Sequelize.Op;
 
 export const getAllFasilitator = async (req, res, next) => {
@@ -30,7 +31,7 @@ export const getOneFasilitator = async (req, res, next) => {
         deleteAt: null,
       },
     });
-    if(!fasilitator){
+    if (!fasilitator) {
       return res.status(404).json({
         status: 404,
         message: "Fasilitator tidak ditemukan",
@@ -80,7 +81,7 @@ export const editFasilitator = async (req, res, next) => {
         deleteAt: null,
       },
     });
-    if(!fasilitator){
+    if (!fasilitator) {
       return res.status(404).json({
         status: 404,
         message: "Fasilitator tidak ditemukan",
@@ -252,4 +253,101 @@ export const getUserForEditFasilitator = async (req, res, next) => {
     message: "",
     data: user,
   });
+};
+
+export const getMitraNotYetVerifByFasilitator = async (req, res, next) => {
+  try {
+    const mitra = await model.adupi.mitra.findAll({
+      where: {
+        fasilitatorCode: null,
+        deleteAt: null,
+      },
+      include: [
+        {
+          model: model.adupi.usaha,
+          where: {
+            deleteAt: null,
+          },
+          include: [
+            {
+              model: model.adupi.mesin,
+              where: {
+                deleteAt: null,
+              },
+            },
+          ],
+        },
+      ],
+    });
+    return res.status(200).json({
+      status: 200,
+      message: "Mitra ditemukan",
+      data: mitra,
+    });
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Mitra tidak ditemukan",
+    });
+  }
+};
+
+export const verifMitraByFasilitator = async (req, res, next) => {
+  try {
+    const mitra = await model.adupi.mitra.findOne({
+      where: {
+        mitraCode: req.params.mitraCode,
+        deleteAt: null,
+      },
+    });
+    if (!mitra) {
+      return res.status(404).json({
+        status: 404,
+        message: "Mitra tidak ditemukan",
+      });
+    }
+    const fasilitator = await model.adupi.fasilitator.findOne({
+      where: {
+        userCode: req.userCode,
+        deleteAt: null,
+      },
+    });
+    if (!fasilitator) {
+      return res.status(404).json({
+        status: 404,
+        message: "Anda tidak terdaftar sebagai fasilitator",
+      });
+    }
+    await model.adupi.mitra
+      .update(
+        {
+          fasilitatorCode: fasilitator.fasilitatorCode,
+          updateAt: new Date(),
+        },
+        {
+          where: {
+            mitraCode: req.params.mitraCode,
+            deleteAt: null,
+          },
+        }
+      )
+      .then(function (mitra) {
+        if (mitra) {
+          return res.status(200).json({
+            status: 200,
+            message: "Berhasil memverifikasi mitra",
+          });
+        } else {
+          return res.status(400).json({
+            status: 400,
+            message: "Gagal memverifikasi mitra",
+          });
+        }
+      });
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Mitra tidak ditemukan",
+    });
+  }
 };

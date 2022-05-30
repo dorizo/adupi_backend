@@ -37,10 +37,12 @@
   {
     "module":"Fasilitator",
     "permission": [
-      { "permission": "RFASILITATOR", "description": "Read fasilitator" },
-      { "permission": "CFASILITATOR", "description": "Create new fasilitator"},
-      { "permission": "UFASILITATOR", "description": "Update fasilitator"},
-      { "permission": "DFASILITATOR", "description": "Delete fasilitator"}
+      { "permission": "RFASILITATOR", "description": "Lihat fasilitator" },
+      { "permission": "CFASILITATOR", "description": "Membuat fasilitator"},
+      { "permission": "UFASILITATOR", "description": "Mengubah fasilitator"},
+      { "permission": "DFASILITATOR", "description": "Menghapus fasilitator"},
+      { "permission": "RMITRANOTYETVERIFBYFASILITATOR", "description": "Lihat semua data mitra yang belum diverifiasi oleh fasilitator"},
+      { "permission": "VERIFMITRABYFASILITATOR", "description": "Verifikasi mitra oleh fasilitator"}
     ]
   }
 ]

@@ -9,6 +9,8 @@ import {
   deleteFasilitator,
   getUserForAddFasilitator,
   getUserForEditFasilitator,
+  getMitraNotYetVerifByFasilitator,
+  verifMitraByFasilitator
 } from "./fasilitator.js";
 
 export const adupi = {
@@ -24,6 +26,8 @@ export const adupi = {
     getUserForEditFasilitator,
     editFasilitator,
     deleteFasilitator,
+    getMitraNotYetVerifByFasilitator,
+    verifMitraByFasilitator
   },
   validation: validation,
 };
