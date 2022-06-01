@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"su@mail.com\",\r\n    \"password\":\"asdasd\"\r\n}"
+							"raw": "{\r\n    \"email\":\"test1@gmail.com\",\r\n    \"password\":\"123\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/api/v1/login",
@@ -326,7 +326,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNjY2NTQ3LCJleHAiOjE2NTM3NTI5NDd9.FCaa9mqC-iqZ-Oj98x1q6UdG56lG5X-oeENWtiEtYPk",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjU0MDc3MjY3LCJleHAiOjE2NTQxNjM2Njd9.Q9Cc2n_NCMaSgOHwLqQff4MyRMlHOW5ObCfm8dtyhZU",
 											"type": "string"
 										}
 									]
@@ -691,7 +691,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNjY2NTQ3LCJleHAiOjE2NTM3NTI5NDd9.FCaa9mqC-iqZ-Oj98x1q6UdG56lG5X-oeENWtiEtYPk",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjU0MDc3MjY3LCJleHAiOjE2NTQxNjM2Njd9.Q9Cc2n_NCMaSgOHwLqQff4MyRMlHOW5ObCfm8dtyhZU",
 											"type": "string"
 										}
 									]
@@ -1387,6 +1387,173 @@
 			"name": "Mitra",
 			"item": [
 				{
+					"name": "anggota",
+					"item": [
+						{
+							"name": "lihat semua data anggota (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDA4MTEzNywiZXhwIjoxNjU0MTY3NTM3fQ.vpkMDKT9rfYHx-x7rpkTTP3i0BePCZN0ZLPs71hce8o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/anggota/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"anggota",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tambah data anggota (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDA4MTEzNywiZXhwIjoxNjU0MTY3NTM3fQ.vpkMDKT9rfYHx-x7rpkTTP3i0BePCZN0ZLPs71hce8o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nama\": \"Bagas Ageng Sandoko\",\r\n    \"nik\": \"1807122006990008\",\r\n    \"noHp\": \"0895606226099\",\r\n    \"jenisKelamin\": \"L\",\r\n    \"wilayahCode\": \"11.05.07.2002\",\r\n    \"ktp\": \"image base 64\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg Cempaka 6, No.07\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/anggota/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"anggota",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ubah data anggota (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDA4MTEzNywiZXhwIjoxNjU0MTY3NTM3fQ.vpkMDKT9rfYHx-x7rpkTTP3i0BePCZN0ZLPs71hce8o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nama\": \"Bagas Ageng Sandoko\",\r\n    \"nik\": \"1807122006990008\",\r\n    \"noHp\": \"0895606226090\",\r\n    \"jenisKelamin\": \"L\",\r\n    \"wilayahCode\": \"11.05.07.2002\",\r\n    \"ktp\": \"image base 64\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg Cempaka 6, No.07\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/anggota/edit/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"anggota",
+										"edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete data anggota (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDA4MTEzNywiZXhwIjoxNjU0MTY3NTM3fQ.vpkMDKT9rfYHx-x7rpkTTP3i0BePCZN0ZLPs71hce8o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/anggota/delete/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"anggota",
+										"delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Registrasi",
 					"request": {
 						"method": "POST",
@@ -1399,10 +1566,48 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nama\": \"Diki Rahmad Sandi\",\r\n    \"nik\": \"1807122006990005\",\r\n    \"noHp\": \"0895606226096\",\r\n    \"jenisKelamin\": \"L\",\r\n    \"wilayahCode\": \"11.05.07.2002\",\r\n    \"jenisMitra\": \"PT\",\r\n    \"tempatLahir\": \"Pugung Raharjo\",\r\n    \"tanggalLahir\": \"1999-06-20\",\r\n    \"ktp\": \"image base 64\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg Cempaka 6, No.07\",\r\n    \"email\": \"wawaiguntang@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"namaUsaha\": \"PT.Mencari Cinta Sejati\",\r\n        \"foto\": \"Image base 64\",\r\n        \"noSuratIzinUsaha\": \"22/01/ST/2022\",\r\n        \"luasGudang\": 300,\r\n        \"statusKepemilikanGudang\": \"Milik Sendiri\",\r\n        \"wilayahCodeUsaha\": \"11.05.07.2002\",\r\n        \"alamatUsaha\": \"Jl.Nin aja dulu\"\r\n}"
+							"raw": "{\r\n    \"nama\": \"Diki Rahmad Sandi\",\r\n    \"nik\": \"1807122006990005\",\r\n    \"noHp\": \"0895606226096\",\r\n    \"jenisKelamin\": \"L\",\r\n    \"wilayahCode\": \"11.05.07.2002\",\r\n    \"jenisMitra\": \"PT\",\r\n    \"tempatLahir\": \"Pugung Raharjo\",\r\n    \"tanggalLahir\": \"1999-06-20\",\r\n    \"ktp\": \"image base 64\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg Cempaka 6, No.07\",\r\n    \"email\": \"wawaiguntang@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"namaUsaha\": \"PT.Mencari Cinta Sejati\",\r\n    \"foto\": \"Image base 64\",\r\n    \"noSuratIzinUsaha\": \"22/01/ST/2022\",\r\n    \"luasGudang\": 300,\r\n    \"lamaOperasional\": 3,\r\n    \"jumlahPekerja\": 30,\r\n    \"statusKepemilikanGudang\": \"Milik Sendiri\",\r\n    \"wilayahCodeUsaha\": \"11.05.07.2002\",\r\n    \"alamatUsaha\": \"Jl.Nin aja dulu\",\r\n    \"lang\": \"2.443345542\",\r\n    \"lat\": \"0.86543467\",\r\n    \"mesin\":[\r\n        {\r\n            \"jenisMesin\":\"Mesin Press\",\r\n            \"statusKepemilikanMesin\": \"Milik Sendiri\",\r\n            \"kapasitas\": \"300\",\r\n            \"foto\": \"Image base 64\"\r\n        },\r\n        {\r\n            \"jenisMesin\":\"Mesin Giling\",\r\n            \"statusKepemilikanMesin\": \"Bantuan GESN\",\r\n            \"kapasitas\": \"300\",\r\n            \"foto\": \"Image base 64\"\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/v1/registrasi/mitra",
+							"raw": "http://localhost:3001/api/v1/registrasi/mitra",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"registrasi",
+								"mitra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lihat detail untuk user mitra",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDA4MTEzNywiZXhwIjoxNjU0MTY3NTM3fQ.vpkMDKT9rfYHx-x7rpkTTP3i0BePCZN0ZLPs71hce8o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/mitra/self",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1411,8 +1616,8 @@
 							"path": [
 								"api",
 								"v1",
-								"registrasi",
-								"mitra"
+								"mitra",
+								"self"
 							]
 						}
 					},
@@ -1434,7 +1639,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1MzkzNTM0NCwiZXhwIjoxNjU0MDIxNzQ0fQ.n2k2lbzsKG51PeAV8-ugsh_jNDedFe5_yoTc9KRV5jU",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDA3NzEzMywiZXhwIjoxNjU0MTYzNTMzfQ.e9QKukALcJNch4axveJETcEZOPq9nMgx6KdoyU7eW-Y",
 											"type": "string"
 										}
 									]
@@ -1473,7 +1678,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1MzkzNTM0NCwiZXhwIjoxNjU0MDIxNzQ0fQ.n2k2lbzsKG51PeAV8-ugsh_jNDedFe5_yoTc9KRV5jU",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDA3NzEzMywiZXhwIjoxNjU0MTYzNTMzfQ.e9QKukALcJNch4axveJETcEZOPq9nMgx6KdoyU7eW-Y",
 											"type": "string"
 										}
 									]
@@ -1487,7 +1692,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:5000/api/v1/fasilitator/verifMitra/20",
+									"raw": "http://localhost:5000/api/v1/fasilitator/verifMitra/21",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1498,7 +1703,7 @@
 										"v1",
 										"fasilitator",
 										"verifMitra",
-										"20"
+										"21"
 									]
 								}
 							},
