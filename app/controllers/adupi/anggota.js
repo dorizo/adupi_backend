@@ -47,7 +47,7 @@ export const getAllAnggota = async (req, res, next) => {
 
 export const getOneAnggota = async (req, res, next) => {
   try {
-    const anggota = await model.adupi.anggota.findAll({
+    const anggota = await model.adupi.anggota.findOne({
       where: {
         anggotaCode: req.params.anggotaCode,
         mitraCode: req.mitraCode,

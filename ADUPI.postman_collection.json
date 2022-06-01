@@ -1550,6 +1550,48 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "lihat satu data anggota (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDA4MTEzNywiZXhwIjoxNjU0MTY3NTM3fQ.vpkMDKT9rfYHx-x7rpkTTP3i0BePCZN0ZLPs71hce8o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://54.144.54.31:3001/api/v1/anggota/one/1",
+									"protocol": "http",
+									"host": [
+										"54",
+										"144",
+										"54",
+										"31"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"anggota",
+										"one",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
