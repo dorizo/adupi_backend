@@ -2,37 +2,45 @@ import { Sequelize } from "sequelize";
 import db from "../../config/database.js";
 
 const { DataTypes, literal } = Sequelize;
-export const mesin = db.define(
-  "mesin",
+export const anggota = db.define(
+  "anggota",
   {
-    mesinCode: {
+    anggotaCode: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    usahaCode: {
-      type: DataTypes.INTEGER,
+    nama: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    nik: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    ktp: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    noHp: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    jenisKelamin: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    wilayahCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    alamat: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     mitraCode: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    jenisMesin: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    statusKepemilikanMesin: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    kapasitas: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    foto: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     createAt: {
       type: "DATETIME",
@@ -51,4 +59,4 @@ export const mesin = db.define(
   }
 );
 
-export default mesin;
+export default anggota;

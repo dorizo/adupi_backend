@@ -287,7 +287,14 @@ export const listPermission = async (req, res, next) => {
     });
     const tempPermission = [];
     await permission.forEach((item, index, arr) => {
-      tempPermission.push(item.permission);
+      let temporary = {
+        rpCode:item.rpCode,
+        permissionCode: item.permission.permisionCode,
+        permission: item.permission.permission,
+        description: item.permission.description,
+        moduleCode: item.permission.moduleCode
+      } 
+      tempPermission.push(temporary);
     });
     return res.status(200).json({
       status: 200,

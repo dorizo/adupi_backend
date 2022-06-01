@@ -1,6 +1,7 @@
 import { model } from "../../models/index.js";
 import db from "../../config/database.js";
 import bcrypt from "bcrypt";
+import { QueryTypes } from "sequelize";
 
 export const registerMitra = async (req, res, next) => {
   let transaction;
@@ -46,6 +47,8 @@ export const registerMitra = async (req, res, next) => {
         luasGudang: req.body.luasGudang,
         statusKepemilikanGudang: req.body.statusKepemilikanGudang,
         wilayahCode: req.body.wilayahCodeUsaha,
+        lang: req.body.lang,
+        lat: req.body.lat,
         alamat: req.body.alamatUsaha,
       },
       { transaction }
@@ -59,6 +62,8 @@ export const registerMitra = async (req, res, next) => {
         usahaCode: usaha.usahaCode,
         jenisMesin: item.jenisMesin,
         statusKepemilikanMesin: item.statusKepemilikanMesin,
+        kapasitas: item.kapasitas,
+        foto: item.foto,
       };
       returnToInsert.push(tempMesin);
     });
@@ -87,3 +92,111 @@ export const registerMitra = async (req, res, next) => {
   }
 };
 
+export const detailSelf = async (req, res, next) => {
+  try {
+    let hasil;
+    const mitra = await model.adupi.mitra.findOne({
+      where: {
+        userCode: req.userCode,
+        deleteAt: null,
+      },
+    });
+    if (!mitra) {
+      return res.status(404).json({
+        status: 404,
+        message: "Anda tidak terdaftar sebagai mitra",
+      });
+    }
+    const fasilitator = await model.adupi.fasilitator.findOne({
+      where: {
+        fasilitatorCode: mitra.fasilitatorCode,
+        deleteAt: null,
+      },
+    });
+    if (!fasilitator) {
+      return res.status(404).json({
+        status: 404,
+        message: "Anda belum terverifikasi oleh fasilitator",
+      });
+    }
+    const desa = await db.query(
+      "SELECT * FROM wilayah WHERE LEFT(wilayahCode,8)=? AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah",
+      {
+        replacements: [mitra.wilayahCode],
+        type: QueryTypes.SELECT,
+      }
+    );
+    const kabupaten = await db.query(
+      "SELECT * FROM wilayah WHERE LEFT(wilayahCode,2)=? AND CHAR_LENGTH(wilayahCode)=5 ORDER BY wilayah",
+      {
+        replacements: [req.params.wilayahCode],
+        type: QueryTypes.SELECT,
+      }
+    );
+    const kecamatan = await db.query(
+      "SELECT * FROM wilayah WHERE LEFT(wilayahCode,5)=? AND CHAR_LENGTH(wilayahCode)=8 ORDER BY wilayah",
+      {
+        replacements: [req.params.wilayahCode],
+        type: QueryTypes.SELECT,
+      }
+    );
+    const provinsi = await db.query(
+      "SELECT wilayahCode,wilayah FROM wilayah WHERE CHAR_LENGTH(wilayahCode)=2 ORDER BY wilayah",
+      { type: QueryTypes.SELECT }
+    );
+
+    if (!desa || !kecamatan || !kabupaten || !provinsi) {
+      return res.status(404).json({
+        status: 404,
+        message: "Wilayah tidak ditemukan",
+      });
+    }
+
+    const usaha = await model.adupi.usaha.findAll({
+      where: {
+        mitraCode: mitra.mitraCode,
+        deleteAt: null,
+      },
+      include: [
+        {
+          model: model.adupi.mesin,
+          where: {
+            deleteAt: null,
+            mitraCode: mitra.mitraCode,
+          },
+        },
+      ],
+    });
+    hasil = {
+      mitraCode: mitra.mitraCode,
+      nama: mitra.nama,
+      nik: mitra.nik,
+      ktp: mitra.ktp,
+      noHp: mitra.noHp,
+      jenisKelamin: mitra.jenisKelamin,
+      wilayahCode: mitra.wilayahCode,
+      wilayah: {
+        desa: desa.wilayah,
+        kecamatan: kecamatan.wilayah,
+        kabupaten: kabupaten.wilayah,
+        provinsi: provinsi.wilayah,
+      },
+      jenisMitra: mitra.jenisMitra,
+      tempatLahir: mitra.tempatLahir,
+      tanggalLahir: mitra.tanggalLahir,
+      alamat: mitra.alamat,
+      fasilitator: fasilitator,
+      gudang: usaha,
+    };
+    return res.status(200).json({
+      status: 200,
+      message: "",
+      data: hasil,
+    });
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Data anda tidak ditemukan",
+    });
+  }
+};

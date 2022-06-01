@@ -167,6 +167,8 @@ export const registrasiMitraValidation = [
   }),
   check("alamatUsaha", "Alamat usaha tidak boleh kosong").notEmpty(),
   check("foto", "Foto gudang tidak boleh kosong").notEmpty(),
+  check("lang", "Posisi gudang tidak boleh kosong").notEmpty(),
+  check("lat", "Posisi gudang tidak boleh kosong").notEmpty(),
 
   // daftar mesin
   check("mesin.*.jenisMesin", "Jenis mesin tidak boleh kosong")
@@ -195,4 +197,14 @@ export const registrasiMitraValidation = [
     .isIn(["Milik Sendiri", "Bantuan GESN"])
     .trim()
     .escape(),
+  check("mesin.*.kapasitas", "Kapasitas tidak boleh kosong")
+    .notEmpty()
+    .trim()
+    .escape(),
+  check("mesin.*.kapasitas", "Kapasitas harus berisi angka")
+    .isDecimal()
+    .trim()
+    .escape(),
+  check("mesin.*.foto", "Foto gudang tidak boleh kosong").notEmpty(),
+
 ];

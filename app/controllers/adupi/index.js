@@ -1,5 +1,5 @@
 import { master } from "./master/index.js";
-import { registerMitra } from "./mitra.js";
+import { registerMitra, detailSelf } from "./mitra.js";
 import { validation } from "./validation/index.js";
 import {
   getAllFasilitator,
@@ -10,13 +10,31 @@ import {
   getUserForAddFasilitator,
   getUserForEditFasilitator,
   getMitraNotYetVerifByFasilitator,
-  verifMitraByFasilitator
+  verifMitraByFasilitator,
 } from "./fasilitator.js";
+
+import {
+  checkMitraOrNot,
+  getAllAnggota,
+  getOneAnggota,
+  addAnggota,
+  editAnggota,
+  deleteAnggota,
+} from "./anggota.js";
 
 export const adupi = {
   master: master,
   mitra: {
     registerMitra,
+    detailSelf
+  },
+  anggota: {
+    checkMitraOrNot,
+    getAllAnggota,
+    getOneAnggota,
+    addAnggota,
+    editAnggota,
+    deleteAnggota,
   },
   fasilitator: {
     getAllFasilitator,
@@ -27,7 +45,7 @@ export const adupi = {
     editFasilitator,
     deleteFasilitator,
     getMitraNotYetVerifByFasilitator,
-    verifMitraByFasilitator
+    verifMitraByFasilitator,
   },
   validation: validation,
 };

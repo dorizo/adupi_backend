@@ -263,15 +263,20 @@ export const listRole = async (req, res, next) => {
           model: model.managementUser.role,
           where: {
             deleteAt: null,
+            status: "Public"
           },
         },
       ],
     });
     const tempRole = [];
     role.forEach((item, index, arr) => {
-      tempRole.push(item.role);
+      let temporary = {
+        ruCode:item.ruCode,
+        roleCode: item.role.roleCode,
+        role: item.role.role,
+      } 
+      tempRole.push(temporary);
     });
-    console.log(tempRole);
     return res.status(200).json({
       status: 200,
       message: "List role of user found",
@@ -379,7 +384,14 @@ export const listPermission = async (req, res, next) => {
     });
     const tempPermission = [];
     permission.forEach((item, index, arr) => {
-      tempPermission.push(item.permission);
+      let temporary = {
+        upCode:item.upCode,
+        permissionCode: item.permission.permisionCode,
+        permission: item.permission.permission,
+        description: item.permission.description,
+        moduleCode: item.permission.moduleCode
+      } 
+      tempPermission.push(temporary);
     });
     return res.status(200).json({
       status: 200,

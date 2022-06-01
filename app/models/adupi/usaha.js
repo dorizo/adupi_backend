@@ -50,6 +50,14 @@ export const usaha = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    lang: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lat: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     createAt: {
       type: "DATETIME",
     },

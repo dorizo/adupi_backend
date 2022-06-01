@@ -29,7 +29,7 @@
     "module": "Master",
     "permission": [
       { "permission": "RJENISSAMPAH", "description": "Lihat semua jenis sampah" },
-      { "permission": "CJENISSAMPAH", "description": "Membuat jenis sampah"},
+      { "permission": "CJENISSAMPAH", "description": "menambah jenis sampah"},
       { "permission": "UJENISSAMPAH", "description": "Mengubah jenis sampah"},
       { "permission": "DJENISSAMPAH", "description": "Menghapus jenis sampah"}
     ]
@@ -38,11 +38,21 @@
     "module":"Fasilitator",
     "permission": [
       { "permission": "RFASILITATOR", "description": "Lihat fasilitator" },
-      { "permission": "CFASILITATOR", "description": "Membuat fasilitator"},
+      { "permission": "CFASILITATOR", "description": "menambah fasilitator"},
       { "permission": "UFASILITATOR", "description": "Mengubah fasilitator"},
       { "permission": "DFASILITATOR", "description": "Menghapus fasilitator"},
       { "permission": "RMITRANOTYETVERIFBYFASILITATOR", "description": "Lihat semua data mitra yang belum diverifiasi oleh fasilitator"},
       { "permission": "VERIFMITRABYFASILITATOR", "description": "Verifikasi mitra oleh fasilitator"}
+    ]
+  },
+  {
+    "module": "Mitra",
+    "permission": [
+      { "permission": "RANGGOTA", "description": "Lihat semua anggota" },
+      { "permission": "CANGGOTA", "description": "menambah anggota"},
+      { "permission": "UANGGOTA", "description": "Mengubah anggota"},
+      { "permission": "DANGGOTA", "description": "Menghapus anggota"},
+      { "permission": "RDETAILSELFMITRA", "description": "Lihat data detail untuk mitra"}
     ]
   }
 ]

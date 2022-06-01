@@ -1,5 +1,5 @@
 import express from "express";
-import { validate } from "../utils/validate.js";
+import { validate } from "../utils/getFullWilyah.js";
 import { authentication } from "../controllers/authentication/index.js";
 import { managementUser } from "../controllers/managementUser/index.js";
 import { wilayah } from "../controllers/wilayah/index.js";
@@ -224,6 +224,13 @@ router.post(
   adupi.mitra.registerMitra
 );
 
+// detail self mitra
+router.get(
+  "/api/v1/mitra/self",
+  verifyToken(["RDETAILSELFMITRA"]),
+  adupi.mitra.detailSelf
+);
+
 // get semua data mitra yang belum terverifikasi oleh fasilitator
 router.get(
   "/api/v1/fasilitator/allMitra/notYetVerifByFasilitator",
@@ -280,6 +287,46 @@ router.delete(
   "/api/v1/fasilitator/delete/:fasilitatorCode",
   verifyToken(["DFASILITATOR"]),
   adupi.fasilitator.deleteFasilitator
+);
+
+
+// anggota
+router.get(
+  "/api/v1/anggota/all",
+  verifyToken(["RANGGOTA"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.anggota.getAllAnggota
+);
+
+router.get(
+  "/api/v1/anggota/one/:anggotaCode",
+  verifyToken(["RANGGOTA"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.anggota.getOneAnggota
+);
+
+router.post(
+  "/api/v1/anggota/add",
+  verifyToken(["CANGGOTA"]),
+  adupi.validation.anggota.addAnggotaValidation,
+  validate,
+  adupi.anggota.checkMitraOrNot,
+  adupi.anggota.addAnggota
+);
+
+router.put(
+  "/api/v1/anggota/edit/:anggotaCode",
+  verifyToken(["UANGGOTA"]),
+  adupi.validation.anggota.editAnggotaValidation,
+  validate,
+  adupi.anggota.checkMitraOrNot,
+  adupi.anggota.editAnggota
+);
+router.delete(
+  "/api/v1/anggota/delete/:anggotaCode",
+  verifyToken(["DANGGOTA"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.anggota.deleteAnggota
 );
 
 router.get("/", () => {
