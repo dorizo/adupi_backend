@@ -1664,109 +1664,11 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Fasilitator",
-			"item": [
-				{
-					"name": "Verif mitra",
-					"item": [
-						{
-							"name": "lihat semua data mitra yang belum terverif oleh fasilitator  (fasilitator)",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDA3NzEzMywiZXhwIjoxNjU0MTYzNTMzfQ.e9QKukALcJNch4axveJETcEZOPq9nMgx6KdoyU7eW-Y",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:5000/api/v1/fasilitator/allMitra/notYetVerifByFasilitator",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "5000",
-									"path": [
-										"api",
-										"v1",
-										"fasilitator",
-										"allMitra",
-										"notYetVerifByFasilitator"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "verif data mitra oleh fasilitator  (fasilitator)",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDA3NzEzMywiZXhwIjoxNjU0MTYzNTMzfQ.e9QKukALcJNch4axveJETcEZOPq9nMgx6KdoyU7eW-Y",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:5000/api/v1/fasilitator/verifMitra/21",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "5000",
-									"path": [
-										"api",
-										"v1",
-										"fasilitator",
-										"verifMitra",
-										"21"
-									]
-								}
-							},
-							"response": []
-						}
-					]
 				},
 				{
-					"name": "lihat semua data fasilitator (super admin)",
+					"name": "Check NIK untuk registrasi mitra",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDk3NTI0LCJleHAiOjE2NTM1ODM5MjR9.ldaE4k7olW1wlnY0Qkz3k0GYkba5WJYtU2Jy3sYBt8c",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -1774,25 +1676,269 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nik\": \"1807122006990005\"\r\n}"
+						},
 						"url": {
-							"raw": "http://localhost:5000/api/v1/fasilitator/all",
+							"raw": "http://localhost:3001/api/v1/registrasi/mitra/checkNIK",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "3001",
 							"path": [
 								"api",
 								"v1",
-								"fasilitator",
-								"all"
+								"registrasi",
+								"mitra",
+								"checkNIK"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "lihat semua user untuk tambah data fasilitator (super admin)",
+					"name": "Check Email untuk registrasi mitra",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"wawaiguntang@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/registrasi/mitra/checkEmail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"registrasi",
+								"mitra",
+								"checkEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check no hp untuk registrasi mitra",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"noHp\": \"0895606226096\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/registrasi/mitra/checkNoHP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"registrasi",
+								"mitra",
+								"checkNoHP"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fasilitator",
+			"item": [
+				{
+					"name": "Mitra",
+					"item": [
+						{
+							"name": "lihat semua mitra dari fasilitator",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDI4ODg4OSwiZXhwIjoxNjU0Mzc1Mjg5fQ.NNzpmFgzf_OT87fJx98UxDEe9s6uYVwr30u1AzAahNs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/fasilitator/allMitra",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"fasilitator",
+										"allMitra"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "lihat detail mitra dari fasilitator",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDI4ODg4OSwiZXhwIjoxNjU0Mzc1Mjg5fQ.NNzpmFgzf_OT87fJx98UxDEe9s6uYVwr30u1AzAahNs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/fasilitator/detailMitra/21",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"fasilitator",
+										"detailMitra",
+										"21"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tambah mitra",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDMyNjMxMywiZXhwIjoxNjU0NDEyNzEzfQ.gOeAefiie5XQHtltdH2_O1r9XK2VX8udj4sKjvjY-8M",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nama\": \"Diki Rahmad Sandi\",\r\n    \"nik\": \"1807122006990007\",\r\n    \"noHp\": \"0895606226097\",\r\n    \"jenisKelamin\": \"L\",\r\n    \"wilayahCode\": \"11.05.07.2002\",\r\n    \"jenisMitra\": \"PT\",\r\n    \"tempatLahir\": \"Pugung Raharjo\",\r\n    \"tanggalLahir\": \"1999-06-20\",\r\n    \"ktp\": \"image base 64\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg Cempaka 6, No.07\",\r\n    \"email\": \"wawaiguntang2@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"namaUsaha\": \"PT.Mulya Sari\",\r\n    \"foto\": \"Image base 64\",\r\n    \"noSuratIzinUsaha\": \"22/01/ST/2021\",\r\n    \"luasGudang\": 300,\r\n    \"lamaOperasional\": 3,\r\n    \"jumlahPekerja\": 30,\r\n    \"statusKepemilikanGudang\": \"Milik Sendiri\",\r\n    \"wilayahCodeUsaha\": \"11.05.07.2002\",\r\n    \"alamatUsaha\": \"Jl.Nin aja dulu\",\r\n    \"lang\": \"2.443345542\",\r\n    \"lat\": \"0.86543467\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/v1/fasilitator/addMitra",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"fasilitator",
+										"addMitra"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Hapus mitra",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDMyNjMxMywiZXhwIjoxNjU0NDEyNzEzfQ.gOeAefiie5XQHtltdH2_O1r9XK2VX8udj4sKjvjY-8M",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/fasilitator/deleteMitra/22",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"fasilitator",
+										"deleteMitra",
+										"22"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "get detail account",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1813,7 +1959,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5000/api/v1/fasilitator/getUserForAdd",
+							"raw": "http://localhost:5000/api/v1/account/self",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1822,12 +1968,181 @@
 							"path": [
 								"api",
 								"v1",
-								"fasilitator",
-								"getUserForAdd"
+								"account",
+								"self"
 							]
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Super admin",
+			"item": [
+				{
+					"name": "Mitra",
+					"item": [
+						{
+							"name": "lihat semua mitra yang telah diverifikasi oleh fasilitator (super admin)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjU0MzQ1Mzk4LCJleHAiOjE2NTQ0MzE3OTh9.cphYOA8hUFPDmOFI_IYdtVKZikpFMFK80xBlTtAoDBg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/su/allMitra/yes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"su",
+										"allMitra",
+										"yes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "lihat semua mitra yang belum diverifikasi oleh fasilitator (super admin)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjU0MzQ1Mzk4LCJleHAiOjE2NTQ0MzE3OTh9.cphYOA8hUFPDmOFI_IYdtVKZikpFMFK80xBlTtAoDBg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/su/allMitra/no",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"su",
+										"allMitra",
+										"no"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "lihat detail mitra (super admin)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjU0MzQ1Mzk4LCJleHAiOjE2NTQ0MzE3OTh9.cphYOA8hUFPDmOFI_IYdtVKZikpFMFK80xBlTtAoDBg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/su/detailMitra/21",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"su",
+										"detailMitra",
+										"21"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "aktifasi akun mitra yang telah diverifikasi oleh fasilitator (super admin)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjU0MzQ1Mzk4LCJleHAiOjE2NTQ0MzE3OTh9.cphYOA8hUFPDmOFI_IYdtVKZikpFMFK80xBlTtAoDBg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mitraCode\": \"22\",\r\n    \"roleCode\" : \"3\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/v1/su/activeAccountMitra",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"su",
+										"activeAccountMitra"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "tambah data fasilitator (super admin)",
@@ -1911,49 +2226,6 @@
 					"response": []
 				},
 				{
-					"name": "ubah data fasilitator (super admin)",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNjY2NTQ3LCJleHAiOjE2NTM3NTI5NDd9.FCaa9mqC-iqZ-Oj98x1q6UdG56lG5X-oeENWtiEtYPk",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"nama\":\"Diki Rahmad Sandi\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg.Cempaka 6, No 07\",\r\n    \"userCode\":27,\r\n    \"wilayahCode\":\"11.05.07.2002\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/v1/fasilitator/edit/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"v1",
-								"fasilitator",
-								"edit",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "hapus data fasilitator (super admin)",
 					"request": {
 						"auth": {
@@ -2030,14 +2302,52 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Account",
-			"item": [
+				},
 				{
-					"name": "get detail account",
+					"name": "ubah data fasilitator (super admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNjY2NTQ3LCJleHAiOjE2NTM3NTI5NDd9.FCaa9mqC-iqZ-Oj98x1q6UdG56lG5X-oeENWtiEtYPk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama\":\"Diki Rahmad Sandi\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg.Cempaka 6, No 07\",\r\n    \"userCode\":27,\r\n    \"wilayahCode\":\"11.05.07.2002\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/fasilitator/edit/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"edit",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lihat semua user untuk tambah data fasilitator (super admin)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2058,7 +2368,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5000/api/v1/account/self",
+							"raw": "http://localhost:5000/api/v1/fasilitator/getUserForAdd",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2067,8 +2377,8 @@
 							"path": [
 								"api",
 								"v1",
-								"account",
-								"self"
+								"fasilitator",
+								"getUserForAdd"
 							]
 						}
 					},
