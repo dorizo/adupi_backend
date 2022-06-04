@@ -6,6 +6,9 @@ import { wilayah } from "../controllers/wilayah/index.js";
 import { adupi } from "../controllers/adupi/index.js";
 import { account } from "../controllers/account/index.js";
 import { verifyToken } from "../middleware/verifyToken.js";
+import pkg from 'node-geocoder';
+const { NodeGeocoder } = pkg;
+
 
 const router = express.Router();
 
@@ -170,17 +173,20 @@ router.get(
 );
 
 // account
-router.get(
-  "/api/v1/account/self",
-  account.self
-);
+router.get("/api/v1/account/self", account.self);
 
 // wilayah
 router.get("/api/v1/wilayah/provinsi/all", wilayah.provinsi.getAllProvinsi);
 
-router.get("/api/v1/wilayah/kabupaten/all/:wilayahCode", wilayah.kabupaten.getAllKabupaten);
+router.get(
+  "/api/v1/wilayah/kabupaten/all/:wilayahCode",
+  wilayah.kabupaten.getAllKabupaten
+);
 
-router.get("/api/v1/wilayah/kecamatan/all/:wilayahCode", wilayah.kecamatan.getAllKecamatan);
+router.get(
+  "/api/v1/wilayah/kecamatan/all/:wilayahCode",
+  wilayah.kecamatan.getAllKecamatan
+);
 
 router.get("/api/v1/wilayah/desa/all/:wilayahCode", wilayah.desa.getAllDesa);
 
@@ -222,6 +228,27 @@ router.post(
   adupi.validation.mitra.registrasiMitraValidation,
   validate,
   adupi.mitra.registerMitra
+);
+
+router.post(
+  "/api/v1/registrasi/mitra/checkEmail",
+  adupi.validation.mitra.checkEmailValidation,
+  validate,
+  adupi.mitra.checkEmail
+);
+
+router.post(
+  "/api/v1/registrasi/mitra/checkNIK",
+  adupi.validation.mitra.checkNIKValidation,
+  validate,
+  adupi.mitra.checkNIK
+);
+
+router.post(
+  "/api/v1/registrasi/mitra/checkNoHP",
+  adupi.validation.mitra.checkNoHPValidation,
+  validate,
+  adupi.mitra.checkNoHP
 );
 
 // detail self mitra
@@ -289,6 +316,31 @@ router.delete(
   adupi.fasilitator.deleteFasilitator
 );
 
+router.get(
+  "/api/v1/fasilitator/allMitra",
+  verifyToken(["RALLMITRAINFASILITATOR"]),
+  adupi.mitra.getAllMitraByFasilitator
+);
+
+router.get(
+  "/api/v1/fasilitator/detailMitra/:mitraCode",
+  verifyToken(["RDETAILMITRAINFASILITATOR"]),
+  adupi.mitra.getDetailMitraByFasilitator
+);
+
+router.post(
+  "/api/v1/fasilitator/addMitra",
+  verifyToken(["CMITRABYFASILITATOR"]),
+  adupi.validation.mitra.addMitraByFasilitatorValidation,
+  validate,
+  adupi.mitra.addMitraByFasilitator
+);
+
+router.delete(
+  "/api/v1/fasilitator/deleteMitra/:mitraCode",
+  verifyToken(["DMITRABYFASILITATOR"]),
+  adupi.mitra.deleteMitraByFasilitator
+);
 
 // anggota
 router.get(
@@ -329,8 +381,80 @@ router.delete(
   adupi.anggota.deleteAnggota
 );
 
-router.get("/", () => {
-  console.log("test");
+// mesin
+router.get(
+  "/api/v1/mesin/all/:usahaCode",
+  verifyToken(["RMESIN"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.mesin.getAllMesin
+);
+
+router.get(
+  "/api/v1/mesin/one/:mesinCode",
+  verifyToken(["RMESIN"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.mesin.getOneMesin
+);
+
+router.post(
+  "/api/v1/mesin/add",
+  verifyToken(["CMESIN"]),
+  adupi.validation.mesin.addMesinValidation,
+  validate,
+  adupi.anggota.checkMitraOrNot,
+  adupi.mesin.addMesin
+);
+
+router.put(
+  "/api/v1/mesin/edit/:mesinCode",
+  verifyToken(["UMESIN"]),
+  adupi.validation.mesin.editMesinValidation,
+  validate,
+  adupi.anggota.checkMitraOrNot,
+  adupi.mesin.editMesin
+);
+router.delete(
+  "/api/v1/mesin/delete/:mesinCode",
+  verifyToken(["DMESIN"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.mesin.deleteMesin
+);
+
+//super admin
+router.get(
+  "/api/v1/su/allMitra/:verified?",
+  verifyToken(["RMITRA"]),
+  adupi.mitra.getAllMitraVerified
+);
+
+router.get(
+  "/api/v1/su/detailMitra/:mitraCode",
+  verifyToken(["RDETAILMITRA"]),
+  adupi.mitra.getDetailMitraVerified
+);
+
+router.post(
+  "/api/v1/su/activeAccountMitra",
+  verifyToken(["ACTIVEACCOUNTMITRA"]),
+  adupi.validation.mitra.activeAccountMitraValidation,
+  validate,
+  adupi.mitra.activeAccountMitra
+);
+
+router.get("/", async () => {
+  const options = {
+    provider: 'google',
+  
+    // Optional depending on the providers
+    fetch: customFetchImplementation,
+    apiKey: 'AIzaSyDttiQFKmTxsGE1Nb5tW6cq2c-rwVELAas', // for Mapquest, OpenCage, Google Premier
+    formatter: null // 'gpx', 'string', ...
+  };
+  
+  const geocoder = NodeGeocoder(options);
+  
+  // Using callback
+  const res = await geocoder.geocode('29 champs elysée paris');
 });
 
 export default router;

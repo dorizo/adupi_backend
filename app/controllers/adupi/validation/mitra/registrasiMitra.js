@@ -205,6 +205,25 @@ export const registrasiMitraValidation = [
     .isDecimal()
     .trim()
     .escape(),
-  check("mesin.*.foto", "Foto gudang tidak boleh kosong").notEmpty(),
+  check("mesin.*.foto", "Foto mesin tidak boleh kosong").notEmpty(),
 
+];
+
+export const checkEmailValidation = [
+  check("email", "Email tidak boleh kosong").notEmpty().trim().escape(),
+  check("email", "Email tidak valid")
+    .isEmail()
+    .trim()
+    .escape()
+    .normalizeEmail(),
+];
+
+export const checkNIKValidation = [
+  check("nik", "NIK tidak boleh kosong").notEmpty().trim().escape(),
+  check("nik", "NIK harus berisi angka").isDecimal().trim().escape(),
+];
+
+export const checkNoHPValidation = [
+  check("noHp", "No HP tidak boleh kosong").notEmpty().trim().escape(),
+  check("noHp", "No HP harus berisi angka").isDecimal().trim().escape(),
 ];

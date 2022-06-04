@@ -17,7 +17,7 @@ app.use(
   })
 );
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(router);
 // app.use(expressValidator);
 app.listen(3001, () => console.log("Server running at port 3001"));

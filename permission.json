@@ -42,7 +42,11 @@
       { "permission": "UFASILITATOR", "description": "Mengubah fasilitator"},
       { "permission": "DFASILITATOR", "description": "Menghapus fasilitator"},
       { "permission": "RMITRANOTYETVERIFBYFASILITATOR", "description": "Lihat semua data mitra yang belum diverifiasi oleh fasilitator"},
-      { "permission": "VERIFMITRABYFASILITATOR", "description": "Verifikasi mitra oleh fasilitator"}
+      { "permission": "VERIFMITRABYFASILITATOR", "description": "Verifikasi mitra oleh fasilitator"},
+      { "permission": "RALLMITRAINFASILITATOR", "description": "Lihat semua mitra dari sisi fasilitator"},
+      { "permission": "RDETAILMITRAINFASILITATOR", "description": "Lihat detail mitra dari sisi fasilitator"},
+      { "permission": "CMITRABYFASILITATOR", "description": "Menambah mitra dari sisi fasilitator"},
+      { "permission": "DMITRABYFASILITATOR", "description": "Menghapus mitra dari sisi fasilitator"}
     ]
   },
   {
@@ -52,7 +56,14 @@
       { "permission": "CANGGOTA", "description": "menambah anggota"},
       { "permission": "UANGGOTA", "description": "Mengubah anggota"},
       { "permission": "DANGGOTA", "description": "Menghapus anggota"},
-      { "permission": "RDETAILSELFMITRA", "description": "Lihat data detail untuk mitra"}
+      { "permission": "RDETAILSELFMITRA", "description": "Lihat data detail untuk mitra"},
+      { "permission": "RMESIN", "description": "Lihat semua mesin" },
+      { "permission": "CMESIN", "description": "menambah mesin"},
+      { "permission": "UMESIN", "description": "Mengubah mesin"},
+      { "permission": "DMESIN", "description": "Menghapus mesin"},
+      { "permission": "RMITRA", "description": "Lihat semua mitra yang sudah di verifikasi oleh fasilitator"},
+      { "permission": "RDETAILMITRA", "description": "Lihat detail mitra yang sudah di verifikasi oleh fasilitator"},
+      { "permission": "ACTIVEACCOUNTMITRA", "description": "Aktifasi akun mitra"}
     ]
   }
 ]

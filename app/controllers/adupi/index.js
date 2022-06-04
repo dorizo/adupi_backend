@@ -1,5 +1,18 @@
 import { master } from "./master/index.js";
-import { registerMitra, detailSelf } from "./mitra.js";
+import {
+  registerMitra,
+  checkEmail,
+  checkNIK,
+  checkNoHP,
+  detailSelf,
+  getAllMitraByFasilitator,
+  getDetailMitraByFasilitator,
+  addMitraByFasilitator,
+  deleteMitraByFasilitator,
+  getAllMitraVerified,
+  getDetailMitraVerified,
+  activeAccountMitra
+} from "./mitra.js";
 import { validation } from "./validation/index.js";
 import {
   getAllFasilitator,
@@ -22,11 +35,29 @@ import {
   deleteAnggota,
 } from "./anggota.js";
 
+import {
+  getAllMesin,
+  getOneMesin,
+  addMesin,
+  editMesin,
+  deleteMesin,
+} from "./mesin.js";
+
 export const adupi = {
   master: master,
   mitra: {
     registerMitra,
-    detailSelf
+    checkEmail,
+    checkNIK,
+    checkNoHP,
+    detailSelf,
+    getAllMitraByFasilitator,
+    getDetailMitraByFasilitator,
+    addMitraByFasilitator,
+    deleteMitraByFasilitator,
+    getAllMitraVerified,
+    getDetailMitraVerified,
+    activeAccountMitra
   },
   anggota: {
     checkMitraOrNot,
@@ -35,6 +66,13 @@ export const adupi = {
     addAnggota,
     editAnggota,
     deleteAnggota,
+  },
+  mesin: {
+    getAllMesin,
+    getOneMesin,
+    addMesin,
+    editMesin,
+    deleteMesin,
   },
   fasilitator: {
     getAllFasilitator,

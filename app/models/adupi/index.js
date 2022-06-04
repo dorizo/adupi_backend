@@ -34,6 +34,8 @@ anggota.belongsTo(mitra, {
   foreignKey: "mitraCode",
 });
 
+
+
 export const adupi = {
   master: master,
   mitra: mitra,

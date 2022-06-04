@@ -1,7 +1,8 @@
 import { model } from "../../models/index.js";
 import { Sequelize } from "sequelize";
-import mesin from "../../models/adupi/mesin.js";
 const op = Sequelize.Op;
+import { QueryTypes } from "sequelize";
+import db from "../../config/database.js";
 
 export const getAllFasilitator = async (req, res, next) => {
   try {
@@ -125,43 +126,65 @@ export const editFasilitator = async (req, res, next) => {
 };
 
 export const deleteFasilitator = async (req, res, next) => {
+  let transaction;
+  transaction = await db.transaction();
   try {
-    const fasilitator = await model.adupi.fasilitator.findOne({
-      where: {
-        fasilitatorCode: req.params.fasilitatorCode,
-        deleteAt: null,
-      },
-    });
-    await model.adupi.fasilitator
-      .update(
-        {
-          deleteAt: new Date(),
+    const fasilitator = await model.adupi.fasilitator.findOne(
+      {
+        where: {
+          fasilitatorCode: req.params.fasilitatorCode,
+          deleteAt: null,
         },
-        {
-          where: {
-            fasilitatorCode: req.params.fasilitatorCode,
-            deleteAt: null,
-          },
-        }
-      )
-      .then(function (fasilitator) {
-        if (fasilitator) {
-          return res.status(200).json({
-            status: 200,
-            message: "Berhasil menghapus fasilitator",
-          });
-        } else {
-          return res.status(400).json({
-            status: 400,
-            message: "Gagal menghapus fasilitator",
-          });
-        }
-      });
-  } catch (error) {
-    return res.status(404).json({
-      status: 404,
-      message: "Fasilitator tidak ditemukan",
+      },
+      {
+        transaction,
+      }
+    );
+    await model.adupi.fasilitator.update(
+      {
+        deleteAt: new Date(),
+      },
+      {
+        where: {
+          fasilitatorCode: req.params.fasilitatorCode,
+          deleteAt: null,
+        },
+      },
+      {
+        transaction,
+      }
+    );
+
+    await model.managementUser.user.update(
+      {
+        deleteAt: new Date(),
+      },
+      {
+        where: {
+          userCode: fasilitator.userCode,
+          deleteAt: null,
+        },
+      },
+      { transaction }
+    );
+    await transaction.commit();
+    return res.status(200).json({
+      status: 200,
+      message: "Berhasil menghapus fasilitator",
     });
+  } catch (error) {
+    if (transaction) {
+      await transaction.rollback();
+      return res.status(400).json({
+        status: 400,
+        message: "Gagal menghapus fasilitator",
+      });
+    } else {
+      return res.status(400).json({
+        status: 400,
+        message: "Gagal menghapus fasilitator",
+      });
+    }
   }
 };
 
