@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2022 at 02:57 PM
+-- Generation Time: Jun 05, 2022 at 08:27 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -47,7 +47,7 @@ CREATE TABLE `anggota` (
 --
 
 INSERT INTO `anggota` (`anggotaCode`, `mitraCode`, `nama`, `nik`, `ktp`, `noHp`, `jenisKelamin`, `wilayahCode`, `alamat`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(1, 21, 'Bagas Ageng Sandoko', '1807122006990008', 'image base 64', '0895606226090', 'L', '11.05.07.2002', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', '2022-06-01 11:46:16', '2022-06-01 11:48:04', '2022-06-01 11:49:26');
+(1, 21, 'Bagas Ageng Sandoko', '1807122006990008', 'image base 64', '0895606226090', 'L', '11.05.07.2002', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', '2022-06-01 11:46:16', '2022-06-01 11:48:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -155,13 +155,21 @@ CREATE TABLE `log` (
 CREATE TABLE `masalah` (
   `masalahCode` int(11) NOT NULL,
   `mitraCode` int(11) NOT NULL,
-  `jenisMasalah` enum('RusakMesin','RusakKendaraan') NOT NULL,
+  `jenisMasalah` enum('Kerusakan Mesin','Kerusakan Kendaraan','Kerusakan Peralatan','Masalah Ketenagakerjaan','Masalah Suplay','Kondisi Darurat') NOT NULL,
   `foto` varchar(100) NOT NULL,
   `deskripsi` longtext NOT NULL,
+  `status` enum('Selesai','Dalam peninjauan') NOT NULL,
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `masalah`
+--
+
+INSERT INTO `masalah` (`masalahCode`, `mitraCode`, `jenisMasalah`, `foto`, `deskripsi`, `status`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(1, 21, 'Kerusakan Kendaraan', 'Image base 64', 'Rusak as roda dan oli mesin habis', 'Selesai', '2022-06-05 18:02:45', '2022-06-05 18:17:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -188,7 +196,8 @@ CREATE TABLE `mesin` (
 
 INSERT INTO `mesin` (`mesinCode`, `mitraCode`, `usahaCode`, `jenisMesin`, `statusKepemilikanMesin`, `kapasitas`, `foto`, `createAt`, `updateAt`, `deleteAt`) VALUES
 (5, 21, 4, 'Mesin Press', 'Milik Sendiri', 0, '', '2022-06-01 09:51:35', NULL, NULL),
-(6, 21, 4, 'Mesin Giling', 'Bantuan GESN', 0, '', '2022-06-01 09:51:35', NULL, NULL);
+(6, 21, 4, 'Mesin Giling', 'Bantuan GESN', 0, '', '2022-06-01 09:51:35', NULL, NULL),
+(7, 21, 4, 'Mesin Press', 'Milik Sendiri', 30, 'Image base 64', '2022-06-05 17:07:10', '2022-06-05 17:08:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -220,7 +229,8 @@ CREATE TABLE `mitra` (
 --
 
 INSERT INTO `mitra` (`mitraCode`, `nama`, `nik`, `ktp`, `noHp`, `jenisKelamin`, `wilayahCode`, `jenisMitra`, `tempatLahir`, `tanggalLahir`, `alamat`, `fasilitatorCode`, `userCode`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(21, 'Diki Rahmad Sandi', '1807122006990005', 'image base 64', '0895606226096', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', 2, 33, '2022-06-01 09:51:35', '2022-06-01 09:53:36', NULL);
+(21, 'Diki Rahmad Sandi', '1807122006990005', 'image base 64', '0895606226096', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', 2, 33, '2022-06-01 09:51:35', '2022-06-01 09:53:36', NULL),
+(22, 'Diki Rahmad Sandi', '1807122006990007', 'image base 64', '0895606226097', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', 2, 34, '2022-06-04 07:09:07', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -302,7 +312,23 @@ INSERT INTO `permission` (`permissionCode`, `permission`, `description`, `module
 (41, 'CANGGOTA', 'menambah anggota', 4, '2022-06-01 18:11:32', NULL, NULL),
 (42, 'UANGGOTA', 'Mengubah anggota', 4, '2022-06-01 18:11:32', NULL, NULL),
 (43, 'DANGGOTA', 'Menghapus anggota', 4, '2022-06-01 18:11:32', NULL, NULL),
-(44, 'RDETAILSELFMITRA', 'Lihat data detail untuk mitra', 4, '2022-06-01 19:49:28', NULL, NULL);
+(44, 'RDETAILSELFMITRA', 'Lihat data detail untuk mitra', 4, '2022-06-01 19:49:28', NULL, NULL),
+(45, 'RMESIN', 'Lihat semua mesin', 4, '2022-06-02 21:51:12', NULL, NULL),
+(46, 'CMESIN', 'menambah mesin', 4, '2022-06-02 21:51:12', NULL, NULL),
+(47, 'UMESIN', 'Mengubah mesin', 4, '2022-06-02 21:51:12', NULL, NULL),
+(48, 'DMESIN', 'Menghapus mesin', 4, '2022-06-02 21:51:12', NULL, NULL),
+(49, 'RALLMITRAINFASILITATOR', 'Lihat semua mitra dari sisi fasilitator', 3, '2022-06-04 03:34:35', NULL, NULL),
+(50, 'RDETAILMITRAINFASILITATOR', 'Lihat detail mitra dari sisi fasilitator', 3, '2022-06-04 03:34:35', NULL, NULL),
+(51, 'CMITRABYFASILITATOR', 'Menambah mitra dari sisi fasilitator', 3, '2022-06-04 14:07:27', NULL, NULL),
+(52, 'DMITRABYFASILITATOR', 'Menghapus mitra dari sisi fasilitator', 3, '2022-06-04 14:17:07', NULL, NULL),
+(53, 'RMITRA', 'Lihat semua mitra yang sudah di verifikasi oleh fasilitator', 4, '2022-06-04 19:22:24', NULL, NULL),
+(54, 'RDETAILMITRA', 'Lihat detail mitra yang sudah di verifikasi oleh fasilitator', 4, '2022-06-04 19:22:24', NULL, NULL),
+(55, 'ACTIVEACCOUNTMITRA', 'Aktifasi akun mitra', 4, '2022-06-04 20:21:31', NULL, NULL),
+(56, 'RMASALAH', 'Lihat semua masalah', 4, '2022-06-06 00:40:29', NULL, NULL),
+(57, 'CMASALAH', 'menambah masalah', 4, '2022-06-06 00:40:29', NULL, NULL),
+(58, 'UMASALAH', 'Mengubah masalah', 4, '2022-06-06 00:40:29', NULL, NULL),
+(59, 'DMASALAH', 'Menghapus masalah', 4, '2022-06-06 00:40:29', NULL, NULL),
+(60, 'CHANGESTATUSMASALAH', 'Merubah status masalah', 4, '2022-06-06 01:16:03', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -393,7 +419,36 @@ INSERT INTO `role_permission` (`rpCode`, `permissionCode`, `roleCode`, `createAt
 (66, 42, 3, '2022-06-01 18:11:32', NULL, NULL),
 (67, 43, 3, '2022-06-01 18:11:32', NULL, NULL),
 (68, 44, 1, '2022-06-01 19:49:28', NULL, NULL),
-(69, 44, 3, '2022-06-01 19:49:59', NULL, NULL);
+(69, 44, 3, '2022-06-01 19:49:59', NULL, NULL),
+(70, 45, 1, '2022-06-02 21:51:12', NULL, NULL),
+(71, 46, 1, '2022-06-02 21:51:12', NULL, NULL),
+(72, 47, 1, '2022-06-02 21:51:12', NULL, NULL),
+(73, 48, 1, '2022-06-02 21:51:12', NULL, NULL),
+(74, 45, 3, '2022-06-02 21:51:12', NULL, NULL),
+(75, 46, 3, '2022-06-02 21:51:12', NULL, NULL),
+(76, 47, 3, '2022-06-02 21:51:12', NULL, NULL),
+(77, 48, 3, '2022-06-02 21:51:12', NULL, NULL),
+(78, 49, 1, '2022-06-04 03:34:35', NULL, NULL),
+(79, 50, 1, '2022-06-04 03:34:35', NULL, NULL),
+(80, 49, 2, '2022-06-04 03:36:23', NULL, NULL),
+(81, 50, 2, '2022-06-04 03:36:23', NULL, NULL),
+(82, 51, 1, '2022-06-04 14:07:27', NULL, NULL),
+(83, 51, 2, '2022-06-04 14:07:27', NULL, NULL),
+(84, 52, 1, '2022-06-04 14:17:08', NULL, NULL),
+(85, 52, 2, '2022-06-04 14:17:08', NULL, NULL),
+(86, 53, 1, '2022-06-04 19:22:24', NULL, NULL),
+(87, 54, 1, '2022-06-04 19:22:24', NULL, NULL),
+(88, 55, 1, '2022-06-04 20:21:31', NULL, NULL),
+(89, 56, 1, '2022-06-06 00:40:29', NULL, NULL),
+(90, 57, 1, '2022-06-06 00:40:29', NULL, NULL),
+(91, 58, 1, '2022-06-06 00:40:29', NULL, NULL),
+(92, 59, 1, '2022-06-06 00:40:29', NULL, NULL),
+(93, 56, 3, '2022-06-06 00:40:29', NULL, NULL),
+(94, 57, 3, '2022-06-06 00:40:29', NULL, NULL),
+(95, 58, 3, '2022-06-06 00:40:29', NULL, NULL),
+(96, 59, 3, '2022-06-06 00:40:29', NULL, NULL),
+(97, 60, 1, '2022-06-06 01:16:04', NULL, NULL),
+(98, 60, 3, '2022-06-06 01:16:04', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -418,7 +473,8 @@ INSERT INTO `role_user` (`ruCode`, `userCode`, `roleCode`, `createAt`, `updateAt
 (1, 1, 1, '2022-05-08 12:00:45', NULL, NULL),
 (2, 1, 2, '2022-05-08 16:33:30', NULL, NULL),
 (3, 27, 2, '2022-05-27 16:46:55', NULL, NULL),
-(4, 33, 3, '2022-06-01 18:03:06', NULL, NULL);
+(4, 33, 3, '2022-06-01 18:03:06', NULL, NULL),
+(5, 34, 3, '2022-06-04 13:37:48', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -436,7 +492,7 @@ CREATE TABLE `usaha` (
   `statusKepemilikanGudang` enum('Milik Sendiri','Sewa') NOT NULL,
   `lamaOperasional` int(11) NOT NULL,
   `jumlahPekerja` int(11) NOT NULL,
-  `wilayahCode` int(11) NOT NULL,
+  `wilayahCode` varchar(50) NOT NULL,
   `alamat` longtext NOT NULL,
   `lang` varchar(255) NOT NULL,
   `lat` varchar(255) NOT NULL,
@@ -450,7 +506,7 @@ CREATE TABLE `usaha` (
 --
 
 INSERT INTO `usaha` (`usahaCode`, `mitraCode`, `namaUsaha`, `foto`, `noSuratIzinUsaha`, `luasGudang`, `statusKepemilikanGudang`, `lamaOperasional`, `jumlahPekerja`, `wilayahCode`, `alamat`, `lang`, `lat`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(4, 21, 'PT.Mencari Cinta Sejati', 'Image base 64', '22/01/ST/2022', 300, 'Milik Sendiri', 3, 30, 1105, 'Jl.Nin aja dulu', '2.443345542', '0.86543467', '2022-06-01 09:51:35', NULL, NULL);
+(4, 21, 'PT.Mencari Cinta Sejati', 'Image base 64', '22/01/ST/2022', 300, 'Milik Sendiri', 3, 30, '1105', 'Jl.Nin aja dulu', '2.443345542', '0.86543467', '2022-06-01 09:51:35', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -477,7 +533,8 @@ INSERT INTO `user` (`userCode`, `email`, `password`, `isActive`, `status`, `crea
 (1, 'su@mail.com', '$2a$12$j.gGTsfI3auYwK.WhLiaTuj2LV..e2P0amAA2Pa2hjejBG8bF3ZFG', 1, 'Private', '2022-05-04 00:29:07', NULL, NULL),
 (27, 'test1@gmail.com', '$2b$10$4Dtl9kehB7KxERzp617M5.KFfEaY0ZLEXZzPCcMd7T.FQdXbbqKyq', 1, 'Public', '2022-05-21 20:02:12', NULL, NULL),
 (28, 'test@mail.com', '$2b$10$O5ApPWT20xJ6HMCEMskQbuBiHhlhqOmk/rzmiZ5e1gDpK5E/R7ZpG', 0, 'Public', '2022-05-26 14:30:42', '2022-05-26 14:33:08', NULL),
-(33, 'wawaiguntang@gmail.com', '$2b$10$MBm5sD.6.z36OSDzp87NR.v9nQo6wiAm7NHF2laIDQwGnsvy/EShy', 1, 'Public', '2022-06-01 09:51:35', NULL, NULL);
+(33, 'wawaiguntang@gmail.com', '$2b$10$MBm5sD.6.z36OSDzp87NR.v9nQo6wiAm7NHF2laIDQwGnsvy/EShy', 1, 'Public', '2022-06-01 09:51:35', NULL, NULL),
+(34, 'wawaiguntang2@gmail.com', '$2b$10$dRG4dCc.V0T70WfzzAQCoO80537TkP/Ps1Q.oZeteWsa4NopRAOUa', 1, 'Public', '2022-06-04 07:09:07', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -92024,19 +92081,19 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT for table `masalah`
 --
 ALTER TABLE `masalah`
-  MODIFY `masalahCode` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `masalahCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `mesin`
 --
 ALTER TABLE `mesin`
-  MODIFY `mesinCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `mesinCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `mitra`
 --
 ALTER TABLE `mitra`
-  MODIFY `mitraCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `mitraCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `module`
@@ -92048,7 +92105,7 @@ ALTER TABLE `module`
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `permissionCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `permissionCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -92060,13 +92117,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `role_permission`
 --
 ALTER TABLE `role_permission`
-  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `ruCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ruCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `usaha`
@@ -92078,7 +92135,7 @@ ALTER TABLE `usaha`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `userCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `user_permission`

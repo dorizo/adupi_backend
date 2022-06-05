@@ -43,6 +43,15 @@ import {
   deleteMesin,
 } from "./mesin.js";
 
+import {
+  getAllMasalah,
+  getOneMasalah,
+  addMasalah,
+  editMasalah,
+  deleteMasalah,
+  updateStatusMasalah
+} from "./masalah.js";
+
 export const adupi = {
   master: master,
   mitra: {
@@ -84,6 +93,14 @@ export const adupi = {
     deleteFasilitator,
     getMitraNotYetVerifByFasilitator,
     verifMitraByFasilitator,
+  },
+  masalah: {
+    getAllMasalah,
+    getOneMasalah,
+    addMasalah,
+    editMasalah,
+    deleteMasalah,
+    updateStatusMasalah
   },
   validation: validation,
 };

@@ -12,6 +12,9 @@ import { editAnggotaValidation } from "./anggota/edit.js";
 import { addMesinValidation } from "./mesin/add.js";
 import { editMesinValidation } from "./mesin/edit.js";
 
+import { addMasalahValidation } from "./masalah/add.js";
+import { editMasalahValidation } from "./masalah/edit.js";
+
 
 import { activeAccountMitraValidation } from "./mitra/activeAccountMitra.js";
 
@@ -27,6 +30,10 @@ export const validation = {
   mesin: {
     addMesinValidation,
     editMesinValidation,
+  },
+  masalah: {
+    addMasalahValidation,
+    editMasalahValidation,
   },
   anggota: {
     addAnggotaValidation,

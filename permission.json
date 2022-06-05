@@ -63,7 +63,12 @@
       { "permission": "DMESIN", "description": "Menghapus mesin"},
       { "permission": "RMITRA", "description": "Lihat semua mitra yang sudah di verifikasi oleh fasilitator"},
       { "permission": "RDETAILMITRA", "description": "Lihat detail mitra yang sudah di verifikasi oleh fasilitator"},
-      { "permission": "ACTIVEACCOUNTMITRA", "description": "Aktifasi akun mitra"}
+      { "permission": "ACTIVEACCOUNTMITRA", "description": "Aktifasi akun mitra"},
+      { "permission": "RMASALAH", "description": "Lihat semua masalah" },
+      { "permission": "CMASALAH", "description": "menambah masalah"},
+      { "permission": "UMASALAH", "description": "Mengubah masalah"},
+      { "permission": "DMASALAH", "description": "Menghapus masalah"},
+      { "permission": "CHANGESTATUSMASALAH", "description": "Merubah status masalah"}
     ]
   }
 ]

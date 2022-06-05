@@ -1596,6 +1596,458 @@
 					]
 				},
 				{
+					"name": "mesin",
+					"item": [
+						{
+							"name": "lihat semua data mesin (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/mesin/all/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"mesin",
+										"all",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tambah data mesin (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"usahaCode\":4,\r\n    \"jenisMesin\":\"Mesin Press\",\r\n    \"statusKepemilikanMesin\": \"Milik Sendiri\",\r\n    \"kapasitas\": \"300\",\r\n    \"foto\": \"Image base 64\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/v1/mesin/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"mesin",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete data mesin (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/mesin/delete/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"mesin",
+										"delete",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "lihat satu data mesin (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/mesin/one/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"mesin",
+										"one",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ubah data mesin (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"usahaCode\":4,\r\n    \"jenisMesin\":\"Mesin Press\",\r\n    \"statusKepemilikanMesin\": \"Milik Sendiri\",\r\n    \"kapasitas\": \"300\",\r\n    \"foto\": \"Image base 64\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/anggota/edit/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"anggota",
+										"edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "masalah",
+					"item": [
+						{
+							"name": "lihat semua data masalah (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/masalah/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"masalah",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tambah data masalah (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"jenisMasalah\":\"Kerusakan Kendaraan\",\r\n    \"deskripsi\": \"Rusak as roda\",\r\n    \"foto\": \"Image base 64\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/v1/masalah/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"masalah",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete data masalah (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/masalah/delete/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"masalah",
+										"delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "lihat satu data masalah (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/masalah/one/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"masalah",
+										"one",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ubah data masalah (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"jenisMasalah\":\"Kerusakan Kendaraan\",\r\n    \"deskripsi\": \"Rusak as roda dan oli mesin habis\",\r\n    \"foto\": \"Image base 64\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3001/api/v1/masalah/edit/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"masalah",
+										"edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "merubah status masalah (mitra)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MzMsImlhdCI6MTY1NDQ0ODUzNywiZXhwIjoxNjU0NTM0OTM3fQ.jio-zv-8mikOPhpO9A_pAR1QZvupSsCAkvVc2_UXLSA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/api/v1/masalah/changeStatus/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"v1",
+										"masalah",
+										"changeStatus",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Registrasi",
 					"request": {
 						"method": "POST",
@@ -1931,6 +2383,84 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "lihat semua mitra yang belum diverif oleh fasilitator",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDI4ODg4OSwiZXhwIjoxNjU0Mzc1Mjg5fQ.NNzpmFgzf_OT87fJx98UxDEe9s6uYVwr30u1AzAahNs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/v1/fasilitator/allMitra/notYetVerifByFasilitator",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"allMitra",
+								"notYetVerifByFasilitator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verif mitra oleh fasilitator",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MjcsImlhdCI6MTY1NDI4ODg4OSwiZXhwIjoxNjU0Mzc1Mjg5fQ.NNzpmFgzf_OT87fJx98UxDEe9s6uYVwr30u1AzAahNs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/v1/fasilitator/verifMitra/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"verifMitra",
+								"4"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -2379,6 +2909,44 @@
 								"v1",
 								"fasilitator",
 								"getUserForAdd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lihat semua data fasilitator (super admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDk3NTI0LCJleHAiOjE2NTM1ODM5MjR9.ldaE4k7olW1wlnY0Qkz3k0GYkba5WJYtU2Jy3sYBt8c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/fasilitator/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"all"
 							]
 						}
 					},

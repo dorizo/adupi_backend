@@ -420,6 +420,52 @@ router.delete(
   adupi.mesin.deleteMesin
 );
 
+
+//masalah
+router.get(
+  "/api/v1/masalah/all",
+  verifyToken(["RMASALAH"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.masalah.getAllMasalah
+);
+
+router.get(
+  "/api/v1/masalah/one/:masalahCode",
+  verifyToken(["RMASALAH"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.masalah.getOneMasalah
+);
+
+router.post(
+  "/api/v1/masalah/add",
+  verifyToken(["CMASALAH"]),
+  adupi.validation.masalah.addMasalahValidation,
+  validate,
+  adupi.anggota.checkMitraOrNot,
+  adupi.masalah.addMasalah
+);
+
+router.put(
+  "/api/v1/masalah/edit/:masalahCode",
+  verifyToken(["UMASALAH"]),
+  adupi.validation.masalah.editMasalahValidation,
+  validate,
+  adupi.anggota.checkMitraOrNot,
+  adupi.masalah.editMasalah
+);
+router.delete(
+  "/api/v1/masalah/delete/:masalahCode",
+  verifyToken(["DMASALAH"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.masalah.deleteMasalah
+);
+router.get(
+  "/api/v1/masalah/changeStatus/:masalahCode",
+  verifyToken(["CHANGESTATUSMASALAH"]),
+  adupi.masalah.updateStatusMasalah
+);
+
+
 //super admin
 router.get(
   "/api/v1/su/allMitra/:verified?",
