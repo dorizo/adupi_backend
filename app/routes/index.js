@@ -6,9 +6,10 @@ import { wilayah } from "../controllers/wilayah/index.js";
 import { adupi } from "../controllers/adupi/index.js";
 import { account } from "../controllers/account/index.js";
 import { verifyToken } from "../middleware/verifyToken.js";
-import pkg from 'node-geocoder';
+import pkg from "node-geocoder";
 const { NodeGeocoder } = pkg;
 
+import request from "request";
 
 const router = express.Router();
 
@@ -328,6 +329,34 @@ router.get(
   adupi.mitra.getDetailMitraByFasilitator
 );
 
+router.get(
+  "/api/v1/koordinat/:address",
+  // verifyToken(["KOORDINAT"]),
+  async (req, res) => {
+    var API_KEY = "AIzaSyDttiQFKmTxsGE1Nb5tW6cq2c-rwVELAas";
+    var BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+
+    var address = req.params.address;
+
+    var url = BASE_URL + address + "&key=" + API_KEY;
+
+    request(url, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        return res.status(200).json({
+          status: 200,
+          message: "",
+          data: JSON.parse(body)
+        });
+      } else {
+        return res.status(400).json({
+          status: 400,
+          message: "Gagal menemukan koordinat",
+        });
+      }
+    });
+  }
+);
+
 router.post(
   "/api/v1/fasilitator/addMitra",
   verifyToken(["CMITRABYFASILITATOR"]),
@@ -420,7 +449,6 @@ router.delete(
   adupi.mesin.deleteMesin
 );
 
-
 //masalah
 router.get(
   "/api/v1/masalah/all",
@@ -465,7 +493,6 @@ router.get(
   adupi.masalah.updateStatusMasalah
 );
 
-
 //super admin
 router.get(
   "/api/v1/su/allMitra/:verified?",
@@ -489,18 +516,18 @@ router.post(
 
 router.get("/", async () => {
   const options = {
-    provider: 'google',
-  
+    provider: "google",
+
     // Optional depending on the providers
     fetch: customFetchImplementation,
-    apiKey: 'AIzaSyDttiQFKmTxsGE1Nb5tW6cq2c-rwVELAas', // for Mapquest, OpenCage, Google Premier
-    formatter: null // 'gpx', 'string', ...
+    apiKey: "AIzaSyDttiQFKmTxsGE1Nb5tW6cq2c-rwVELAas", // for Mapquest, OpenCage, Google Premier
+    formatter: null, // 'gpx', 'string', ...
   };
-  
+
   const geocoder = NodeGeocoder(options);
-  
+
   // Using callback
-  const res = await geocoder.geocode('29 champs elysée paris');
+  const res = await geocoder.geocode("29 champs elysée paris");
 });
 
 export default router;

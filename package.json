@@ -22,6 +22,7 @@
     "mysql2": "^2.3.3",
     "node-geocoder": "^4.0.0",
     "nodemon": "^2.0.16",
+    "request": "^2.88.2",
     "sequelize": "^6.19.0"
   }
 }
