@@ -11,7 +11,7 @@ import {
   deleteMitraByFasilitator,
   getAllMitraVerified,
   getDetailMitraVerified,
-  activeAccountMitra
+  activeAccountMitra,
 } from "./mitra.js";
 import { validation } from "./validation/index.js";
 import {
@@ -49,8 +49,10 @@ import {
   addMasalah,
   editMasalah,
   deleteMasalah,
-  updateStatusMasalah
+  updateStatusMasalah,
 } from "./masalah.js";
+
+import { addBeliSampah } from "./beliSampah.js";
 
 export const adupi = {
   master: master,
@@ -66,7 +68,7 @@ export const adupi = {
     deleteMitraByFasilitator,
     getAllMitraVerified,
     getDetailMitraVerified,
-    activeAccountMitra
+    activeAccountMitra,
   },
   anggota: {
     checkMitraOrNot,
@@ -82,6 +84,9 @@ export const adupi = {
     addMesin,
     editMesin,
     deleteMesin,
+  },
+  beliSampah: {
+    addBeliSampah,
   },
   fasilitator: {
     getAllFasilitator,
@@ -100,7 +105,7 @@ export const adupi = {
     addMasalah,
     editMasalah,
     deleteMasalah,
-    updateStatusMasalah
+    updateStatusMasalah,
   },
   validation: validation,
 };

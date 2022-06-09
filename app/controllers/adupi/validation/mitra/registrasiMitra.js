@@ -126,9 +126,9 @@ export const registrasiMitraValidation = [
     .escape(),
   check(
     "statusKepemilikanGudang",
-    "Status kepemilikan gudang harus berisi 'Milik Sendiri' atau 'Milik Bersama'"
+    "Status kepemilikan gudang harus berisi 'Milik Pribadi', 'Milik Negara', 'Sewa' atau 'Hak Guna Pakai'"
   )
-    .isIn(["Milik Sendiri", "Milik Bersama"])
+    .isIn(["Milik Pribadi", "Milik Negara", "Sewa", "Hak Guna Pakai"])
     .trim()
     .escape(),
 
@@ -192,9 +192,9 @@ export const registrasiMitraValidation = [
     .escape(),
   check(
     "mesin.*.statusKepemilikanMesin",
-    "Status kepemilikan mesin harus berisi 'Milik Sendiri' atau 'Bantuan GESN'"
+    "Status kepemilikan mesin harus berisi 'Milik Sendiri', 'Sewa' atau 'Hak Pakai'"
   )
-    .isIn(["Milik Sendiri", "Bantuan GESN"])
+    .isIn(["Milik Sendiri", "Sewa", "Hak Pakai"])
     .trim()
     .escape(),
   check("mesin.*.kapasitas", "Kapasitas tidak boleh kosong")
@@ -206,7 +206,6 @@ export const registrasiMitraValidation = [
     .trim()
     .escape(),
   check("mesin.*.foto", "Foto mesin tidak boleh kosong").notEmpty(),
-
 ];
 
 export const checkEmailValidation = [

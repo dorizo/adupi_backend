@@ -5,6 +5,8 @@ import { usaha } from "./usaha.js";
 import { mesin } from "./mesin.js";
 import { anggota } from "./anggota.js";
 import { masalah } from "./masalah.js";
+import { beliSampah } from "./beliSampah.js";
+import { detailBeliSampah } from "./detailBeliSampah.js";
 
 mitra.hasMany(usaha ,{
   foreignKey: "mitraCode",
@@ -43,6 +45,20 @@ masalah.belongsTo(mitra, {
   foreignKey: "mitraCode",
 });
 
+beliSampah.hasMany(detailBeliSampah ,{
+  foreignKey: "bsCode",
+});
+detailBeliSampah.belongsTo(beliSampah, {
+  foreignKey: "bsCode",
+});
+
+(master.jenisSampah).hasMany(detailBeliSampah ,{
+  foreignKey: "jsCode",
+});
+detailBeliSampah.belongsTo((master.jenisSampah), {
+  foreignKey: "jsCode",
+});
+
 
 
 export const adupi = {
@@ -53,4 +69,6 @@ export const adupi = {
   mesin: mesin,
   fasilitator: fasilitator,
   masalah: masalah,
+  beliSampah: beliSampah,
+  detailBeliSampah: detailBeliSampah
 };

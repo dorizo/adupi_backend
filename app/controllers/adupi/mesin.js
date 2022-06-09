@@ -50,28 +50,42 @@ export const getOneMesin = async (req, res, next) => {
 };
 
 export const addMesin = async (req, res, next) => {
-  await model.adupi.mesin
-    .create({
-      usahaCode: req.body.usahaCode,
-      jenisMesin: req.body.jenisMesin,
-      statusKepemilikanMesin: req.body.statusKepemilikanMesin,
-      kapasitas: req.body.kapasitas,
-      foto: req.body.foto,
-      mitraCode: req.mitraCode,
-    })
-    .then(function (mesin) {
-      if (mesin) {
-        return res.status(200).json({
-          status: 200,
-          message: "Berhasil menambah data mesin",
-        });
-      } else {
-        return res.status(400).json({
-          status: 400,
-          message: "Gagal menambah data mesin",
-        });
-      }
+  let uploadFoto = uploads3({
+    imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
+    typeImage: req.body.foto.split(";")[0].split(":")[1],
+    extImage: req.body.foto.split(";")[0].split("/")[1],
+    nameImage: (Math.random() + 1).toString(36).substring(7) + "_mesin",
+  });
+
+  if (uploadFoto.status == false) {
+    return res.status(400).json({
+      status: 400,
+      message: "Foto gagal di upload",
     });
+  } else {
+    await model.adupi.mesin
+      .create({
+        usahaCode: req.body.usahaCode,
+        jenisMesin: req.body.jenisMesin,
+        statusKepemilikanMesin: req.body.statusKepemilikanMesin,
+        kapasitas: req.body.kapasitas,
+        foto: uploadFoto.url,
+        mitraCode: req.mitraCode,
+      })
+      .then(function (mesin) {
+        if (mesin) {
+          return res.status(200).json({
+            status: 200,
+            message: "Berhasil menambah data mesin",
+          });
+        } else {
+          return res.status(400).json({
+            status: 400,
+            message: "Gagal menambah data mesin",
+          });
+        }
+      });
+  }
 };
 
 export const editMesin = async (req, res, next) => {
@@ -90,13 +104,31 @@ export const editMesin = async (req, res, next) => {
         message: "Mesin tidak ditemukan",
       });
     }
+    let urlFoto = mesin.foto;
+    if(mesin.foto != req.body.foto){
+      let uploadFoto = uploads3({
+        imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
+        typeImage: req.body.foto.split(";")[0].split(":")[1],
+        extImage: req.body.foto.split(";")[0].split("/")[1],
+        nameImage: (Math.random() + 1).toString(36).substring(7) + "_mesin",
+      });
+    
+      if (uploadFoto.status == false) {
+        return res.status(400).json({
+          status: 400,
+          message: "Foto gagal di upload",
+        });
+      } else {
+        urlFoto = uploadFoto.url;
+      }
+    }
     await model.adupi.mesin
       .update(
         {
           jenisMesin: req.body.jenisMesin,
           statusKepemilikanMesin: req.body.statusKepemilikanMesin,
           kapasitas: req.body.kapasitas,
-          foto: req.body.foto,
+          foto: urlFoto,
           updateAt: new Date(),
         },
         {

@@ -1,5 +1,5 @@
 import express from "express";
-import { validate } from "../utils/getFullWilyah.js";
+import { validate } from "../utils/validate.js"
 import { authentication } from "../controllers/authentication/index.js";
 import { managementUser } from "../controllers/managementUser/index.js";
 import { wilayah } from "../controllers/wilayah/index.js";
@@ -371,6 +371,16 @@ router.delete(
   adupi.mitra.deleteMitraByFasilitator
 );
 
+// beli sampah
+router.post(
+  "/api/v1/beli/sampah",
+  verifyToken(["BSAMPAH"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.validation.beliSampah.addBeliSampahValidation,
+  validate,
+  adupi.beliSampah.addBeliSampah
+);
+
 // anggota
 router.get(
   "/api/v1/anggota/all",
@@ -389,18 +399,18 @@ router.get(
 router.post(
   "/api/v1/anggota/add",
   verifyToken(["CANGGOTA"]),
+  adupi.anggota.checkMitraOrNot,
   adupi.validation.anggota.addAnggotaValidation,
   validate,
-  adupi.anggota.checkMitraOrNot,
   adupi.anggota.addAnggota
 );
 
 router.put(
   "/api/v1/anggota/edit/:anggotaCode",
   verifyToken(["UANGGOTA"]),
+  adupi.anggota.checkMitraOrNot,
   adupi.validation.anggota.editAnggotaValidation,
   validate,
-  adupi.anggota.checkMitraOrNot,
   adupi.anggota.editAnggota
 );
 router.delete(
@@ -428,18 +438,18 @@ router.get(
 router.post(
   "/api/v1/mesin/add",
   verifyToken(["CMESIN"]),
+  adupi.anggota.checkMitraOrNot,
   adupi.validation.mesin.addMesinValidation,
   validate,
-  adupi.anggota.checkMitraOrNot,
   adupi.mesin.addMesin
 );
 
 router.put(
   "/api/v1/mesin/edit/:mesinCode",
   verifyToken(["UMESIN"]),
+  adupi.anggota.checkMitraOrNot,
   adupi.validation.mesin.editMesinValidation,
   validate,
-  adupi.anggota.checkMitraOrNot,
   adupi.mesin.editMesin
 );
 router.delete(
@@ -467,18 +477,18 @@ router.get(
 router.post(
   "/api/v1/masalah/add",
   verifyToken(["CMASALAH"]),
+  adupi.anggota.checkMitraOrNot,
   adupi.validation.masalah.addMasalahValidation,
   validate,
-  adupi.anggota.checkMitraOrNot,
   adupi.masalah.addMasalah
 );
 
 router.put(
   "/api/v1/masalah/edit/:masalahCode",
   verifyToken(["UMASALAH"]),
+  adupi.anggota.checkMitraOrNot,
   adupi.validation.masalah.editMasalahValidation,
   validate,
-  adupi.anggota.checkMitraOrNot,
   adupi.masalah.editMasalah
 );
 router.delete(

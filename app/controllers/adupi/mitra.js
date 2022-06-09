@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { QueryTypes } from "sequelize";
 import { Sequelize } from "sequelize";
 const op = Sequelize.Op;
+import { uploads3 } from "../../utils/aws_bucket.js";
 
 export const registerMitra = async (req, res, next) => {
   let transaction;
@@ -20,11 +21,31 @@ export const registerMitra = async (req, res, next) => {
       { transaction }
     );
 
+    const uploadKTP = uploads3({
+      imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
+      typeImage: req.body.ktp.split(";")[0].split(":")[1],
+      extImage: req.body.ktp.split(";")[0].split("/")[1],
+      nameImage: req.body.nik + "_ktp",
+    });
+
+    let urlKTP;
+    if (uploadKTP.status == false) {
+      if (transaction) {
+        await transaction.rollback();
+        return res.status(400).json({
+          status: 400,
+          message: "Gagal melakukan registrasi, foto KTP gagal di upload",
+        });
+      }
+    } else {
+      urlKTP = uploadKTP.url;
+    }
+
     const mitra = await model.adupi.mitra.create(
       {
         nama: req.body.nama,
         nik: req.body.nik,
-        ktp: req.body.ktp,
+        ktp: urlKTP,
         noHp: req.body.noHp,
         jenisKelamin: req.body.jenisKelamin,
         wilayahCode: req.body.wilayahCode,
@@ -37,11 +58,31 @@ export const registerMitra = async (req, res, next) => {
       { transaction }
     );
 
+    const uploadFoto = uploads3({
+      imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
+      typeImage: req.body.foto.split(";")[0].split(":")[1],
+      extImage: req.body.foto.split(";")[0].split("/")[1],
+      nameImage: req.body.nik + "_gudang",
+    });
+
+    let urlFoto;
+    if (uploadFoto.status == false) {
+      if (transaction) {
+        await transaction.rollback();
+        return res.status(400).json({
+          status: 400,
+          message: "Gagal melakukan registrasi, Foto gudang gagal di upload",
+        });
+      }
+    } else {
+      urlFoto = uploadFoto.url;
+    }
+
     const usaha = await model.adupi.usaha.create(
       {
         mitraCode: mitra.mitraCode,
         namaUsaha: req.body.namaUsaha,
-        foto: req.body.foto,
+        foto: urlFoto,
         noSuratIzinUsaha: req.body.noSuratIzinUsaha,
         luasGudang: req.body.luasGudang,
         lamaOperasional: req.body.lamaOperasional,
@@ -58,16 +99,33 @@ export const registerMitra = async (req, res, next) => {
 
     const mesinData = req.body.mesin;
     let returnToInsert = [];
-    mesinData.forEach((item) => {
-      let tempMesin = {
-        mitraCode: mitra.mitraCode,
-        usahaCode: usaha.usahaCode,
-        jenisMesin: item.jenisMesin,
-        statusKepemilikanMesin: item.statusKepemilikanMesin,
-        kapasitas: item.kapasitas,
-        foto: item.foto,
-      };
-      returnToInsert.push(tempMesin);
+    await mesinData.forEach((item) => {
+      let uploadFotoMesin = uploads3({
+        imageBase64: item.foto.replace(/^data:image\/\w+;base64,/, ""),
+        typeImage: item.foto.split(";")[0].split(":")[1],
+        extImage: item.foto.split(";")[0].split("/")[1],
+        nameImage: "foto_" + mitra.mitraCode + "_" + usaha.usahaCode + "_mesin",
+      });
+
+      if (uploadFotoMesin.status == false) {
+        if (transaction) {
+          transaction.rollback();
+          return res.status(400).json({
+            status: 400,
+            message: "Gagal melakukan registrasi, Foto mesin gagal di upload",
+          });
+        }
+      } else {
+        let tempMesin = {
+          mitraCode: mitra.mitraCode,
+          usahaCode: usaha.usahaCode,
+          jenisMesin: item.jenisMesin,
+          statusKepemilikanMesin: item.statusKepemilikanMesin,
+          kapasitas: item.kapasitas,
+          foto: uploadFotoMesin.url,
+        };
+        returnToInsert.push(tempMesin);
+      }
     });
     const mesin = await model.adupi.mesin.bulkCreate(returnToInsert, {
       transaction,

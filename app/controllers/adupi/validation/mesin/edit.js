@@ -33,9 +33,9 @@ export const editMesinValidation = [
     .escape(),
   check(
     "statusKepemilikanMesin",
-    "Status kepemilikan mesin harus berisi 'Milik Sendiri' atau 'Bantuan GESN'"
+    "Status kepemilikan mesin harus berisi 'Milik Sendiri', 'Sewa' atau 'Hak Pakai'"
   )
-    .isIn(["Milik Sendiri", "Bantuan GESN"])
+    .isIn(["Milik Sendiri", "Sewa", "Hak Pakai"])
     .trim()
     .escape(),
   check("kapasitas", "Kapasitas tidak boleh kosong").notEmpty().trim().escape(),

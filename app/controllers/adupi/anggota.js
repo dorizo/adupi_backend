@@ -1,4 +1,5 @@
 import { model } from "../../models/index.js";
+import { uploads3 } from "../../utils/aws_bucket.js";
 
 export const checkMitraOrNot = async (req, res, next) => {
   try {
@@ -74,30 +75,44 @@ export const getOneAnggota = async (req, res, next) => {
 };
 
 export const addAnggota = async (req, res, next) => {
-  await model.adupi.anggota
-    .create({
-      nama: req.body.nama,
-      nik: req.body.nik,
-      ktp: req.body.ktp,
-      noHp: req.body.noHp,
-      jenisKelamin: req.body.jenisKelamin,
-      wilayahCode: req.body.wilayahCode,
-      alamat: req.body.alamat,
-      mitraCode: req.mitraCode,
-    })
-    .then(function (anggota) {
-      if (anggota) {
-        return res.status(200).json({
-          status: 200,
-          message: "Berhasil menambah data anggota",
-        });
-      } else {
-        return res.status(400).json({
-          status: 400,
-          message: "Gagal menambah data anggota",
-        });
-      }
+  let uploadFoto = uploads3({
+    imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
+    typeImage: req.body.ktp.split(";")[0].split(":")[1],
+    extImage: req.body.ktp.split(";")[0].split("/")[1],
+    nameImage: req.body.nik + "_ktp_anggota",
+  });
+
+  if (uploadFoto.status == false) {
+    return res.status(400).json({
+      status: 400,
+      message: "Foto gagal di upload",
     });
+  } else {
+    await model.adupi.anggota
+      .create({
+        nama: req.body.nama,
+        nik: req.body.nik,
+        ktp: uploadFoto.url,
+        noHp: req.body.noHp,
+        jenisKelamin: req.body.jenisKelamin,
+        wilayahCode: req.body.wilayahCode,
+        alamat: req.body.alamat,
+        mitraCode: req.mitraCode,
+      })
+      .then(function (anggota) {
+        if (anggota) {
+          return res.status(200).json({
+            status: 200,
+            message: "Berhasil menambah data anggota",
+          });
+        } else {
+          return res.status(400).json({
+            status: 400,
+            message: "Gagal menambah data anggota",
+          });
+        }
+      });
+  }
 };
 
 export const editAnggota = async (req, res, next) => {
@@ -115,12 +130,30 @@ export const editAnggota = async (req, res, next) => {
         message: "Anggota tidak ditemukan",
       });
     }
+    let urlKTP = anggota.ktp;
+    if(anggota.ktp != req.body.ktp){
+      let uploadFoto = uploads3({
+        imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
+        typeImage: req.body.ktp.split(";")[0].split(":")[1],
+        extImage: req.body.ktp.split(";")[0].split("/")[1],
+        nameImage: req.body.nik + "_ktp_anggota",
+      });
+    
+      if (uploadFoto.status == false) {
+        return res.status(400).json({
+          status: 400,
+          message: "Foto gagal di upload",
+        });
+      } else {
+        urlKTP = uploadFoto.url;
+      }
+    }
     await model.adupi.anggota
       .update(
         {
           nama: req.body.nama,
           nik: req.body.nik,
-          ktp: req.body.ktp,
+          ktp: urlKTP,
           noHp: req.body.noHp,
           jenisKelamin: req.body.jenisKelamin,
           wilayahCode: req.body.wilayahCode,
