@@ -50,6 +50,19 @@ export const getBeliSampah = (req, res) => {
   model.adupi.beliSampah
     .findAndCountAll({
       where: condition,
+      include: [
+        {
+          model: model.adupi.detailBeliSampah,
+          where: {
+            deleteAt: null,
+          },
+          include: [
+            {
+              model: model.adupi.master.jenisSampah,
+            },
+          ],
+        },
+      ],
       limit,
       offset,
     })
