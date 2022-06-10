@@ -69,6 +69,7 @@
       { "permission": "UMASALAH", "description": "Mengubah masalah"},
       { "permission": "DMASALAH", "description": "Menghapus masalah"},
       { "permission": "CHANGESTATUSMASALAH", "description": "Merubah status masalah"},
+      { "permission": "RBELISAMPAH", "description": "Lihat riwayat beli sampah"},
       { "permission": "BSAMPAH", "description": "Beli sampah"}
     ]
   }

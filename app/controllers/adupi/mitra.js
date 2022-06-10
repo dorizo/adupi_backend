@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { QueryTypes } from "sequelize";
 import { Sequelize } from "sequelize";
 const op = Sequelize.Op;
-import { uploads3 } from "../../utils/aws_bucket.js";
+import { saveImage } from "../../utils/saveImage.js";
 
 export const registerMitra = async (req, res, next) => {
   let transaction;
@@ -21,11 +21,11 @@ export const registerMitra = async (req, res, next) => {
       { transaction }
     );
 
-    const uploadKTP = uploads3({
+    const uploadKTP = await saveImage({
       imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
-      typeImage: req.body.ktp.split(";")[0].split(":")[1],
       extImage: req.body.ktp.split(";")[0].split("/")[1],
       nameImage: req.body.nik + "_ktp",
+      dir:"mitra"
     });
 
     let urlKTP;
@@ -58,11 +58,11 @@ export const registerMitra = async (req, res, next) => {
       { transaction }
     );
 
-    const uploadFoto = uploads3({
+    const uploadFoto = await saveImage({
       imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
-      typeImage: req.body.foto.split(";")[0].split(":")[1],
       extImage: req.body.foto.split(";")[0].split("/")[1],
       nameImage: req.body.nik + "_gudang",
+      dir:"gudang"
     });
 
     let urlFoto;
@@ -99,12 +99,12 @@ export const registerMitra = async (req, res, next) => {
 
     const mesinData = req.body.mesin;
     let returnToInsert = [];
-    await mesinData.forEach((item) => {
-      let uploadFotoMesin = uploads3({
+    await mesinData.forEach(async (item) => {
+      let uploadFotoMesin = await saveImage({
         imageBase64: item.foto.replace(/^data:image\/\w+;base64,/, ""),
-        typeImage: item.foto.split(";")[0].split(":")[1],
         extImage: item.foto.split(";")[0].split("/")[1],
         nameImage: "foto_" + mitra.mitraCode + "_" + usaha.usahaCode + "_mesin",
+        dir:"mesin"
       });
 
       if (uploadFotoMesin.status == false) {

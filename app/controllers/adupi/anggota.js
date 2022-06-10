@@ -1,5 +1,5 @@
 import { model } from "../../models/index.js";
-import { uploads3 } from "../../utils/aws_bucket.js";
+import { saveImage } from "../../utils/saveImage.js";
 
 export const checkMitraOrNot = async (req, res, next) => {
   try {
@@ -75,11 +75,11 @@ export const getOneAnggota = async (req, res, next) => {
 };
 
 export const addAnggota = async (req, res, next) => {
-  let uploadFoto = uploads3({
+  let uploadFoto = await saveImage({
     imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
-    typeImage: req.body.ktp.split(";")[0].split(":")[1],
     extImage: req.body.ktp.split(";")[0].split("/")[1],
     nameImage: req.body.nik + "_ktp_anggota",
+    dir:"anggota"
   });
 
   if (uploadFoto.status == false) {
@@ -132,11 +132,11 @@ export const editAnggota = async (req, res, next) => {
     }
     let urlKTP = anggota.ktp;
     if(anggota.ktp != req.body.ktp){
-      let uploadFoto = uploads3({
+      let uploadFoto = await saveImage({
         imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
-        typeImage: req.body.ktp.split(";")[0].split(":")[1],
         extImage: req.body.ktp.split(";")[0].split("/")[1],
         nameImage: req.body.nik + "_ktp_anggota",
+        dir:"anggota"
       });
     
       if (uploadFoto.status == false) {

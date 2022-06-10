@@ -52,7 +52,7 @@ import {
   updateStatusMasalah,
 } from "./masalah.js";
 
-import { addBeliSampah } from "./beliSampah.js";
+import { addBeliSampah,getBeliSampah,checkMitraOrNot as checkMitraOrNotBeliSampah } from "./beliSampah.js";
 
 export const adupi = {
   master: master,
@@ -86,6 +86,8 @@ export const adupi = {
     deleteMesin,
   },
   beliSampah: {
+    checkMitraOrNotBeliSampah,
+    getBeliSampah,
     addBeliSampah,
   },
   fasilitator: {

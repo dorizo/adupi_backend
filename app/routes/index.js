@@ -1,5 +1,5 @@
 import express from "express";
-import { validate } from "../utils/validate.js"
+import { validate } from "../utils/validate.js";
 import { authentication } from "../controllers/authentication/index.js";
 import { managementUser } from "../controllers/managementUser/index.js";
 import { wilayah } from "../controllers/wilayah/index.js";
@@ -195,12 +195,12 @@ router.get("/api/v1/wilayah/desa/all/:wilayahCode", wilayah.desa.getAllDesa);
 // master
 router.get(
   "/api/v1/master/jenisSampah/all",
-  verifyToken(["RJENISSAMPAH"]),
+  verifyToken(["RJENISSAMPAH","BSAMPAH"]),
   adupi.master.jenisSampah.getAllJenisSampah
 );
 router.get(
   "/api/v1/master/jenisSampah/one/:jsCode",
-  verifyToken(["RJENISSAMPAH"]),
+  verifyToken(["RJENISSAMPAH","BSAMPAH"]),
   adupi.master.jenisSampah.getOneJenisSampah
 );
 router.post(
@@ -345,7 +345,7 @@ router.get(
         return res.status(200).json({
           status: 200,
           message: "",
-          data: JSON.parse(body)
+          data: JSON.parse(body),
         });
       } else {
         return res.status(400).json({
@@ -372,6 +372,13 @@ router.delete(
 );
 
 // beli sampah
+router.get(
+  "/api/v1/beli/sampah/:mitraCode?",
+  verifyToken(["RBELISAMPAH"]),
+  adupi.beliSampah.checkMitraOrNotBeliSampah,
+  adupi.beliSampah.getBeliSampah
+);
+
 router.post(
   "/api/v1/beli/sampah",
   verifyToken(["BSAMPAH"]),
@@ -461,16 +468,15 @@ router.delete(
 
 //masalah
 router.get(
-  "/api/v1/masalah/all",
+  "/api/v1/masalah/all/:mitraCode?",
   verifyToken(["RMASALAH"]),
-  adupi.anggota.checkMitraOrNot,
+  adupi.beliSampah.checkMitraOrNotBeliSampah,
   adupi.masalah.getAllMasalah
 );
 
 router.get(
   "/api/v1/masalah/one/:masalahCode",
   verifyToken(["RMASALAH"]),
-  adupi.anggota.checkMitraOrNot,
   adupi.masalah.getOneMasalah
 );
 
@@ -525,19 +531,24 @@ router.post(
 );
 
 router.get("/", async () => {
-  const options = {
-    provider: "google",
+  console.log("asd");
+});
+import fs from "fs";
 
-    // Optional depending on the providers
-    fetch: customFetchImplementation,
-    apiKey: "AIzaSyDttiQFKmTxsGE1Nb5tW6cq2c-rwVELAas", // for Mapquest, OpenCage, Google Premier
-    formatter: null, // 'gpx', 'string', ...
-  };
-
-  const geocoder = NodeGeocoder(options);
-
-  // Using callback
-  const res = await geocoder.geocode("29 champs elysée paris");
+router.get("/api/v1/assets/:dir/:file", (req, res) => {
+  fs.readFile(
+    "./assets/" + req.params.dir + "/" + req.params.file,
+    function (err, data) {
+      if (err) {
+        return res.status(404).json({
+          status: 404,
+          message: "Gambar tidak ditemukan",
+        });
+      }
+      res.writeHead(200, { "Content-Type": "image/jpeg" });
+      res.end(data);
+    }
+  );
 });
 
 export default router;

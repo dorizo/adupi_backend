@@ -1,4 +1,5 @@
 import { model } from "../../models/index.js";
+import { saveImage } from "../../utils/saveImage.js";
 
 export const getAllMesin = async (req, res, next) => {
   try {
@@ -50,11 +51,11 @@ export const getOneMesin = async (req, res, next) => {
 };
 
 export const addMesin = async (req, res, next) => {
-  let uploadFoto = uploads3({
+  let uploadFoto = await saveImage({
     imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
-    typeImage: req.body.foto.split(";")[0].split(":")[1],
     extImage: req.body.foto.split(";")[0].split("/")[1],
     nameImage: (Math.random() + 1).toString(36).substring(7) + "_mesin",
+    dir: "mesin",
   });
 
   if (uploadFoto.status == false) {
@@ -105,14 +106,14 @@ export const editMesin = async (req, res, next) => {
       });
     }
     let urlFoto = mesin.foto;
-    if(mesin.foto != req.body.foto){
-      let uploadFoto = uploads3({
+    if (mesin.foto != req.body.foto) {
+      let uploadFoto = await saveImage({
         imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
-        typeImage: req.body.foto.split(";")[0].split(":")[1],
         extImage: req.body.foto.split(";")[0].split("/")[1],
         nameImage: (Math.random() + 1).toString(36).substring(7) + "_mesin",
+        dir: "mesin",
       });
-    
+
       if (uploadFoto.status == false) {
         return res.status(400).json({
           status: 400,
