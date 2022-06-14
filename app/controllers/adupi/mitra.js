@@ -521,12 +521,30 @@ export const addMitraByFasilitator = async (req, res, next) => {
       },
       { transaction }
     );
+    const uploadKTP = await saveImage({
+      imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
+      extImage: req.body.ktp.split(";")[0].split("/")[1],
+      nameImage: req.body.nik + "_ktp",
+      dir:"mitra"
+    });
 
+    let urlKTP;
+    if (uploadKTP.status == false) {
+      if (transaction) {
+        await transaction.rollback();
+        return res.status(400).json({
+          status: 400,
+          message: "Gagal melakukan registrasi, foto KTP gagal di upload",
+        });
+      }
+    } else {
+      urlKTP = uploadKTP.url;
+    }
     const mitra = await model.adupi.mitra.create(
       {
         nama: req.body.nama,
         nik: req.body.nik,
-        ktp: req.body.ktp,
+        ktp: urlKTP,
         noHp: req.body.noHp,
         jenisKelamin: req.body.jenisKelamin,
         wilayahCode: req.body.wilayahCode,
@@ -536,6 +554,44 @@ export const addMitraByFasilitator = async (req, res, next) => {
         alamat: req.body.alamat,
         userCode: user.userCode,
         fasilitatorCode: fasilitator.fasilitatorCode,
+      },
+      { transaction }
+    );
+    const uploadFoto = await saveImage({
+      imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
+      extImage: req.body.foto.split(";")[0].split("/")[1],
+      nameImage: req.body.nik + "_gudang",
+      dir:"gudang"
+    });
+
+    let urlFoto;
+    if (uploadFoto.status == false) {
+      if (transaction) {
+        await transaction.rollback();
+        return res.status(400).json({
+          status: 400,
+          message: "Gagal menambah mitra, Foto gudang gagal di upload",
+        });
+      }
+    } else {
+      urlFoto = uploadFoto.url;
+    }
+
+    const usaha = await model.adupi.usaha.create(
+      {
+        mitraCode: mitra.mitraCode,
+        namaUsaha: req.body.namaUsaha,
+        foto: urlFoto,
+        noSuratIzinUsaha: req.body.noSuratIzinUsaha,
+        luasGudang: req.body.luasGudang,
+        lamaOperasional: req.body.lamaOperasional,
+        jumlahPekerja: req.body.jumlahPekerja,
+        luasGudang: req.body.luasGudang,
+        statusKepemilikanGudang: req.body.statusKepemilikanGudang,
+        wilayahCode: req.body.wilayahCodeUsaha,
+        lang: req.body.lang,
+        lat: req.body.lat,
+        alamat: req.body.alamatUsaha,
       },
       { transaction }
     );

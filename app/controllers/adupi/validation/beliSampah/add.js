@@ -21,7 +21,6 @@ export const addBeliSampahValidation = [
         }
       });
   }),
-  check("nota", "Nota tidak boleh kosong").notEmpty(),
   check("detail.*.sumber", "Sumber tidak boleh kosong")
     .notEmpty()
     .trim()

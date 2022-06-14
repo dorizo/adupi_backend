@@ -24,8 +24,8 @@ const getPagination = (page, size) => {
   return { limit, offset };
 };
 
-const getPagingData = (dataDB, page, limit) => {
-  const { count: totalItems, rows: data } = dataDB;
+const getPagingData = (data, page, limit) => {
+  const totalItems = data.length;
   const currentPage = page ? +page : 0;
   const totalPages = Math.ceil(totalItems / limit);
   return { totalItems, data, totalPages, currentPage };
@@ -48,7 +48,7 @@ export const getBeliSampah = (req, res) => {
   }
   const { limit, offset } = getPagination(page, size);
   model.adupi.beliSampah
-    .findAndCountAll({
+    .findAll({
       where: condition,
       include: [
         {
@@ -90,7 +90,6 @@ export const addBeliSampah = async (req, res, next) => {
       {
         anggotaCode: req.body.anggotaCode,
         mitraCode: req.mitraCode,
-        nota: req.body.nota,
       },
       { transaction }
     );

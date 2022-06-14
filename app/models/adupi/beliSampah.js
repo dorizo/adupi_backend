@@ -26,10 +26,6 @@ export const beliSampah = db.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    nota: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     createAt: {
       type: "DATETIME",
     },

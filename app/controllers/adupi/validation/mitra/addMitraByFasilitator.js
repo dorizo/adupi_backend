@@ -89,4 +89,83 @@ export const addMitraByFasilitatorValidation = [
       });
   }),
   check("password", "Password tidak boleh kosong").notEmpty().trim().escape(),
+
+  check("namaUsaha", "Nama usaha tidak boleh kosong")
+    .notEmpty()
+    .trim()
+    .escape(),
+  check(
+    "noSuratIzinUsaha",
+    "No surat izin usaha tidak boleh kosong"
+  ).notEmpty(),
+  check("noSuratIzinUsaha").custom((value) => {
+    return model.adupi.usaha
+      .findOne({ where: { noSuratIzinUsaha: value, deleteAt: null } })
+      .then((noSuratIzinUsaha) => {
+        if (noSuratIzinUsaha) {
+          return Promise.reject("No surat izin usaha sudah digunakan");
+        }
+      });
+  }),
+  check("luasGudang", "Luas gudang tidak boleh kosong")
+    .notEmpty()
+    .trim()
+    .escape(),
+  check("luasGudang", "Luas gudang harus berisi angka")
+    .isDecimal()
+    .trim()
+    .escape(),
+
+  check(
+    "statusKepemilikanGudang",
+    "Status kepemilikan gudang tidak boleh kosong"
+  )
+    .notEmpty()
+    .trim()
+    .escape(),
+  check(
+    "statusKepemilikanGudang",
+    "Status kepemilikan gudang harus berisi 'Milik Pribadi', 'Milik Negara', 'Sewa' atau 'Hak Guna Pakai'"
+  )
+    .isIn(["Milik Pribadi", "Milik Negara", "Sewa", "Hak Guna Pakai"])
+    .trim()
+    .escape(),
+
+  check("lamaOperasional", "Lama operasional tidak boleh kosong")
+    .notEmpty()
+    .trim()
+    .escape(),
+  check("lamaOperasional", "Lama operasional harus berisi angka")
+    .isDecimal()
+    .trim()
+    .escape(),
+
+  check("jumlahPekerja", "Jumlah pekerja tidak boleh kosong")
+    .notEmpty()
+    .trim()
+    .escape(),
+  check("jumlahPekerja", "Jumlah pekerja harus berisi angka")
+    .isDecimal()
+    .trim()
+    .escape(),
+  check("wilayahCodeUsaha", "Wilayah usaha tidak boleh kosong")
+    .notEmpty()
+    .trim()
+    .escape(),
+  check("wilayahCodeUsaha").custom(async (value) => {
+    const desa = await db.query(
+      "SELECT * FROM wilayah WHERE LEFT(wilayahCode,8)=? AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah",
+      {
+        replacements: [value],
+        type: QueryTypes.SELECT,
+      }
+    );
+    if (!desa) {
+      return Promise.reject("Wilayah tidak ditemukan");
+    }
+  }),
+  check("alamatUsaha", "Alamat usaha tidak boleh kosong").notEmpty(),
+  check("foto", "Foto gudang tidak boleh kosong").notEmpty(),
+  check("lang", "Posisi gudang tidak boleh kosong").notEmpty(),
+  check("lat", "Posisi gudang tidak boleh kosong").notEmpty(),
 ];

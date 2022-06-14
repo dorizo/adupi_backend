@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2022 at 05:06 PM
+-- Generation Time: Jun 14, 2022 at 03:21 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -36,6 +36,8 @@ CREATE TABLE `anggota` (
   `noHp` varchar(16) NOT NULL,
   `jenisKelamin` enum('L','P') NOT NULL,
   `wilayahCode` varchar(20) NOT NULL,
+  `long` varchar(50) DEFAULT NULL,
+  `lat` varchar(50) DEFAULT NULL,
   `alamat` longtext NOT NULL,
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
@@ -46,9 +48,9 @@ CREATE TABLE `anggota` (
 -- Dumping data for table `anggota`
 --
 
-INSERT INTO `anggota` (`anggotaCode`, `mitraCode`, `nama`, `nik`, `ktp`, `noHp`, `jenisKelamin`, `wilayahCode`, `alamat`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(1, 21, 'Bagas Ageng Sandoko', '1807122006990008', 'image base 64', '0895606226090', 'L', '11.05.07.2002', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', '2022-06-01 11:46:16', '2022-06-01 11:48:04', NULL),
-(2, 21, 'Bagas Ageng Sandoko', '1807122006990000', 'https://s3.ap-southeast-1.amazonaws.com/ekonomisirkular.org/1807122006990000_ktp_anggota.png', '0895606276099', 'L', '11.05.07.2002', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', '2022-06-09 10:06:30', '2022-06-09 10:09:25', NULL);
+INSERT INTO `anggota` (`anggotaCode`, `mitraCode`, `nama`, `nik`, `ktp`, `noHp`, `jenisKelamin`, `wilayahCode`, `long`, `lat`, `alamat`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(1, 21, 'Bagas Ageng Sandoko', '1807122006990008', 'image base 64', '0895606226090', 'L', '11.05.07.2002', '2.23234434', '3.2342342343', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', '2022-06-01 11:46:16', '2022-06-14 05:01:06', NULL),
+(2, 21, 'Bagas Ageng Sandoko', '1807122006990000', 'https://s3.ap-southeast-1.amazonaws.com/ekonomisirkular.org/1807122006990000_ktp_anggota.png', '0895606276099', 'L', '11.05.07.2002', '2.23234434', '3.2342342343', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', '2022-06-09 10:06:30', '2022-06-09 10:09:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -62,7 +64,6 @@ CREATE TABLE `beli_sampah` (
   `anggotaCode` int(11) NOT NULL,
   `totalBerat` varchar(20) DEFAULT '0',
   `totalHarga` varchar(20) DEFAULT '0',
-  `nota` varchar(255) NOT NULL,
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL
@@ -72,9 +73,9 @@ CREATE TABLE `beli_sampah` (
 -- Dumping data for table `beli_sampah`
 --
 
-INSERT INTO `beli_sampah` (`bsCode`, `mitraCode`, `anggotaCode`, `totalBerat`, `totalHarga`, `nota`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(4, 21, 1, '63', '630000', 'image base 64', '2022-06-09 04:52:59', '2022-06-09 04:52:59', NULL),
-(5, 21, 1, '63', '630000', '-', '2022-06-10 12:41:29', '2022-06-10 12:41:29', NULL);
+INSERT INTO `beli_sampah` (`bsCode`, `mitraCode`, `anggotaCode`, `totalBerat`, `totalHarga`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(4, 21, 1, '63', '630000', '2022-06-09 04:52:59', '2022-06-09 04:52:59', NULL),
+(5, 21, 1, '63', '630000', '2022-06-10 12:41:29', '2022-06-10 12:41:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -104,6 +105,32 @@ INSERT INTO `detail_beli_sampah` (`dbsCode`, `sumber`, `jsCode`, `berat`, `harga
 (4, 'Perumahan', 2, '31', '10000', '310000', 4, '2022-06-09 04:52:59', NULL, NULL),
 (5, 'Perkantoran', 2, '32', '10000', '320000', 5, '2022-06-10 12:41:29', NULL, NULL),
 (6, 'Perumahan', 2, '31', '10000', '310000', 5, '2022-06-10 12:41:29', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_jual_sampah`
+--
+
+CREATE TABLE `detail_jual_sampah` (
+  `djsCode` int(11) NOT NULL,
+  `jenisCode` int(11) NOT NULL,
+  `berat` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `jsCode` int(11) NOT NULL,
+  `createAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `updateAt` datetime DEFAULT NULL,
+  `deleteAt` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_jual_sampah`
+--
+
+INSERT INTO `detail_jual_sampah` (`djsCode`, `jenisCode`, `berat`, `harga`, `total`, `jsCode`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(1, 2, 32, 10000, 320000, 2, '2022-06-13 17:57:01', NULL, NULL),
+(2, 2, 31, 10000, 310000, 2, '2022-06-13 17:57:01', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -160,14 +187,45 @@ INSERT INTO `jenis_sampah` (`jsCode`, `jenis`, `createAt`, `updateAt`, `deleteAt
 CREATE TABLE `jual_sampah` (
   `jsCode` int(11) NOT NULL,
   `mitraCode` int(11) NOT NULL,
-  `berat` int(11) NOT NULL,
-  `harga` double NOT NULL,
+  `totalBerat` varchar(50) NOT NULL,
+  `totalHarga` varchar(50) NOT NULL,
   `pembeli` varchar(100) NOT NULL,
-  `jenisCode` int(11) NOT NULL,
+  `nota` varchar(255) NOT NULL,
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jual_sampah`
+--
+
+INSERT INTO `jual_sampah` (`jsCode`, `mitraCode`, `totalBerat`, `totalHarga`, `pembeli`, `nota`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(2, 21, '63', '630000', 'PT.KITA KITA AJA', '8m72v_penjualan.jpeg', '2022-06-13 17:57:01', '2022-06-13 17:57:01', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kunjungan`
+--
+
+CREATE TABLE `kunjungan` (
+  `kunjunganCode` int(11) NOT NULL,
+  `fasilitatorCode` int(11) NOT NULL,
+  `mitraCode` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `deskripsi` longtext NOT NULL,
+  `createAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `updateAt` datetime DEFAULT NULL,
+  `deleteAt` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kunjungan`
+--
+
+INSERT INTO `kunjungan` (`kunjunganCode`, `fasilitatorCode`, `mitraCode`, `judul`, `deskripsi`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(1, 2, 21, 'Pemantauan', 'Memantau kinerja dimitra A Edit', '2022-06-14 06:25:18', '2022-06-14 06:30:00', '2022-06-14 06:30:43');
 
 -- --------------------------------------------------------
 
@@ -279,7 +337,8 @@ INSERT INTO `mitra` (`mitraCode`, `nama`, `nik`, `ktp`, `noHp`, `jenisKelamin`, 
 (21, 'Diki Rahmad Sandi', '1807122006990005', 'image base 64', '0895606226096', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', 2, 33, '2022-06-01 09:51:35', '2022-06-01 09:53:36', NULL),
 (34, 'Diki Rahmad Sandi', '1807122006990002', 'https://s3.ap-southeast-1.amazonaws.com/ekonomisirkular.org/1807122006990002_ktp.png', '0895606226086', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', 2, 46, '2022-06-09 09:05:07', NULL, NULL),
 (35, 'Diki Rahmad Sandi', '1807122006990001', '1807122006990001_ktp.png', '0895606216086', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', NULL, 47, '2022-06-09 17:54:38', NULL, NULL),
-(36, 'Diki Rahmad Sandi', '1807122001990001', '1807122001990001_ktp.png', '0895606211086', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', NULL, 48, '2022-06-09 17:57:28', NULL, NULL);
+(36, 'Diki Rahmad Sandi', '1807122001990001', '1807122001990001_ktp.png', '0895606211086', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', NULL, 48, '2022-06-09 17:57:28', NULL, NULL),
+(37, 'Diki Rahmad Sandi', '1807122006990003', '1807122006990003_ktp.undefined', '0895606226077', 'L', '11.05.07.2002', 'PT', 'Pugung Raharjo', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', 2, 49, '2022-06-14 13:19:41', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -379,7 +438,15 @@ INSERT INTO `permission` (`permissionCode`, `permission`, `description`, `module
 (59, 'DMASALAH', 'Menghapus masalah', 4, '2022-06-06 00:40:29', NULL, NULL),
 (60, 'CHANGESTATUSMASALAH', 'Merubah status masalah', 4, '2022-06-06 01:16:03', NULL, NULL),
 (61, 'BSAMPAH', 'Beli sampah', 4, '2022-06-09 02:26:52', NULL, NULL),
-(62, 'RBELISAMPAH', 'Lihat riwayat beli sampah', 4, '2022-06-10 20:27:51', NULL, NULL);
+(62, 'RBELISAMPAH', 'Lihat riwayat beli sampah', 4, '2022-06-10 20:27:51', NULL, NULL),
+(63, 'RJUALSAMPAH', 'Lihat riwayat jual sampah', 4, '2022-06-14 00:50:00', NULL, NULL),
+(64, 'JSAMPAH', 'Jual sampah', 4, '2022-06-14 00:50:00', NULL, NULL),
+(65, 'ACTIVEANGGOTA', 'Aktivasi anggota', 4, '2022-06-14 12:00:01', NULL, NULL),
+(66, 'RKUNJUNGAN', 'Lihat semua kunjungan', 3, '2022-06-14 13:18:25', NULL, NULL),
+(67, 'CKUNJUNGAN', 'menambah kunjungan', 3, '2022-06-14 13:18:25', NULL, NULL),
+(68, 'UKUNJUNGAN', 'Mengubah kunjungan', 3, '2022-06-14 13:18:25', NULL, NULL),
+(69, 'DKUNJUNGAN', 'Menghapus kunjungan', 3, '2022-06-14 13:18:25', NULL, NULL),
+(70, 'RDASHBOARDMAP', 'Lihat map dan detail nya', 2, '2022-06-14 20:09:29', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -505,7 +572,21 @@ INSERT INTO `role_permission` (`rpCode`, `permissionCode`, `roleCode`, `createAt
 (101, 62, 1, '2022-06-10 20:27:51', NULL, NULL),
 (102, 62, 3, '2022-06-10 20:27:51', NULL, NULL),
 (103, 62, 2, '2022-06-10 20:27:51', NULL, NULL),
-(104, 56, 2, '2022-06-06 00:40:29', NULL, NULL);
+(104, 56, 2, '2022-06-06 00:40:29', NULL, NULL),
+(105, 63, 1, '2022-06-14 00:50:01', NULL, NULL),
+(106, 64, 1, '2022-06-14 00:50:01', NULL, NULL),
+(107, 63, 3, '2022-06-14 00:50:01', NULL, NULL),
+(108, 64, 3, '2022-06-14 00:50:01', NULL, NULL),
+(109, 65, 1, '2022-06-14 12:00:01', NULL, NULL),
+(110, 66, 1, '2022-06-14 13:18:26', NULL, NULL),
+(111, 67, 1, '2022-06-14 13:18:26', NULL, NULL),
+(112, 68, 1, '2022-06-14 13:18:26', NULL, NULL),
+(113, 69, 1, '2022-06-14 13:18:26', NULL, NULL),
+(114, 66, 2, '2022-06-14 13:18:26', NULL, NULL),
+(115, 67, 2, '2022-06-14 13:18:26', NULL, NULL),
+(116, 68, 2, '2022-06-14 13:18:26', NULL, NULL),
+(117, 69, 2, '2022-06-14 13:18:26', NULL, NULL),
+(118, 70, 1, '2022-06-14 20:09:29', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -567,7 +648,8 @@ INSERT INTO `usaha` (`usahaCode`, `mitraCode`, `namaUsaha`, `foto`, `noSuratIzin
 (4, 21, 'PT.Mencari Cinta Sejati', 'Image base 64', '23/01/ST/2022', 300, 'Milik Pribadi', 3, 30, '1105', 'Jl.Nin aja dulu', '2.443345542', '0.86543467', '2022-06-01 09:51:35', NULL, NULL),
 (16, 34, 'PT.Mencari Cinta Sejati', 'https://s3.ap-southeast-1.amazonaws.com/ekonomisirkular.org/1807122006990002_gudang.png', '22/01/ST/2022', 300, 'Milik Pribadi', 3, 30, '11.05.07.2002', 'Jl.Nin aja dulu', '2.443345542', '0.86543467', '2022-06-09 09:05:07', NULL, NULL),
 (17, 35, 'PT.Mencari Cinta Sejati', '1807122006990001_gudang.png', '22/01/ST/20221', 300, 'Milik Pribadi', 3, 30, '11.05.07.2002', 'Jl.Nin aja dulu', '2.443345542', '0.86543467', '2022-06-09 17:54:38', NULL, NULL),
-(18, 36, 'PT.Mencari Cinta Sejati', '1807122001990001_gudang.png', '22/01/ST/202211', 300, 'Milik Pribadi', 3, 30, '11.05.07.2002', 'Jl.Nin aja dulu', '2.443345542', '0.86543467', '2022-06-09 17:57:28', NULL, NULL);
+(18, 36, 'PT.Mencari Cinta Sejati', '1807122001990001_gudang.png', '22/01/ST/202211', 300, 'Milik Pribadi', 3, 30, '11.05.07.2002', 'Jl.Nin aja dulu', '2.443345542', '0.86543467', '2022-06-09 17:57:28', NULL, NULL),
+(19, 37, 'PT.Mulya Sari', '1807122006990003_gudang.undefined', '22/01/ST/2021', 300, 'Milik Pribadi', 3, 30, '11.05.07.2002', 'Jl.Nin aja dulu', '2.443345542', '0.86543467', '2022-06-14 13:19:41', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -598,7 +680,8 @@ INSERT INTO `user` (`userCode`, `email`, `password`, `isActive`, `status`, `crea
 (34, 'wawaiguntang2@gmail.com', '$2b$10$dRG4dCc.V0T70WfzzAQCoO80537TkP/Ps1Q.oZeteWsa4NopRAOUa', 1, 'Public', '2022-06-04 07:09:07', NULL, NULL),
 (46, 'wawaiguntan2g@gmail.com', '$2b$10$F05ycacG7hO96qC/edHhfedOcgUZC4ZCqPK08tJXXBnBGfUsuhueq', 1, 'Public', '2022-06-09 09:05:06', NULL, NULL),
 (47, 'wawaiguntang3@gmail.com', '$2b$10$PVuq3dnmc1TWyavTcnIM9uc9DJ2sVwaheKAT4Y29Z8D9fmzVZwHw.', 0, 'Public', '2022-06-09 17:54:37', NULL, NULL),
-(48, 'wawaiguntang4@gmail.com', '$2b$10$2bSII0a.VMKtFS9h/B.FF.OksHR9CLHWdVXAvkMMx25dF1XIyrEdS', 0, 'Public', '2022-06-09 17:57:28', NULL, NULL);
+(48, 'wawaiguntang4@gmail.com', '$2b$10$2bSII0a.VMKtFS9h/B.FF.OksHR9CLHWdVXAvkMMx25dF1XIyrEdS', 0, 'Public', '2022-06-09 17:57:28', NULL, NULL),
+(49, 'wawaiguntang23@gmail.com', '$2b$10$.Pp70BlKZl2SruJwp28z9eNSr25/mLIhK6CVnwNNcWPvrHEoip76.', 0, 'Public', '2022-06-14 13:19:41', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -92004,6 +92087,14 @@ ALTER TABLE `detail_beli_sampah`
   ADD KEY `bsCode` (`bsCode`);
 
 --
+-- Indexes for table `detail_jual_sampah`
+--
+ALTER TABLE `detail_jual_sampah`
+  ADD PRIMARY KEY (`djsCode`),
+  ADD KEY `jenisCode` (`jenisCode`),
+  ADD KEY `jsCode` (`jsCode`);
+
+--
 -- Indexes for table `fasilitator`
 --
 ALTER TABLE `fasilitator`
@@ -92021,8 +92112,15 @@ ALTER TABLE `jenis_sampah`
 --
 ALTER TABLE `jual_sampah`
   ADD PRIMARY KEY (`jsCode`),
-  ADD KEY `mitraCode` (`mitraCode`),
-  ADD KEY `jenisCode` (`jenisCode`);
+  ADD KEY `mitraCode` (`mitraCode`);
+
+--
+-- Indexes for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  ADD PRIMARY KEY (`kunjunganCode`),
+  ADD KEY `fasilitatorCode` (`fasilitatorCode`),
+  ADD KEY `mitraCode` (`mitraCode`);
 
 --
 -- Indexes for table `log`
@@ -92132,6 +92230,12 @@ ALTER TABLE `detail_beli_sampah`
   MODIFY `dbsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `detail_jual_sampah`
+--
+ALTER TABLE `detail_jual_sampah`
+  MODIFY `djsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `fasilitator`
 --
 ALTER TABLE `fasilitator`
@@ -92147,7 +92251,13 @@ ALTER TABLE `jenis_sampah`
 -- AUTO_INCREMENT for table `jual_sampah`
 --
 ALTER TABLE `jual_sampah`
-  MODIFY `jsCode` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `jsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  MODIFY `kunjunganCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `log`
@@ -92171,7 +92281,7 @@ ALTER TABLE `mesin`
 -- AUTO_INCREMENT for table `mitra`
 --
 ALTER TABLE `mitra`
-  MODIFY `mitraCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `mitraCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `module`
@@ -92183,7 +92293,7 @@ ALTER TABLE `module`
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `permissionCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `permissionCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -92195,7 +92305,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `role_permission`
 --
 ALTER TABLE `role_permission`
-  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT for table `role_user`
@@ -92207,13 +92317,13 @@ ALTER TABLE `role_user`
 -- AUTO_INCREMENT for table `usaha`
 --
 ALTER TABLE `usaha`
-  MODIFY `usahaCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `usahaCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `userCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `user_permission`
@@ -92246,6 +92356,13 @@ ALTER TABLE `detail_beli_sampah`
   ADD CONSTRAINT `detail_beli_sampah_ibfk_2` FOREIGN KEY (`jsCode`) REFERENCES `jenis_sampah` (`jsCode`);
 
 --
+-- Constraints for table `detail_jual_sampah`
+--
+ALTER TABLE `detail_jual_sampah`
+  ADD CONSTRAINT `jenis_sampah` FOREIGN KEY (`jenisCode`) REFERENCES `jenis_sampah` (`jsCode`),
+  ADD CONSTRAINT `jual_sampah` FOREIGN KEY (`jsCode`) REFERENCES `jual_sampah` (`jsCode`);
+
+--
 -- Constraints for table `fasilitator`
 --
 ALTER TABLE `fasilitator`
@@ -92255,8 +92372,14 @@ ALTER TABLE `fasilitator`
 -- Constraints for table `jual_sampah`
 --
 ALTER TABLE `jual_sampah`
-  ADD CONSTRAINT `jual_sampah_ibfk_1` FOREIGN KEY (`mitraCode`) REFERENCES `mitra` (`mitraCode`),
-  ADD CONSTRAINT `jual_sampah_ibfk_2` FOREIGN KEY (`jenisCode`) REFERENCES `jenis_sampah` (`jsCode`);
+  ADD CONSTRAINT `jual_sampah_ibfk_1` FOREIGN KEY (`mitraCode`) REFERENCES `mitra` (`mitraCode`);
+
+--
+-- Constraints for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  ADD CONSTRAINT `fasilitator` FOREIGN KEY (`fasilitatorCode`) REFERENCES `fasilitator` (`fasilitatorCode`),
+  ADD CONSTRAINT `mitra` FOREIGN KEY (`mitraCode`) REFERENCES `mitra` (`mitraCode`);
 
 --
 -- Constraints for table `masalah`

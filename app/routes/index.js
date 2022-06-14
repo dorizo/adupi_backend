@@ -388,18 +388,35 @@ router.post(
   adupi.beliSampah.addBeliSampah
 );
 
+// jual sampah
+router.get(
+  "/api/v1/jual/sampah/:mitraCode?",
+  verifyToken(["RJUALSAMPAH"]),
+  adupi.beliSampah.checkMitraOrNotBeliSampah,
+  adupi.jualSampah.getJualSampah
+);
+
+router.post(
+  "/api/v1/jual/sampah",
+  verifyToken(["JSAMPAH"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.validation.jualSampah.addJualSampahValidation,
+  validate,
+  adupi.jualSampah.addJualSampah
+);
+
 // anggota
 router.get(
-  "/api/v1/anggota/all",
+  "/api/v1/anggota/all/:mitraCode?/:status?",
   verifyToken(["RANGGOTA"]),
-  adupi.anggota.checkMitraOrNot,
+  adupi.beliSampah.checkMitraOrNotBeliSampah,
   adupi.anggota.getAllAnggota
 );
 
 router.get(
-  "/api/v1/anggota/one/:anggotaCode",
+  "/api/v1/anggota/one/:anggotaCode/:mitraCode?",
   verifyToken(["RANGGOTA"]),
-  adupi.anggota.checkMitraOrNot,
+  adupi.beliSampah.checkMitraOrNotBeliSampah,
   adupi.anggota.getOneAnggota
 );
 
@@ -530,6 +547,14 @@ router.post(
   adupi.mitra.activeAccountMitra
 );
 
+router.post(
+  "/api/v1/su/activeAnggota/:anggotaCode",
+  verifyToken(["ACTIVEANGGOTA"]),
+  adupi.validation.anggota.verifAnggotaValidation,
+  validate,
+  adupi.anggota.verifAnggota
+);
+
 router.get("/", async () => {
   console.log("asd");
 });
@@ -550,5 +575,64 @@ router.get("/api/v1/assets/:dir/:file", (req, res) => {
     }
   );
 });
+
+
+//kunjungan
+router.get(
+  "/api/v1/kunjungan/all",
+  verifyToken(["RKUNJUNGAN"]),
+  adupi.kunjungan.checkFasilitatorOrNot,
+  adupi.kunjungan.getAllKunjungan
+);
+
+router.get(
+  "/api/v1/kunjungan/one/:kunjunganCode",
+  verifyToken(["RKUNJUNGAN"]),
+  adupi.kunjungan.checkFasilitatorOrNot,
+  adupi.kunjungan.getOneKunjungan
+);
+
+router.post(
+  "/api/v1/kunjungan/add",
+  verifyToken(["CKUNJUNGAN"]),
+  adupi.kunjungan.checkFasilitatorOrNot,
+  adupi.validation.kunjungan.addKunjunganValidation,
+  validate,
+  adupi.kunjungan.addKunjungan
+);
+
+router.put(
+  "/api/v1/kunjungan/edit/:kunjunganCode",
+  verifyToken(["UKUNJUNGAN"]),
+  adupi.kunjungan.checkFasilitatorOrNot,
+  adupi.validation.kunjungan.editKunjunganValidation,
+  validate,
+  adupi.kunjungan.editKunjungan
+);
+router.delete(
+  "/api/v1/kunjungan/delete/:kunjunganCode",
+  verifyToken(["DKUNJUNGAN"]),
+  adupi.kunjungan.checkFasilitatorOrNot,
+  adupi.kunjungan.deleteKunjungan
+);
+
+//dashboard
+router.get(
+  "/api/v1/dashboard/getAllAnggota",
+  verifyToken(["RDASHBOARDMAP"]),
+  adupi.dashboard.getAllAnggotaForDashboard
+);
+
+router.get(
+  "/api/v1/dashboard/getAllAnggotaByWilayah/:wilayahCode",
+  verifyToken(["RDASHBOARDMAP"]),
+  adupi.dashboard.getAllAnggotaByWilayah
+);
+
+router.get(
+  "/api/v1/dashboard/getDetailTransaksi/:anggotaCode",
+  verifyToken(["RDASHBOARDMAP"]),
+  adupi.dashboard.getDetailTransaksi
+);
 
 export default router;

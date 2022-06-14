@@ -31,7 +31,8 @@
       { "permission": "RJENISSAMPAH", "description": "Lihat semua jenis sampah" },
       { "permission": "CJENISSAMPAH", "description": "menambah jenis sampah"},
       { "permission": "UJENISSAMPAH", "description": "Mengubah jenis sampah"},
-      { "permission": "DJENISSAMPAH", "description": "Menghapus jenis sampah"}
+      { "permission": "DJENISSAMPAH", "description": "Menghapus jenis sampah"},
+      { "permission": "RDASHBOARDMAP", "description": "Lihat map dan detail nya"}
     ]
   },
   {
@@ -46,7 +47,11 @@
       { "permission": "RALLMITRAINFASILITATOR", "description": "Lihat semua mitra dari sisi fasilitator"},
       { "permission": "RDETAILMITRAINFASILITATOR", "description": "Lihat detail mitra dari sisi fasilitator"},
       { "permission": "CMITRABYFASILITATOR", "description": "Menambah mitra dari sisi fasilitator"},
-      { "permission": "DMITRABYFASILITATOR", "description": "Menghapus mitra dari sisi fasilitator"}
+      { "permission": "DMITRABYFASILITATOR", "description": "Menghapus mitra dari sisi fasilitator"},
+      { "permission": "RKUNJUNGAN", "description": "Lihat semua kunjungan" },
+      { "permission": "CKUNJUNGAN", "description": "menambah kunjungan"},
+      { "permission": "UKUNJUNGAN", "description": "Mengubah kunjungan"},
+      { "permission": "DKUNJUNGAN", "description": "Menghapus kunjungan"}
     ]
   },
   {
@@ -70,7 +75,10 @@
       { "permission": "DMASALAH", "description": "Menghapus masalah"},
       { "permission": "CHANGESTATUSMASALAH", "description": "Merubah status masalah"},
       { "permission": "RBELISAMPAH", "description": "Lihat riwayat beli sampah"},
-      { "permission": "BSAMPAH", "description": "Beli sampah"}
+      { "permission": "BSAMPAH", "description": "Beli sampah"},
+      { "permission": "RJUALSAMPAH", "description": "Lihat riwayat jual sampah"},
+      { "permission": "JSAMPAH", "description": "Jual sampah"},
+      { "permission": "ACTIVEANGGOTA", "description": "Aktivasi anggota"}
     ]
   }
 ]

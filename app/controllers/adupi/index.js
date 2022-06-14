@@ -33,7 +33,17 @@ import {
   addAnggota,
   editAnggota,
   deleteAnggota,
+  verifAnggota,
 } from "./anggota.js";
+
+import {
+  checkFasilitatorOrNot,
+  getAllKunjungan,
+  getOneKunjungan,
+  addKunjungan,
+  editKunjungan,
+  deleteKunjungan,
+} from "./kunjungan.js";
 
 import {
   getAllMesin,
@@ -52,9 +62,21 @@ import {
   updateStatusMasalah,
 } from "./masalah.js";
 
-import { addBeliSampah,getBeliSampah,checkMitraOrNot as checkMitraOrNotBeliSampah } from "./beliSampah.js";
+import {
+  addBeliSampah,
+  getBeliSampah,
+  checkMitraOrNot as checkMitraOrNotBeliSampah,
+} from "./beliSampah.js";
+import { addJualSampah, getJualSampah } from "./jualSampah.js";
+
+import { getAllAnggota as getAllAnggotaForDashboard,getAllAnggotaByWilayah,getDetailTransaksi } from "./dashboard.js";
 
 export const adupi = {
+  dashboard: {
+    getAllAnggotaForDashboard,
+    getAllAnggotaByWilayah,
+    getDetailTransaksi
+  },
   master: master,
   mitra: {
     registerMitra,
@@ -77,6 +99,15 @@ export const adupi = {
     addAnggota,
     editAnggota,
     deleteAnggota,
+    verifAnggota,
+  },
+  kunjungan: {
+    checkFasilitatorOrNot,
+    getAllKunjungan,
+    getOneKunjungan,
+    addKunjungan,
+    editKunjungan,
+    deleteKunjungan,
   },
   mesin: {
     getAllMesin,
@@ -89,6 +120,10 @@ export const adupi = {
     checkMitraOrNotBeliSampah,
     getBeliSampah,
     addBeliSampah,
+  },
+  jualSampah: {
+    getJualSampah,
+    addJualSampah,
   },
   fasilitator: {
     getAllFasilitator,

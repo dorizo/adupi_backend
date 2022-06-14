@@ -1,4 +1,5 @@
 import { model } from "../../models/index.js";
+import { saveImage } from  "../../utils/saveImage.js"
 
 export const getAllMasalah = async (req, res, next) => {
   try {

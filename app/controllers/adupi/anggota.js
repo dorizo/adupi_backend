@@ -1,5 +1,8 @@
 import { model } from "../../models/index.js";
 import { saveImage } from "../../utils/saveImage.js";
+import { QueryTypes } from "sequelize";
+import { Sequelize } from "sequelize";
+const op = Sequelize.Op;
 
 export const checkMitraOrNot = async (req, res, next) => {
   try {
@@ -27,17 +30,70 @@ export const checkMitraOrNot = async (req, res, next) => {
 
 export const getAllAnggota = async (req, res, next) => {
   try {
-    const anggota = await model.adupi.anggota.findAll({
-      where: {
-        mitraCode: req.mitraCode,
-        deleteAt: null,
-      },
-    });
-    return res.status(200).json({
-      status: 200,
-      message: "Anggota ditemukan",
-      data: anggota,
-    });
+    let condition;
+    if (req.mitraCode == "0") {
+      if (req.params.mitraCode == null || req.params.status == null) {
+        return res.status(400).json({
+          status: 400,
+          message: "Kode mitra atau status dibutuhkan",
+        });
+      } else {
+        console.log(req.params.status);
+        if (req.params.status == "verified") {
+          condition = {
+            ...condition,
+            deleteAt: null,
+            mitraCode: req.params.mitraCode,
+            [op.and]: [
+              {
+                long: {
+                  [op.ne]: null,
+                },
+              },
+              {
+                lat: {
+                  [op.ne]: null,
+                },
+              },
+            ],
+          };
+          const anggota = await model.adupi.anggota.findAll({
+            where: condition,
+          });
+          return res.status(200).json({
+            status: 200,
+            message: "Anggota ditemukan",
+            data: anggota,
+          });
+        } else {
+          condition = {
+            ...condition,
+            deleteAt: null,
+            mitraCode: req.params.mitraCode,
+            long: null,
+            lat: null,
+          };
+          const anggota = await model.adupi.anggota.findAll({
+            where: condition,
+          });
+          return res.status(200).json({
+            status: 200,
+            message: "Anggota ditemukan",
+            data: anggota,
+          });
+        }
+      }
+    } else {
+      condition = { ...condition, deleteAt: null, mitraCode: req.mitraCode };
+      const anggota = await model.adupi.anggota.findAll({
+        where: condition,
+      });
+      return res.status(200).json({
+        status: 200,
+        message: "Anggota ditemukan",
+        data: anggota,
+      });
+    }
   } catch (error) {
     return res.status(404).json({
       status: 404,
@@ -48,12 +104,27 @@ export const getAllAnggota = async (req, res, next) => {
 
 export const getOneAnggota = async (req, res, next) => {
   try {
+    let condition = {
+      anggotaCode: req.params.anggotaCode,
+    };
+    if (req.mitraCode == "0") {
+      if (req.params.mitraCode == null) {
+        return res.status(400).json({
+          status: 400,
+          message: "Kode mitra dibutuhkan",
+        });
+      } else {
+        condition = {
+          ...condition,
+          deleteAt: null,
+          mitraCode: req.params.mitraCode,
+        };
+      }
+    } else {
+      condition = { ...condition, deleteAt: null, mitraCode: req.mitraCode };
+    }
     const anggota = await model.adupi.anggota.findOne({
-      where: {
-        anggotaCode: req.params.anggotaCode,
-        mitraCode: req.mitraCode,
-        deleteAt: null,
-      },
+      where: condition,
     });
     if (!anggota) {
       return res.status(404).json({
@@ -79,7 +150,7 @@ export const addAnggota = async (req, res, next) => {
     imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
     extImage: req.body.ktp.split(";")[0].split("/")[1],
     nameImage: req.body.nik + "_ktp_anggota",
-    dir:"anggota"
+    dir: "anggota",
   });
 
   if (uploadFoto.status == false) {
@@ -131,14 +202,14 @@ export const editAnggota = async (req, res, next) => {
       });
     }
     let urlKTP = anggota.ktp;
-    if(anggota.ktp != req.body.ktp){
+    if (anggota.ktp != req.body.ktp) {
       let uploadFoto = await saveImage({
         imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
         extImage: req.body.ktp.split(";")[0].split("/")[1],
         nameImage: req.body.nik + "_ktp_anggota",
-        dir:"anggota"
+        dir: "anggota",
       });
-    
+
       if (uploadFoto.status == false) {
         return res.status(400).json({
           status: 400,
@@ -171,7 +242,7 @@ export const editAnggota = async (req, res, next) => {
         if (anggota) {
           return res.status(200).json({
             status: 200,
-            message: "Berhasil mengubah data anggota",
+            message: "Berhasil memverif data anggota",
           });
         } else {
           return res.status(400).json({
@@ -225,6 +296,57 @@ export const deleteAnggota = async (req, res, next) => {
           return res.status(400).json({
             status: 400,
             message: "Gagal menghapus data anggota",
+          });
+        }
+      });
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Anggota tidak ditemukan",
+    });
+  }
+};
+
+
+export const verifAnggota = async (req, res, next) => {
+  try {
+    const anggota = await model.adupi.anggota.findOne({
+      where: {
+        anggotaCode: req.params.anggotaCode,
+        deleteAt: null,
+      },
+    });
+    if (!anggota) {
+      return res.status(404).json({
+        status: 404,
+        message: "Anggota tidak ditemukan",
+      });
+    }
+    
+    await model.adupi.anggota
+      .update(
+        {
+          long: req.body.long,
+          lat: req.body.lat,
+          updateAt: new Date(),
+        },
+        {
+          where: {
+            anggotaCode: req.params.anggotaCode,
+            deleteAt: null,
+          },
+        }
+      )
+      .then(function (anggota) {
+        if (anggota) {
+          return res.status(200).json({
+            status: 200,
+            message: "Berhasil memverif data anggota",
+          });
+        } else {
+          return res.status(400).json({
+            status: 400,
+            message: "Gagal memverif data anggota",
           });
         }
       });
