@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2022 at 03:21 PM
+-- Generation Time: Jun 15, 2022 at 05:25 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -130,7 +130,9 @@ CREATE TABLE `detail_jual_sampah` (
 
 INSERT INTO `detail_jual_sampah` (`djsCode`, `jenisCode`, `berat`, `harga`, `total`, `jsCode`, `createAt`, `updateAt`, `deleteAt`) VALUES
 (1, 2, 32, 10000, 320000, 2, '2022-06-13 17:57:01', NULL, NULL),
-(2, 2, 31, 10000, 310000, 2, '2022-06-13 17:57:01', NULL, NULL);
+(2, 2, 31, 10000, 310000, 2, '2022-06-13 17:57:01', NULL, NULL),
+(3, 2, 32, 10000, 320000, 3, '2022-06-15 14:58:35', NULL, NULL),
+(4, 2, 31, 10000, 310000, 3, '2022-06-15 14:58:35', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -187,8 +189,8 @@ INSERT INTO `jenis_sampah` (`jsCode`, `jenis`, `createAt`, `updateAt`, `deleteAt
 CREATE TABLE `jual_sampah` (
   `jsCode` int(11) NOT NULL,
   `mitraCode` int(11) NOT NULL,
-  `totalBerat` varchar(50) NOT NULL,
-  `totalHarga` varchar(50) NOT NULL,
+  `totalBerat` varchar(50) DEFAULT NULL,
+  `totalHarga` varchar(50) DEFAULT NULL,
   `pembeli` varchar(100) NOT NULL,
   `nota` varchar(255) NOT NULL,
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
@@ -201,7 +203,8 @@ CREATE TABLE `jual_sampah` (
 --
 
 INSERT INTO `jual_sampah` (`jsCode`, `mitraCode`, `totalBerat`, `totalHarga`, `pembeli`, `nota`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(2, 21, '63', '630000', 'PT.KITA KITA AJA', '8m72v_penjualan.jpeg', '2022-06-13 17:57:01', '2022-06-13 17:57:01', NULL);
+(2, 21, '63', '630000', 'PT.KITA KITA AJA', '8m72v_penjualan.jpeg', '2022-06-13 17:57:01', '2022-06-13 17:57:01', NULL),
+(3, 21, '63', '630000', 'PT.KITA KITA AJA', 'sxeoq_penjualan.jpeg', '2022-06-15 14:58:35', '2022-06-15 14:58:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -92233,7 +92236,7 @@ ALTER TABLE `detail_beli_sampah`
 -- AUTO_INCREMENT for table `detail_jual_sampah`
 --
 ALTER TABLE `detail_jual_sampah`
-  MODIFY `djsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `djsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `fasilitator`
@@ -92251,7 +92254,7 @@ ALTER TABLE `jenis_sampah`
 -- AUTO_INCREMENT for table `jual_sampah`
 --
 ALTER TABLE `jual_sampah`
-  MODIFY `jsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `jsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kunjungan`

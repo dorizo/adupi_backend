@@ -44,11 +44,11 @@ export const anggota = db.define(
     },
     long: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lat: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     createAt: {
       type: "DATETIME",
