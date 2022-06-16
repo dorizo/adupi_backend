@@ -26,6 +26,8 @@ import {
   verifMitraByFasilitator,
 } from "./fasilitator.js";
 
+import { getAllMitraReport, getDetailMitraReport } from "./report.js";
+
 import {
   checkMitraOrNot,
   getAllAnggota,
@@ -38,6 +40,7 @@ import {
 
 import {
   checkFasilitatorOrNot,
+  checkFasilitatorOrNotForAll,
   getAllKunjungan,
   getOneKunjungan,
   addKunjungan,
@@ -69,13 +72,17 @@ import {
 } from "./beliSampah.js";
 import { addJualSampah, getJualSampah } from "./jualSampah.js";
 
-import { getAllAnggota as getAllAnggotaForDashboard,getAllAnggotaByWilayah,getDetailTransaksi } from "./dashboard.js";
+import {
+  getAllAnggota as getAllAnggotaForDashboard,
+  getAllAnggotaByWilayah,
+  getDetailTransaksi,
+} from "./dashboard.js";
 
 export const adupi = {
   dashboard: {
     getAllAnggotaForDashboard,
     getAllAnggotaByWilayah,
-    getDetailTransaksi
+    getDetailTransaksi,
   },
   master: master,
   mitra: {
@@ -103,6 +110,7 @@ export const adupi = {
   },
   kunjungan: {
     checkFasilitatorOrNot,
+    checkFasilitatorOrNotForAll,
     getAllKunjungan,
     getOneKunjungan,
     addKunjungan,
@@ -136,6 +144,7 @@ export const adupi = {
     getMitraNotYetVerifByFasilitator,
     verifMitraByFasilitator,
   },
+  report: { getAllMitraReport, getDetailMitraReport },
   masalah: {
     getAllMasalah,
     getOneMasalah,

@@ -28,9 +28,37 @@ export const checkFasilitatorOrNot = async (req, res, next) => {
   }
 };
 
+export const checkFasilitatorOrNotForAll = async (req, res, next) => {
+  try {
+    const fasilitator = await model.adupi.fasilitator.findOne({
+      where: {
+        userCode: req.userCode,
+        deleteAt: null,
+      },
+    });
+    if (!fasilitator) {
+      req.fasilitatorCode = "0";
+      next();
+    } else {
+      req.fasilitatorCode = fasilitator.fasilitatorCode;
+      next();
+    }
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Anda tidak terdaftar sebagai fasilitator",
+    });
+  }
+};
+
 export const getAllKunjungan = async (req, res, next) => {
   try {
-    let condition = { deleteAt: null, fasilitatorCode: req.fasilitatorCode };
+    let condition;
+    if (req.fasilitatorCode == "0") {
+      condition = { deleteAt: null };
+    } else {
+      condition = { deleteAt: null, fasilitatorCode: req.fasilitatorCode };
+    }
     const kunjungan = await model.adupi.kunjungan.findAll({
       where: condition,
     });
@@ -49,12 +77,21 @@ export const getAllKunjungan = async (req, res, next) => {
 
 export const getOneKunjungan = async (req, res, next) => {
   try {
-    const kunjungan = await model.adupi.kunjungan.findOne({
-      where: {
+    let condition;
+    if (req.fasilitatorCode == "0") {
+      condition = {
+        deleteAt: null,
+        kunjunganCode: req.params.kunjunganCode,
+      };
+    } else {
+      condition = {
         deleteAt: null,
         fasilitatorCode: req.fasilitatorCode,
         kunjunganCode: req.params.kunjunganCode,
-      },
+      };
+    }
+    const kunjungan = await model.adupi.kunjungan.findOne({
+      where: condition,
     });
     if (!kunjungan) {
       return res.status(404).json({

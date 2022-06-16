@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2022 at 05:25 PM
+-- Generation Time: Jun 16, 2022 at 10:12 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -636,8 +636,8 @@ CREATE TABLE `usaha` (
   `jumlahPekerja` int(11) NOT NULL,
   `wilayahCode` varchar(50) NOT NULL,
   `alamat` longtext NOT NULL,
-  `lang` varchar(255) NOT NULL,
-  `lat` varchar(255) NOT NULL,
+  `lang` varchar(255) DEFAULT NULL,
+  `lat` varchar(255) DEFAULT NULL,
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL

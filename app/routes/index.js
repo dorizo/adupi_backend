@@ -575,20 +575,29 @@ router.get("/api/v1/assets/:dir/:file", (req, res) => {
     }
   );
 });
+//report
+router.get(
+  "/api/v1/report/all/:startDate?/:endDate?",
+  adupi.report.getAllMitraReport
+);
 
+router.get(
+  "/api/v1/report/detail/:mitraCode/:startDate?/:endDate?",
+  adupi.report.getDetailMitraReport
+);
 
 //kunjungan
 router.get(
   "/api/v1/kunjungan/all",
   verifyToken(["RKUNJUNGAN"]),
-  adupi.kunjungan.checkFasilitatorOrNot,
+  adupi.kunjungan.checkFasilitatorOrNotForAll,
   adupi.kunjungan.getAllKunjungan
 );
 
 router.get(
   "/api/v1/kunjungan/one/:kunjunganCode",
   verifyToken(["RKUNJUNGAN"]),
-  adupi.kunjungan.checkFasilitatorOrNot,
+  adupi.kunjungan.checkFasilitatorOrNotForAll,
   adupi.kunjungan.getOneKunjungan
 );
 

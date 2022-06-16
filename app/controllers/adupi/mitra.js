@@ -25,7 +25,7 @@ export const registerMitra = async (req, res, next) => {
       imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
       extImage: req.body.ktp.split(";")[0].split("/")[1],
       nameImage: req.body.nik + "_ktp",
-      dir:"mitra"
+      dir: "mitra",
     });
 
     let urlKTP;
@@ -62,7 +62,7 @@ export const registerMitra = async (req, res, next) => {
       imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
       extImage: req.body.foto.split(";")[0].split("/")[1],
       nameImage: req.body.nik + "_gudang",
-      dir:"gudang"
+      dir: "gudang",
     });
 
     let urlFoto;
@@ -104,7 +104,7 @@ export const registerMitra = async (req, res, next) => {
         imageBase64: item.foto.replace(/^data:image\/\w+;base64,/, ""),
         extImage: item.foto.split(";")[0].split("/")[1],
         nameImage: "foto_" + mitra.mitraCode + "_" + usaha.usahaCode + "_mesin",
-        dir:"mesin"
+        dir: "mesin",
       });
 
       if (uploadFotoMesin.status == false) {
@@ -496,6 +496,8 @@ export const getDetailMitraByFasilitator = async (req, res, next) => {
 };
 
 export const addMitraByFasilitator = async (req, res, next) => {
+  let transaction;
+  transaction = await db.transaction();
   try {
     const fasilitator = await model.adupi.fasilitator.findOne({
       where: {
@@ -509,8 +511,7 @@ export const addMitraByFasilitator = async (req, res, next) => {
         message: "Anda tidak terdaftar sebagai fasilitator",
       });
     }
-    let transaction;
-    transaction = await db.transaction();
+
     const passwordHash = await bcrypt.hash(req.body.password, 10);
     const user = await model.managementUser.user.create(
       {
@@ -525,7 +526,7 @@ export const addMitraByFasilitator = async (req, res, next) => {
       imageBase64: req.body.ktp.replace(/^data:image\/\w+;base64,/, ""),
       extImage: req.body.ktp.split(";")[0].split("/")[1],
       nameImage: req.body.nik + "_ktp",
-      dir:"mitra"
+      dir: "mitra",
     });
 
     let urlKTP;
@@ -561,7 +562,7 @@ export const addMitraByFasilitator = async (req, res, next) => {
       imageBase64: req.body.foto.replace(/^data:image\/\w+;base64,/, ""),
       extImage: req.body.foto.split(";")[0].split("/")[1],
       nameImage: req.body.nik + "_gudang",
-      dir:"gudang"
+      dir: "gudang",
     });
 
     let urlFoto;
@@ -699,6 +700,21 @@ export const getAllMitraVerified = async (req, res, next) => {
       verified = "0";
     }
     const mitra = await model.adupi.mitra.findAll({
+      attributes: [
+        "mitraCode",
+        "nama",
+        "nik",
+        "ktp",
+        "noHp",
+        "jenisKelamin",
+        "wilayahCode",
+        "jenisMitra",
+        "tempatLahir",
+        "tanggalLahir",
+        "alamat",
+        "fasilitatorCode",
+        "userCode",
+      ],
       where: {
         [op.and]: [
           {
@@ -819,6 +835,50 @@ export const getDetailMitraVerified = async (req, res, next) => {
         deleteAt: null,
       },
     });
+    const masalah = await model.adupi.masalah.findAll({
+      where: {
+        mitraCode: mitra.mitraCode,
+        deleteAt: null,
+      },
+    });
+    const beliSampah = await model.adupi.beliSampah.findAll({
+      where: {
+        mitraCode: mitra.mitraCode,
+        deleteAt: null,
+      },
+      include: [
+        {
+          model: model.adupi.detailBeliSampah,
+          where: {
+            deleteAt: null,
+          },
+          include: [
+            {
+              model: model.adupi.master.jenisSampah,
+            },
+          ],
+        },
+      ],
+    });
+    const jualSampah = await model.adupi.jualSampah.findAll({
+      where: {
+        mitraCode: mitra.mitraCode,
+        deleteAt: null,
+      },
+      include: [
+        {
+          model: model.adupi.detailJualSampah,
+          where: {
+            deleteAt: null,
+          },
+          include: [
+            {
+              model: model.adupi.master.jenisSampah,
+            },
+          ],
+        },
+      ],
+    });
     hasil = {
       mitraCode: mitra.mitraCode,
       nama: mitra.nama,
@@ -841,6 +901,11 @@ export const getDetailMitraVerified = async (req, res, next) => {
       user: user,
       gudang: usaha,
       anggota: anggota,
+      masalah: masalah,
+      transaksi: {
+        beliSampah: beliSampah,
+        jualSampah: jualSampah,
+      },
     };
     return res.status(200).json({
       status: 200,
