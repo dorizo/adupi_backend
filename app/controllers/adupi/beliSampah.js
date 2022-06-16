@@ -24,28 +24,36 @@ const getPagination = (page, size) => {
   return { limit, offset };
 };
 
-const getPagingData = (data, page, limit) => {
+const getPagingData = (data, totalAll, page, limit) => {
   const totalItems = data.length;
   const currentPage = page ? +page : 0;
   const totalPages = Math.ceil(totalItems / limit);
-  return { totalItems, data, totalPages, currentPage };
+  return { totalItems, data, totalPages, currentPage, totalAll };
 };
 
 export const getBeliSampah = (req, res) => {
   const { page, size, date } = req.query;
   var condition = date ? { createAt: { [op.like]: `%${date}%` } } : {};
-  if(req.mitraCode == "0"){
-    if(req.params.mitraCode == null){
+  let conditionAll;
+  if (req.mitraCode == "0") {
+    if (req.params.mitraCode == null) {
       return res.status(400).json({
         status: 400,
         message: "Kode mitra dibutuhkan",
       });
-    }else{
-      condition = { ...condition, deleteAt: null, mitraCode: req.params.mitraCode };
+    } else {
+      condition = {
+        ...condition,
+        deleteAt: null,
+        mitraCode: req.params.mitraCode,
+      };
+      conditionAll = { deleteAt: null, mitraCode: req.params.mitraCode };
     }
-  }else{
+  } else {
     condition = { ...condition, deleteAt: null, mitraCode: req.mitraCode };
+    conditionAll = { deleteAt: null, mitraCode: req.mitraCode };
   }
+  
   const { limit, offset } = getPagination(page, size);
   model.adupi.beliSampah
     .findAll({
@@ -66,8 +74,24 @@ export const getBeliSampah = (req, res) => {
       limit,
       offset,
     })
-    .then((data) => {
-      const response = getPagingData(data, page, limit);
+    .then(async (data) => {
+      const totalAll = await model.adupi.beliSampah.findAll({
+        where: conditionAll,
+        include: [
+          {
+            model: model.adupi.detailBeliSampah,
+            where: {
+              deleteAt: null,
+            },
+            include: [
+              {
+                model: model.adupi.master.jenisSampah,
+              },
+            ],
+          },
+        ],
+      });
+      const response = await getPagingData(data, totalAll.length, page, limit);
       return res.status(200).json({
         status: 200,
         message: "",
