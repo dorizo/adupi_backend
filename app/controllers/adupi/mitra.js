@@ -451,6 +451,7 @@ export const getDetailMitraByFasilitator = async (req, res, next) => {
             deleteAt: null,
             mitraCode: mitra.mitraCode,
           },
+          required: false
         },
       ],
     });
