@@ -305,6 +305,7 @@ export const detailSelf = async (req, res, next) => {
             deleteAt: null,
             mitraCode: mitra.mitraCode,
           },
+          required: false
         },
       ],
     });
