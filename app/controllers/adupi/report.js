@@ -35,41 +35,42 @@ export const getAllMitraReport = async (req, res, next) => {
         deleteAt: null,
       };
       literalMesin =
-        "SELECT count(*) FROM `mesin` AS `mesin` WHERE `mesin`.`mitraCode` = `mitra`.`mitraCode` AND `mesin`.`createAt` BETWEEN ('" +
+        "SELECT count(*) FROM `mesin` AS `mesin` WHERE `mesin`.`mitraCode` = `mitra`.`mitraCode` AND `mesin`.`createAt` BETWEEN CAST('" +
         req.params.startDate +
-        "' AND '" +
+        "' AS DATE) AND CAST('" +
         req.params.endDate +
-        "') AND `mesin`.`deleteAt` IS NULL";
+        "' AS DATE) AND `mesin`.`deleteAt` IS NULL";
       literalMasalahSelesai =
-        "SELECT count(*) FROM `masalah` AS `masalah` WHERE `masalah`.`mitraCode` = `mitra`.`mitraCode` AND `masalah`.`status` = 'Selesai' AND `masalah`.`createAt` BETWEEN ('" +
+        "SELECT count(*) FROM `masalah` AS `masalah` WHERE `masalah`.`mitraCode` = `mitra`.`mitraCode` AND `masalah`.`status` = 'Selesai' AND `masalah`.`createAt` BETWEEN CAST('" +
         req.params.startDate +
-        "' AND '" +
+        "' AS DATE) AND CAST('" +
         req.params.endDate +
-        "') AND `masalah`.`deleteAt` IS NULL";
+        "' AS DATE) AND `masalah`.`deleteAt` IS NULL";
       literalMasalahProses =
-        "SELECT count(*) FROM `masalah` AS `masalah` WHERE `masalah`.`mitraCode` = `mitra`.`mitraCode` AND `masalah`.`status` = 'Dalam peninjauan' AND `masalah`.`createAt` BETWEEN ('" +
+        "SELECT count(*) FROM `masalah` AS `masalah` WHERE `masalah`.`mitraCode` = `mitra`.`mitraCode` AND `masalah`.`status` = 'Dalam peninjauan' AND `masalah`.`createAt` BETWEEN CAST('" +
         req.params.startDate +
-        "' AND '" +
+        "' AS DATE) AND CAST('" +
         req.params.endDate +
-        "') AND `masalah`.`deleteAt` IS NULL";
+        "' AS DATE) AND `masalah`.`deleteAt` IS NULL";
       literalJualSampah =
-        "SELECT count(*) FROM `jual_sampah` AS `jual_sampah` WHERE `jual_sampah`.`mitraCode` = `mitra`.`mitraCode` AND `jual_sampah`.`createAt` BETWEEN ('" +
+        "SELECT count(*) FROM `jual_sampah` AS `jual_sampah` WHERE `jual_sampah`.`mitraCode` = `mitra`.`mitraCode` AND `jual_sampah`.`createAt` BETWEEN CAST('" +
         req.params.startDate +
-        "' AND '" +
+        "' AS DATE) AND CAST('" +
         req.params.endDate +
-        "') AND `jual_sampah`.`deleteAt` IS NULL";
+        "' AS DATE) AND `jual_sampah`.`deleteAt` IS NULL";
       literalBeliSampah =
-        "SELECT count(*) FROM `beli_sampah` AS `beli_sampah` WHERE `beli_sampah`.`mitraCode` = `mitra`.`mitraCode` AND `beli_sampah`.`createAt` BETWEEN ('" +
+        "SELECT count(*) FROM `beli_sampah` AS `beli_sampah` WHERE `beli_sampah`.`mitraCode` = `mitra`.`mitraCode` AND `beli_sampah`.`createAt` BETWEEN CAST('" +
         req.params.startDate +
-        "' AND '" +
+        "' AS DATE) AND CAST('" +
         req.params.endDate +
-        "') AND `beli_sampah`.`deleteAt` IS NULL";
+        "' AS DATE) AND `beli_sampah`.`deleteAt` IS NULL";
     }
 
     const mitra = await model.adupi.mitra.findAll({
       attributes: [
         "mitraCode",
         "nama",
+        "ktp",
         "nik",
         "noHp",
         "jenisKelamin",
