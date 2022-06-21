@@ -22,10 +22,10 @@ export const jualSampah = db.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    pembeli: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+    // pembeli: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
     nota: {
       type: DataTypes.STRING,
       allowNull: true,
