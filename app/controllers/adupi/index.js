@@ -78,6 +78,8 @@ import {
   getDetailTransaksi,
 } from "./dashboard.js";
 
+import { getAllpembelian } from "./maps.js";
+
 export const adupi = {
   dashboard: {
     getAllAnggotaForDashboard,
@@ -152,6 +154,9 @@ export const adupi = {
     editMasalah,
     deleteMasalah,
     updateStatusMasalah,
+  },
+  map : {
+    getAllpembelian
   },
   validation: validation,
 };

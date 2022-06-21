@@ -643,5 +643,9 @@ router.get(
   verifyToken(["RDASHBOARDMAP"]),
   adupi.dashboard.getDetailTransaksi
 );
+router.post(
+  "/api/v1/maps/pembelian",
+  adupi.map.getAllpembelian
+);
 
 export default router;
