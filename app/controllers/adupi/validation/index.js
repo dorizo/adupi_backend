@@ -23,6 +23,10 @@ import { activeAccountMitraValidation } from "./mitra/activeAccountMitra.js";
 
 import { addKunjunganValidation } from "./kunjungan/add.js";
 import { editKunjunganValidation } from "./kunjungan/edit.js";
+
+import { addPembeliOnJualSampahValidation } from "./pembeli/addPembeliOnJualSampah.js";
+import { addPembeliValidation } from "./pembeli/add.js";
+import { editPembeliValidation } from "./pembeli/edit.js";
 export const validation = {
   mitra: {
     registrasiMitraValidation,
@@ -43,7 +47,7 @@ export const validation = {
   anggota: {
     addAnggotaValidation,
     editAnggotaValidation,
-    verifAnggotaValidation
+    verifAnggotaValidation,
   },
   fasilitator: {
     addFasilitatorValidation,
@@ -58,5 +62,10 @@ export const validation = {
   kunjungan: {
     addKunjunganValidation,
     editKunjunganValidation,
+  },
+  pembeli: {
+    addPembeliOnJualSampahValidation,
+    addPembeliValidation,
+    editPembeliValidation,
   },
 };

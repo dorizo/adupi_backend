@@ -26,7 +26,26 @@ import {
   verifMitraByFasilitator,
 } from "./fasilitator.js";
 
-import { getAllMitraReport, getDetailMitraReport } from "./report.js";
+import {
+  getAllMitraReport,
+  getDetailMitraReport,
+  getJumlahMitraPerbulanPerkabupaten,
+  getJumlahLuasGudangPerbulan,
+  getJumlahPekerjaPerbulan,
+  getPembelianSemuaMitraPerbulan,
+  getPembelianPermitraPerbulan,
+  getPenjualanPermitraPerbulan,
+  getPenjualanSemuaMitraPerbulan,
+  getPenjualanSemuaMitraPerbulanPerpabrik,
+  getPenjualanPermitraPerbulanPerpabrik,
+  getMasalahSemuaMitraPerbulanPerjenisPerstatus,
+  getMasalahPermitraPerbulanPerjenisPerstatus,
+  getPenjualanPerkategori,
+  getPembelianPerkategori,
+  getAnalisisPembelianDenganMitraPerbulan,
+  getAnalisisPembelianDenganPekerjaPerbulan,
+  getAnalisisPembelianDenganLuasGudangPerbulan,
+} from "./report.js";
 
 import {
   checkMitraOrNot,
@@ -71,6 +90,15 @@ import {
   checkMitraOrNot as checkMitraOrNotBeliSampah,
 } from "./beliSampah.js";
 import { addJualSampah, getJualSampah } from "./jualSampah.js";
+
+import {
+  addPembeli,
+  addPembeliJualSampah,
+  getAllPembeli,
+  getOnePembeli,
+  editPembeli,
+  deletePembeli,
+} from "./pembeli.js";
 
 import {
   getAllAnggota as getAllAnggotaForDashboard,
@@ -144,7 +172,26 @@ export const adupi = {
     getMitraNotYetVerifByFasilitator,
     verifMitraByFasilitator,
   },
-  report: { getAllMitraReport, getDetailMitraReport },
+  report: {
+    getAllMitraReport,
+    getDetailMitraReport,
+    getJumlahMitraPerbulanPerkabupaten,
+    getJumlahLuasGudangPerbulan,
+    getJumlahPekerjaPerbulan,
+    getPembelianSemuaMitraPerbulan,
+    getPembelianPermitraPerbulan,
+    getPenjualanPermitraPerbulan,
+    getPenjualanSemuaMitraPerbulan,
+    getPenjualanSemuaMitraPerbulanPerpabrik,
+    getPenjualanPermitraPerbulanPerpabrik,
+    getMasalahSemuaMitraPerbulanPerjenisPerstatus,
+    getMasalahPermitraPerbulanPerjenisPerstatus,
+    getPenjualanPerkategori,
+    getPembelianPerkategori,
+    getAnalisisPembelianDenganMitraPerbulan,
+    getAnalisisPembelianDenganPekerjaPerbulan,
+    getAnalisisPembelianDenganLuasGudangPerbulan,
+  },
   masalah: {
     getAllMasalah,
     getOneMasalah,
@@ -152,6 +199,15 @@ export const adupi = {
     editMasalah,
     deleteMasalah,
     updateStatusMasalah,
+  },
+
+  pembeli: {
+    addPembeli,
+    addPembeliJualSampah,
+    getAllPembeli,
+    getOnePembeli,
+    editPembeli,
+    deletePembeli,
   },
   validation: validation,
 };

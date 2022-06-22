@@ -389,6 +389,13 @@ router.post(
 );
 
 // jual sampah
+router.post(
+  "/api/v1/jual/sampah/add/pembeli",
+  verifyToken(["RJUALSAMPAH"]),
+  adupi.validation.pembeli.addPembeliOnJualSampahValidation,
+  adupi.pembeli.addPembeliJualSampah
+);
+
 router.get(
   "/api/v1/jual/sampah/:mitraCode?",
   verifyToken(["RJUALSAMPAH"]),
@@ -586,6 +593,84 @@ router.get(
   adupi.report.getDetailMitraReport
 );
 
+router.get(
+  "/api/v1/report/jumlahMitraPerbulanPerkabupaten",
+  adupi.report.getJumlahMitraPerbulanPerkabupaten
+);
+
+router.get(
+  "/api/v1/report/jumlahLuasGudangPerbulan",
+  adupi.report.getJumlahLuasGudangPerbulan
+);
+
+router.get(
+  "/api/v1/report/jumlahPekerjaPerbulan",
+  adupi.report.getJumlahPekerjaPerbulan
+);
+
+router.get(
+  "/api/v1/report/pembelian/semuaMitraPerbulan",
+  adupi.report.getPembelianSemuaMitraPerbulan
+);
+
+router.get(
+  "/api/v1/report/penjualan/semuaMitraPerbulan",
+  adupi.report.getPenjualanSemuaMitraPerbulan
+);
+
+router.get(
+  "/api/v1/report/pembelian/permitraPerbulan",
+  adupi.report.getPembelianPermitraPerbulan
+);
+
+router.get(
+  "/api/v1/report/penjualan/permitraPerbulan",
+  adupi.report.getPenjualanPermitraPerbulan
+);
+
+router.get(
+  "/api/v1/report/penjualan/semuaMitraPerbulanPerpabrik",
+  adupi.report.getPenjualanSemuaMitraPerbulanPerpabrik
+);
+
+router.get(
+  "/api/v1/report/penjualan/permitraPerbulanPerpabrik",
+  adupi.report.getPenjualanPermitraPerbulanPerpabrik
+);
+
+router.get(
+  "/api/v1/report/masalah/semuaMitraPerbulanPerjenisPerstatus",
+  adupi.report.getMasalahSemuaMitraPerbulanPerjenisPerstatus
+);
+
+router.get(
+  "/api/v1/report/masalah/permitraPerbulanPerjenisPerstatus",
+  adupi.report.getMasalahPermitraPerbulanPerjenisPerstatus
+);
+
+router.get(
+  "/api/v1/report/pembelian/semuaMitraPerkategori",
+  adupi.report.getPembelianPerkategori
+);
+
+router.get(
+  "/api/v1/report/penjualan/semuaMitraPerkategori",
+  adupi.report.getPenjualanPerkategori
+);
+
+
+router.get(
+  "/api/v1/report/analisis/pembelianDenganMitraPerbulan",
+  adupi.report.getAnalisisPembelianDenganMitraPerbulan
+);
+router.get(
+  "/api/v1/report/analisis/pembelianDenganPekerjaPerbulan",
+  adupi.report.getAnalisisPembelianDenganPekerjaPerbulan
+);
+router.get(
+  "/api/v1/report/analisis/pembelianDenganLuasGudangPerbulan",
+  adupi.report.getAnalisisPembelianDenganLuasGudangPerbulan
+);
 //kunjungan
 router.get(
   "/api/v1/kunjungan/all",
@@ -642,6 +727,40 @@ router.get(
   "/api/v1/dashboard/getDetailTransaksi/:anggotaCode",
   verifyToken(["RDASHBOARDMAP"]),
   adupi.dashboard.getDetailTransaksi
+);
+
+// pembeli
+router.get(
+  "/api/v1/pembeli/all",
+  verifyToken(["RPEMBELI"]),
+  adupi.pembeli.getAllPembeli
+);
+
+router.get(
+  "/api/v1/pembeli/one/:pembeliCode",
+  verifyToken(["RPEMBELI"]),
+  adupi.pembeli.getOnePembeli
+);
+
+router.post(
+  "/api/v1/pembeli/add",
+  verifyToken(["CPEMBELI"]),
+  adupi.validation.pembeli.addPembeliValidation,
+  validate,
+  adupi.pembeli.addPembeli
+);
+
+router.put(
+  "/api/v1/pembeli/edit/:pembeliCode",
+  verifyToken(["UPEMBELI"]),
+  adupi.validation.pembeli.editPembeliValidation,
+  validate,
+  adupi.pembeli.editPembeli
+);
+router.delete(
+  "/api/v1/pembeli/delete/:pembeliCode",
+  verifyToken(["DPEMBELI"]),
+  adupi.pembeli.deletePembeli
 );
 
 export default router;

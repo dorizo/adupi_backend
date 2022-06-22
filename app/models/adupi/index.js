@@ -7,6 +7,7 @@ import { anggota } from "./anggota.js";
 import { masalah } from "./masalah.js";
 import { beliSampah } from "./beliSampah.js";
 import { detailBeliSampah } from "./detailBeliSampah.js";
+import { pembeli } from "./pembeli.js";
 import { jualSampah } from "./jualSampah.js";
 import { detailJualSampah } from "./detailJualSampah.js";
 import { kunjungan } from "./kunjungan.js";
@@ -73,6 +74,13 @@ detailJualSampah.belongsTo(jualSampah, {
   foreignKey: "jsCode",
 });
 
+pembeli.hasMany(jualSampah ,{
+  foreignKey: "pembeliCode",
+});
+jualSampah.belongsTo(pembeli, {
+  foreignKey: "pembeliCode",
+});
+
 (master.jenisSampah).hasMany(detailJualSampah ,{
   foreignKey: "jenisCode",
 });
@@ -96,6 +104,7 @@ export const adupi = {
   beliSampah: beliSampah,
   detailBeliSampah: detailBeliSampah,
   jualSampah: jualSampah,
+  pembeli: pembeli,
   detailJualSampah: detailJualSampah,
   kunjungan:kunjungan
 };

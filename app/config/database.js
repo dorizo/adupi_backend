@@ -1,13 +1,8 @@
 import { Sequelize } from "sequelize";
 
-const db = new Sequelize('adupi', 'root', '', {
-    host: "localhost",
+const db = new Sequelize('adupi', 'dorizo', 'password', {
+    host: "165.22.244.130",
     dialect: "mysql"
 });
-
-// const db = new Sequelize('adupi', 'root', 'citm0029', {
-//     host: "localhost",
-//     dialect: "mysql"
-// });
  
 export default db;

@@ -78,7 +78,11 @@
       { "permission": "BSAMPAH", "description": "Beli sampah"},
       { "permission": "RJUALSAMPAH", "description": "Lihat riwayat jual sampah"},
       { "permission": "JSAMPAH", "description": "Jual sampah"},
-      { "permission": "ACTIVEANGGOTA", "description": "Aktivasi anggota"}
+      { "permission": "ACTIVEANGGOTA", "description": "Aktivasi anggota"},
+      { "permission": "RPEMBELI", "description": "Lihat semua pembeli" },
+      { "permission": "CPEMBELI", "description": "menambah pembeli"},
+      { "permission": "UPEMBELI", "description": "Mengubah pembeli"},
+      { "permission": "DPEMBELI", "description": "Menghapus pembeli"}
     ]
   }
 ]

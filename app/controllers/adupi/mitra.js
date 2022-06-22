@@ -305,6 +305,7 @@ export const detailSelf = async (req, res, next) => {
             deleteAt: null,
             mitraCode: mitra.mitraCode,
           },
+          required: false
         },
       ],
     });
@@ -451,6 +452,7 @@ export const getDetailMitraByFasilitator = async (req, res, next) => {
             deleteAt: null,
             mitraCode: mitra.mitraCode,
           },
+          required: false
         },
       ],
     });
@@ -814,6 +816,7 @@ export const getDetailMitraVerified = async (req, res, next) => {
             deleteAt: null,
             mitraCode: mitra.mitraCode,
           },
+          required: false
         },
       ],
     });

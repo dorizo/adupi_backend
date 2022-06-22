@@ -58,6 +58,9 @@ export const getJualSampah = (req, res) => {
             },
           ],
         },
+        {
+          model: model.adupi.pembeli,
+        }
       ],
       limit,
       offset,
