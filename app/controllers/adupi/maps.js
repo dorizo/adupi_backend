@@ -12,6 +12,7 @@ export const getAllpembelian = async (req, res, next) => {
                 "nama",
                 "ktp",
             ],
+            include:model.adupi.usaha,
             where:{
                     fasilitatorcode:{
                         [op.ne]:null
@@ -43,7 +44,9 @@ export const getAllpembelian = async (req, res, next) => {
                     }]
                     }
                     );
-                    cartItem3.nama = song.nama;
+                    cartItem3.nama = song;
+                    // cartItem3.long = song?.usahas[0]?.lang;
+                    // cartItem3.lat = song?.usahas[0]?.lat;
                     cartItem3.anggota = as;
                     params.push(cartItem3);
                 } catch (error) {
