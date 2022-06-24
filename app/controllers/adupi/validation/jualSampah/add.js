@@ -2,7 +2,7 @@ import { check } from "express-validator";
 import { model } from "../../../../models/index.js";
 
 export const addJualSampahValidation = [
-  check("pembeli", "Pembeli tidak boleh kosong").notEmpty(),
+  check("pembeliCode", "Pembeli tidak boleh kosong").notEmpty(),
   check("nota", "Nota tidak boleh kosong").notEmpty(),
   check("detail.*.berat", "Sumber tidak boleh kosong")
     .notEmpty()
