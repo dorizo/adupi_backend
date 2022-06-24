@@ -117,7 +117,7 @@ export const addJualSampah = async (req, res, next) => {
     } else {
       const jualSampah = await model.adupi.jualSampah.create(
         {
-          pembeli: req.body.pembeli,
+          pembeliCode: req.body.pembeliCode,
           mitraCode: req.mitraCode,
           nota: uploadFoto.url,
         },
