@@ -763,4 +763,8 @@ router.delete(
   adupi.pembeli.deletePembeli
 );
 
+router.post(
+  "/api/v1/maps/pembelian",
+  adupi.map.getAllpembelian
+);
 export default router;
