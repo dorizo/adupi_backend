@@ -60,6 +60,45 @@ export const getAllAnggota = async (req, res, next) => {
             ],
           };
           const anggota = await model.adupi.anggota.findAll({
+            attributes: [
+              "anggotaCode",
+              "nama",
+              "nik",
+              "noHp",
+              "jenisKelamin",
+              "long",
+              "lat",
+              "alamat",
+              "mitraCode",
+              "createAt",
+              "updateAt",
+              "wilayahCode",
+              "deleteAt",
+              [
+                db.literal(
+                  "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,13)=anggota.wilayahCode AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah LIMIT 1)"
+                ),
+                "desa",
+              ],
+              [
+                db.literal(
+                  "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,8) = LEFT(anggota.wilayahCode,8) AND CHAR_LENGTH(wilayahCode) = 8 ORDER BY wilayah LIMIT 1)"
+                ),
+                "kecamatan",
+              ],
+              [
+                db.literal(
+                  "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,5) = LEFT(anggota.wilayahCode,5) AND CHAR_LENGTH(wilayahCode) = 5 ORDER BY wilayah LIMIT 1)"
+                ),
+                "kabupaten",
+              ],
+              [
+                db.literal(
+                  "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,2) = LEFT(anggota.wilayahCode,2) AND CHAR_LENGTH(wilayahCode) = 2 ORDER BY wilayah LIMIT 1)"
+                ),
+                "provinsi",
+              ],
+            ],
             where: condition,
           });
           return res.status(200).json({
@@ -75,7 +114,45 @@ export const getAllAnggota = async (req, res, next) => {
             long: null,
             lat: null,
           };
-          const anggota = await model.adupi.anggota.findAll({
+          const anggota = await model.adupi.anggota.findAll({attributes: [
+            "anggotaCode",
+            "nama",
+            "nik",
+            "noHp",
+            "jenisKelamin",
+            "long",
+            "lat",
+            "alamat",
+            "mitraCode",
+            "createAt",
+            "updateAt",
+            "wilayahCode",
+            "deleteAt",
+            [
+              db.literal(
+                "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,13)=anggota.wilayahCode AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah LIMIT 1)"
+              ),
+              "desa",
+            ],
+            [
+              db.literal(
+                "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,8) = LEFT(anggota.wilayahCode,8) AND CHAR_LENGTH(wilayahCode) = 8 ORDER BY wilayah LIMIT 1)"
+              ),
+              "kecamatan",
+            ],
+            [
+              db.literal(
+                "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,5) = LEFT(anggota.wilayahCode,5) AND CHAR_LENGTH(wilayahCode) = 5 ORDER BY wilayah LIMIT 1)"
+              ),
+              "kabupaten",
+            ],
+            [
+              db.literal(
+                "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,2) = LEFT(anggota.wilayahCode,2) AND CHAR_LENGTH(wilayahCode) = 2 ORDER BY wilayah LIMIT 1)"
+              ),
+              "provinsi",
+            ],
+          ],
             where: condition,
           });
           return res.status(200).json({
