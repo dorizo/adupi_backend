@@ -52,7 +52,7 @@ export const checkFasilitatorOrNotForAll = async (req, res, next) => {
 };
 
 export const getAllKunjungan = async (req, res, next) => {
-  try {
+  // try {
     let condition;
     if (req.fasilitatorCode == "0") {
       condition = { deleteAt: null };
@@ -61,18 +61,26 @@ export const getAllKunjungan = async (req, res, next) => {
     }
     const kunjungan = await model.adupi.kunjungan.findAll({
       where: condition,
+      include: [
+        {
+          model: model.adupi.fasilitator,
+        },
+        {
+          model: model.adupi.mitra,
+        },
+      ],
     });
     return res.status(200).json({
       status: 200,
       message: "Kunjungan ditemukan",
       data: kunjungan,
     });
-  } catch (error) {
-    return res.status(404).json({
-      status: 404,
-      message: "Kunjungan tidak ditemukan",
-    });
-  }
+  // } catch (error) {
+  //   return res.status(404).json({
+  //     status: 404,
+  //     message: "Kunjungan tidak ditemukan",
+  //   });
+  // }
 };
 
 export const getOneKunjungan = async (req, res, next) => {
@@ -92,6 +100,14 @@ export const getOneKunjungan = async (req, res, next) => {
     }
     const kunjungan = await model.adupi.kunjungan.findOne({
       where: condition,
+      include: [
+        {
+          model: model.adupi.fasilitator,
+        },
+        {
+          model: model.adupi.mitra,
+        },
+      ],
     });
     if (!kunjungan) {
       return res.status(404).json({

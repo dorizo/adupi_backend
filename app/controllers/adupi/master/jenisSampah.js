@@ -22,7 +22,7 @@ export const getAllJenisSampah = async (req, res, next) => {
 
 export const getOneJenisSampah = async (req, res, next) => {
   try {
-    const jenis = await model.adupi.master.jenisSampah.findAll({
+    const jenis = await model.adupi.master.jenisSampah.findOne({
       where: {
         jsCode: req.params.jsCode,
         deleteAt: null,
@@ -51,6 +51,7 @@ export const addJenisSampah = async (req, res, next) => {
   await model.adupi.master.jenisSampah
     .create({
       jenis: req.body.jenis,
+      ksCode: req.body.ksCode,
     })
     .then(function (jenis) {
       if (jenis) {
@@ -85,6 +86,7 @@ export const editJenisSampah = async (req, res, next) => {
       .update(
         {
           jenis: req.body.jenis,
+          ksCode: req.body.ksCode,
           updateAt: new Date(),
         },
         {

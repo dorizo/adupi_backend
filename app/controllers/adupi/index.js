@@ -45,7 +45,14 @@ import {
   getAnalisisPembelianDenganMitraPerbulan,
   getAnalisisPembelianDenganPekerjaPerbulan,
   getAnalisisPembelianDenganLuasGudangPerbulan,
+  getNewPenjualanPerkategori,
+  getNewPembelianPerkategori,
 } from "./report.js";
+
+import {
+  getDocBeliSampah,
+  getDocJualSampah,
+} from "./export.js"
 
 import {
   checkMitraOrNot,
@@ -95,6 +102,7 @@ import {
   addPembeli,
   addPembeliJualSampah,
   getAllPembeli,
+  getAllPembeliForPembelian,
   getOnePembeli,
   editPembeli,
   deletePembeli,
@@ -192,6 +200,12 @@ export const adupi = {
     getAnalisisPembelianDenganMitraPerbulan,
     getAnalisisPembelianDenganPekerjaPerbulan,
     getAnalisisPembelianDenganLuasGudangPerbulan,
+    getNewPenjualanPerkategori,
+    getNewPembelianPerkategori,
+  },
+  export: {
+    getDocBeliSampah,
+    getDocJualSampah,
   },
   masalah: {
     getAllMasalah,
@@ -206,6 +220,7 @@ export const adupi = {
     addPembeli,
     addPembeliJualSampah,
     getAllPembeli,
+    getAllPembeliForPembelian,
     getOnePembeli,
     editPembeli,
     deletePembeli,

@@ -223,6 +223,37 @@ router.delete(
   adupi.master.jenisSampah.deleteJenisSampah
 );
 
+//kategoriSampah
+router.get(
+  "/api/v1/master/kategoriSampah/all",
+  verifyToken(["RKATEGORISAMPAH","BSAMPAH"]),
+  adupi.master.kategoriSampah.getAllKategoriSampah
+);
+router.get(
+  "/api/v1/master/kategoriSampah/one/:ksCode",
+  verifyToken(["RKATEGORISAMPAH","BSAMPAH"]),
+  adupi.master.kategoriSampah.getOneKategoriSampah
+);
+router.post(
+  "/api/v1/master/kategoriSampah/add",
+  verifyToken(["CKATEGORISAMPAH"]),
+  adupi.master.kategoriSampah.validation.kategoriSampah.addKategoriSampahValidation,
+  validate,
+  adupi.master.kategoriSampah.addKategoriSampah
+);
+router.put(
+  "/api/v1/master/kategoriSampah/edit/:ksCode",
+  verifyToken(["UKATEGORISAMPAH"]),
+  adupi.master.kategoriSampah.validation.kategoriSampah.editKategoriSampahValidation,
+  validate,
+  adupi.master.kategoriSampah.editKategoriSampah
+);
+router.delete(
+  "/api/v1/master/kategoriSampah/delete/:ksCode",
+  verifyToken(["DKATEGORISAMPAH"]),
+  adupi.master.kategoriSampah.deleteKategoriSampah
+);
+
 // registrasi mitra
 router.post(
   "/api/v1/registrasi/mitra",
@@ -401,6 +432,12 @@ router.get(
   verifyToken(["RJUALSAMPAH"]),
   adupi.beliSampah.checkMitraOrNotBeliSampah,
   adupi.jualSampah.getJualSampah
+);
+
+router.get(
+  "/api/v1/jual/getPembeli",
+  verifyToken(["RJUALSAMPAH"]),
+  adupi.pembeli.getAllPembeliForPembelian
 );
 
 router.post(
@@ -582,95 +619,142 @@ router.get("/api/v1/assets/:dir/:file", (req, res) => {
     }
   );
 });
+
 //report
 router.get(
   "/api/v1/report/all/:startDate?/:endDate?",
+  verifyToken(["REPORT"]),
   adupi.report.getAllMitraReport
 );
 
 router.get(
   "/api/v1/report/detail/:mitraCode/:startDate?/:endDate?",
+  verifyToken(["REPORT"]),
   adupi.report.getDetailMitraReport
 );
 
 router.get(
   "/api/v1/report/jumlahMitraPerbulanPerkabupaten",
+  verifyToken(["REPORT"]),
   adupi.report.getJumlahMitraPerbulanPerkabupaten
 );
 
 router.get(
   "/api/v1/report/jumlahLuasGudangPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getJumlahLuasGudangPerbulan
 );
 
 router.get(
   "/api/v1/report/jumlahPekerjaPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getJumlahPekerjaPerbulan
 );
 
 router.get(
   "/api/v1/report/pembelian/semuaMitraPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getPembelianSemuaMitraPerbulan
 );
 
 router.get(
   "/api/v1/report/penjualan/semuaMitraPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getPenjualanSemuaMitraPerbulan
 );
 
 router.get(
   "/api/v1/report/pembelian/permitraPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getPembelianPermitraPerbulan
 );
 
 router.get(
   "/api/v1/report/penjualan/permitraPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getPenjualanPermitraPerbulan
 );
 
 router.get(
   "/api/v1/report/penjualan/semuaMitraPerbulanPerpabrik",
+  verifyToken(["REPORT"]),
   adupi.report.getPenjualanSemuaMitraPerbulanPerpabrik
 );
 
 router.get(
   "/api/v1/report/penjualan/permitraPerbulanPerpabrik",
+  verifyToken(["REPORT"]),
   adupi.report.getPenjualanPermitraPerbulanPerpabrik
 );
 
 router.get(
   "/api/v1/report/masalah/semuaMitraPerbulanPerjenisPerstatus",
+  verifyToken(["REPORT"]),
   adupi.report.getMasalahSemuaMitraPerbulanPerjenisPerstatus
 );
 
 router.get(
   "/api/v1/report/masalah/permitraPerbulanPerjenisPerstatus",
+  verifyToken(["REPORT"]),
   adupi.report.getMasalahPermitraPerbulanPerjenisPerstatus
 );
 
 router.get(
   "/api/v1/report/pembelian/semuaMitraPerkategori",
+  verifyToken(["REPORT"]),
   adupi.report.getPembelianPerkategori
 );
 
 router.get(
   "/api/v1/report/penjualan/semuaMitraPerkategori",
+  verifyToken(["REPORT"]),
   adupi.report.getPenjualanPerkategori
+);
+
+router.get(
+  "/api/v1/report/pembelian/newSemuaMitraPerkategori",
+  verifyToken(["REPORT"]),
+  adupi.report.getNewPembelianPerkategori
+);
+
+router.get(
+  "/api/v1/report/penjualan/newSemuaMitraPerkategori",
+  verifyToken(["REPORT"]),
+  adupi.report.getNewPenjualanPerkategori
 );
 
 
 router.get(
   "/api/v1/report/analisis/pembelianDenganMitraPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getAnalisisPembelianDenganMitraPerbulan
 );
 router.get(
   "/api/v1/report/analisis/pembelianDenganPekerjaPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getAnalisisPembelianDenganPekerjaPerbulan
 );
 router.get(
   "/api/v1/report/analisis/pembelianDenganLuasGudangPerbulan",
+  verifyToken(["REPORT"]),
   adupi.report.getAnalisisPembelianDenganLuasGudangPerbulan
 );
+
+
+router.get(
+  "/api/v1/export/beliSampah/:mitraCode?",
+  verifyToken(["EXPORT"]),
+  adupi.beliSampah.checkMitraOrNotBeliSampah,
+  adupi.export.getDocBeliSampah
+);
+
+router.get(
+  "/api/v1/export/jualSampah/:mitraCode?",
+  // verifyToken(["EXPORT"]),
+  // adupi.beliSampah.checkMitraOrNotBeliSampah,
+  adupi.export.getDocJualSampah
+);
+
 //kunjungan
 router.get(
   "/api/v1/kunjungan/all",

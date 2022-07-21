@@ -5,6 +5,13 @@ import {
   editJenisSampah,
   deleteJenisSampah,
 } from "./jenisSampah.js";
+import {
+  getAllKategoriSampah,
+  getOneKategoriSampah,
+  addKategoriSampah,
+  editKategoriSampah,
+  deleteKategoriSampah,
+} from "./kategoriSampah.js";
 import { validation } from "./validation/index.js";
 
 export const master = {
@@ -14,6 +21,14 @@ export const master = {
     addJenisSampah,
     editJenisSampah,
     deleteJenisSampah,
+    validation: validation,
+  },
+  kategoriSampah: {
+    getAllKategoriSampah,
+    getOneKategoriSampah,
+    addKategoriSampah,
+    editKategoriSampah,
+    deleteKategoriSampah,
     validation: validation,
   },
 };

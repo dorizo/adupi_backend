@@ -53,6 +53,34 @@ anggota.hasMany(beliSampah ,{
   foreignKey: "anggotaCode",
 });
 
+beliSampah.belongsTo(anggota ,{
+  foreignKey: "anggotaCode",
+});
+
+mitra.hasMany(beliSampah ,{
+  foreignKey: "mitraCode",
+});
+
+beliSampah.belongsTo(mitra ,{
+  foreignKey: "mitraCode",
+});
+
+mitra.hasMany(jualSampah ,{
+  foreignKey: "mitraCode",
+});
+
+jualSampah.belongsTo(mitra ,{
+  foreignKey: "mitraCode",
+});
+
+pembeli.hasMany(jualSampah ,{
+  foreignKey: "pembeliCode",
+});
+
+jualSampah.belongsTo(pembeli ,{
+  foreignKey: "pembeliCode",
+});
+
 beliSampah.hasMany(detailBeliSampah ,{
   foreignKey: "bsCode",
 });
@@ -90,6 +118,25 @@ detailJualSampah.belongsTo((master.jenisSampah), {
 
 fasilitator.hasMany(kunjungan ,{
   foreignKey: "fasilitatorCode",
+});
+
+kunjungan.belongsTo(fasilitator ,{
+  foreignKey: "fasilitatorCode",
+});
+
+mitra.hasMany(kunjungan ,{
+  foreignKey: "mitraCode",
+});
+
+kunjungan.belongsTo(mitra ,{
+  foreignKey: "mitraCode",
+});
+
+(master.kategoriSampah).hasMany((master.jenisSampah) ,{
+  foreignKey: "ksCode",
+});
+(master.jenisSampah).belongsTo((master.kategoriSampah), {
+  foreignKey: "ksCode",
 });
 
 

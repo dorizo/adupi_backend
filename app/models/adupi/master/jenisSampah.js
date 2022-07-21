@@ -10,6 +10,10 @@ export const jenisSampah = db.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    ksCode: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     jenis: {
       type: DataTypes.STRING,
       allowNull: false,

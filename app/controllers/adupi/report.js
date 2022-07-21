@@ -755,3 +755,44 @@ export const getAnalisisPembelianDenganPekerjaPerbulan = async (req, res) => {
     data: data,
   });
 };
+
+
+export const getNewPenjualanPerkategori = async (req, res) => {
+  let date = new Date();
+  let condition = "";
+  if (req.query.ksCode != null) {
+    condition = condition + "WHERE ksCode = '" + req.query.ksCode + "'";
+  }
+  const data = await db.query(
+    "SELECT * FROM new_report_penjualan_semua_mitra_perkategori " + condition,
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
+export const getNewPembelianPerkategori = async (req, res) => {
+  let date = new Date();
+  let condition = "";
+  if (req.query.ksCode != null) {
+    condition = condition + "WHERE ksCode = '" + req.query.ksCode + "'";
+  }
+  const data = await db.query(
+    "SELECT * FROM new_report_pembelian_semua_mitra_perkategori " + condition,
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};

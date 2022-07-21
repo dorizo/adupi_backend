@@ -30,6 +30,36 @@ export const getAllPembeli = async (req, res, next) => {
   }
 };
 
+export const getAllPembeliForPembelian = async (req, res, next) => {
+  try {
+    if(req.query.search != null){
+      var condition = {
+        deleteAt: null,
+        parentCode: null,
+        pembeli: { [op.like]: `%${req.query.search}%` }
+      };
+    }else{
+      var condition = {
+        deleteAt: null,
+        parentCode: null,
+      };
+    }
+    const pembeli = await model.adupi.pembeli.findAll({
+      where: condition,
+    });
+    return res.status(200).json({
+      status: 200,
+      message: "Pembeli ditemukan",
+      data: pembeli,
+    });
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Pembeli tidak ditemukan",
+    });
+  }
+};
+
 export const getOnePembeli = async (req, res, next) => {
   try {
     const pembeli = await model.adupi.pembeli.findOne({
