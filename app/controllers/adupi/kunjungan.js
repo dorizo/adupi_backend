@@ -61,6 +61,9 @@ export const getAllKunjungan = async (req, res, next) => {
     }
     const kunjungan = await model.adupi.kunjungan.findAll({
       where: condition,
+      order: [
+        ['kunjunganCode', 'DESC'],
+      ],
       include: [
         {
           model: model.adupi.fasilitator,
@@ -129,11 +132,14 @@ export const getOneKunjungan = async (req, res, next) => {
 };
 
 export const addKunjungan = async (req, res, next) => {
+ 
   await model.adupi.kunjungan
     .create({
       judul: req.body.judul,
       deskripsi: req.body.deskripsi,
       mitraCode: req.body.mitraCode,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
       fasilitatorCode: req.fasilitatorCode,
     })
     .then(function (kunjungan) {
@@ -151,6 +157,32 @@ export const addKunjungan = async (req, res, next) => {
     });
 };
 
+export const addKunjunganimage = async (req, res, next) => {
+
+  let uploadFoto = await saveImage({
+    imageBase64: req.body.image.replace(/^data:image\/\w+;base64,/, ""),
+    extImage: req.body.image.split(";")[0].split("/")[1],
+    nameImage: (Math.random() + 1).toString(36).substring(7) + "_kunjungan",
+    dir: "kunjungan",
+  });
+  await model.adupi.kunjunganimage.create({
+      kunjunganCode :req.body.idku,
+      foto : uploadFoto.url
+
+  }).then(function (kunjungan) {
+      if (kunjungan) {
+        return res.status(200).json({
+          status: 200,
+          message: "Berhasil menambah data kunjungan",
+        });
+      } else {
+        return res.status(400).json({
+          status: 400,
+          message: "Gagal menambah data kunjungan",
+        });
+      }
+    });
+}
 export const editKunjungan = async (req, res, next) => {
   try {
     const kunjungan = await model.adupi.kunjungan.findOne({

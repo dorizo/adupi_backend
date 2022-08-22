@@ -11,6 +11,7 @@ import { pembeli } from "./pembeli.js";
 import { jualSampah } from "./jualSampah.js";
 import { detailJualSampah } from "./detailJualSampah.js";
 import { kunjungan } from "./kunjungan.js";
+import kunjunganimage from "./Kunjunganimage.js";
 
 mitra.hasMany(usaha ,{
   foreignKey: "mitraCode",
@@ -153,5 +154,6 @@ export const adupi = {
   jualSampah: jualSampah,
   pembeli: pembeli,
   detailJualSampah: detailJualSampah,
-  kunjungan:kunjungan
+  kunjungan:kunjungan,
+  kunjunganimage : kunjunganimage,
 };

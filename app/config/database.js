@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 
-const db = new Sequelize('', '', '', {
-    host: "",
+const db = new Sequelize('adupi', 'root', '', {
+    host: "localhost",
     dialect: "mariadb"
 });
  

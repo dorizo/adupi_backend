@@ -779,6 +779,13 @@ router.post(
   adupi.kunjungan.addKunjungan
 );
 
+
+router.post(
+  "/api/v1/kunjungan/addfoto",
+  verifyToken(["CKUNJUNGAN"]),
+  adupi.kunjungan.addKunjunganimage
+);
+
 router.put(
   "/api/v1/kunjungan/edit/:kunjunganCode",
   verifyToken(["UKUNJUNGAN"]),

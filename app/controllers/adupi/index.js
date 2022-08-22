@@ -70,6 +70,7 @@ import {
   getAllKunjungan,
   getOneKunjungan,
   addKunjungan,
+  addKunjunganimage,
   editKunjungan,
   deleteKunjungan,
 } from "./kunjungan.js";
@@ -151,6 +152,7 @@ export const adupi = {
     getAllKunjungan,
     getOneKunjungan,
     addKunjungan,
+    addKunjunganimage,
     editKunjungan,
     deleteKunjungan,
   },

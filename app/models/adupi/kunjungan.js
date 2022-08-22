@@ -14,6 +14,14 @@ export const kunjungan = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    latitude: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    longitude: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     deskripsi: {
       type: DataTypes.STRING,
       allowNull: false,
