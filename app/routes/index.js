@@ -361,6 +361,11 @@ router.get(
 );
 
 router.get(
+  "/api/v1/fasilitator/ceklokasi/:mitraCode",
+  verifyToken(["RDETAILMITRAINFASILITATOR"]),
+  adupi.mitra.getDetailMitraByFasilitator
+);
+router.get(
   "/api/v1/koordinat/:address",
   // verifyToken(["KOORDINAT"]),
   async (req, res) => {
