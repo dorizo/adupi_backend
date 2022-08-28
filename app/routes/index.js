@@ -874,4 +874,15 @@ router.get(
   "/api/v1/kunjunganmitra/view/:mitraCode/:tanggal" , 
   adupi.kunjunganmitra.viewKunjunganAbsen
 )
+
+router.post(
+  "/api/v1/kunjunganmitraformv2/tambah",
+  adupi.validation.kunjunganmitra.addKunjunganmitraValidation,
+  validate,
+  adupi.kunjunganForm.addkunjunganForm
+);
+router.get(
+  "/api/v1/kunjunganmitraform/view/:mitraCode/:tanggal" , 
+  adupi.kunjunganForm.viewkunjunganForm
+)
 export default router;

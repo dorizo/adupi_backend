@@ -117,8 +117,10 @@ import {
 import{getAllpembelian} from "./maps.js"
 import{
 addKunjunganAbsen , 
-viewKunjunganAbsen
+viewKunjunganAbsen,
+addKunjunganAbsenupdate,
 } from "./Kunjunganabsen.js";
+import{addkunjunganForm , viewkunjunganForm , addkunjunganFormupdate} from "./Kunjunganform.js";
 export const adupi = {
   dashboard: {
     getAllAnggotaForDashboard,
@@ -235,7 +237,13 @@ export const adupi = {
   },
   kunjunganmitra :{
     addKunjunganAbsen ,
-    viewKunjunganAbsen
+    viewKunjunganAbsen ,
+    addKunjunganAbsenupdate,
+  },
+  kunjunganForm :{
+    addkunjunganForm ,
+    viewkunjunganForm ,
+    addkunjunganFormupdate,
   },
   validation: validation,
 };

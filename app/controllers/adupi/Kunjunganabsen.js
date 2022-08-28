@@ -21,6 +21,36 @@ export const addKunjunganAbsen = async (req, res, next) => {
         }
       });
 }
+
+
+export const addKunjunganAbsenupdate = async (req, res, next) => {
+  await model.adupi.kunjunganAbsen.update({
+      kunjungan_absen_name: req.body.kunjungan_absen_name,
+      kunjungan_absen_date: req.body.kunjungan_absen_date,
+      kunjungan_absen_status: req.body.kunjungan_absen_status,
+      mitraCode: req.body.mitraCode,
+    } , 
+    {
+      where : {
+        kunjungan_absenCode: req.params.kunjungan_absenCode,
+        deleteAt: null,
+      }
+    }).then(function(hasil){
+      if (hasil) {
+        return res.status(200).json({
+          status: 200,
+          message: "Berhasil menambah data Kunjungan Mitra",
+        });
+      } else {
+        return res.status(400).json({
+          status: 400,
+          message: "Gagal menambah data kunjungan Mitra",
+        });
+      }
+    });
+}
+
+
 export const viewKunjunganAbsen = async (req , res , next) => {
  const kunjungan =  await model.adupi.kunjunganAbsen.findAll(
     {
