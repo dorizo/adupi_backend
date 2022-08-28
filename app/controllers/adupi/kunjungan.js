@@ -167,7 +167,7 @@ export const addKunjunganimage = async (req, res, next) => {
   });
   await model.adupi.kunjunganimage.create({
       kunjunganCode :req.body.idku,
-      status_foto : "non mitra",
+      status_foto : req.body.statusfoto,
       foto : uploadFoto.url
 
   }).then(function (kunjungan) {

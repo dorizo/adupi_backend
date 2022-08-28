@@ -86,5 +86,36 @@ export const viewkunjunganForm = async (req , res , next) => {
       data: kunjungan,
     });
   }
- 
+
 }
+
+
+export const viewkunjunganimagev2 = async (req , res , next) => {
+  const kunjungan =  await model.adupi.kunjunganimage.findAll(
+     {
+       where:{
+       //  [Op.and]:[ 
+         kunjunganCode : req.params.mitraCode,
+         status_foto : req.params.status
+       // ]
+       },
+       order: [
+         ['kunjungan_imageCode', 'DESC'],
+       ],
+     }
+   );
+   console.log(Sequelize.fn(Date()));
+   if (kunjungan.length === 0) {
+     return res.status(404).json({
+       status: 404,
+       message: "Kunjungan Data Tidak Ada",
+     });
+   }else{
+     return res.status(200).json({
+       status: 200,
+       message: "Kunjungan ditemukan",
+       data: kunjungan,
+     });
+   }
+   
+ }

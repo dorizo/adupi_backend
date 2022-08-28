@@ -14,6 +14,10 @@ export const kunjunganimage = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    status_foto: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     foto: {
       type: DataTypes.STRING,
       allowNull: false,

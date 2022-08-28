@@ -788,6 +788,8 @@ router.post(
 router.post(
   "/api/v1/kunjungan/addfoto",
   verifyToken(["CKUNJUNGAN"]),
+  adupi.validation.kunjungan.addfotoValidationimage,
+  validate,
   adupi.kunjungan.addKunjunganimage
 );
 
@@ -884,5 +886,9 @@ router.post(
 router.get(
   "/api/v1/kunjunganmitraform/view/:mitraCode/:tanggal" , 
   adupi.kunjunganForm.viewkunjunganForm
-)
+);
+router.get(
+  "/api/v1/kunjunganmitraimage/view/:mitraCode/:status" , 
+  adupi.kunjunganForm.viewkunjunganimagev2
+);
 export default router;

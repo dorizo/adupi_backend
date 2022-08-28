@@ -29,6 +29,7 @@ import { addPembeliValidation } from "./pembeli/add.js";
 import { editPembeliValidation } from "./pembeli/edit.js";
 import {addKunjunganmitraValidation} from "./kunjunganmitra/add.js"
 import {addKunjunganformValidation} from "./kunjunganform/add.js"
+import{addfotoValidationimage} from "./kunjunganimage/add.js"
 
 export const validation = {
   mitra: {
@@ -65,6 +66,7 @@ export const validation = {
   kunjungan: {
     addKunjunganValidation,
     editKunjunganValidation,
+    addfotoValidationimage
   },
   pembeli: {
     addPembeliOnJualSampahValidation,
