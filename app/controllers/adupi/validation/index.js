@@ -28,6 +28,7 @@ import { addPembeliOnJualSampahValidation } from "./pembeli/addPembeliOnJualSamp
 import { addPembeliValidation } from "./pembeli/add.js";
 import { editPembeliValidation } from "./pembeli/edit.js";
 import {addKunjunganmitraValidation} from "./kunjunganmitra/add.js"
+import {addKunjunganformValidation} from "./kunjunganform/add.js"
 
 export const validation = {
   mitra: {
@@ -72,5 +73,8 @@ export const validation = {
   },
   kunjunganmitra : {
     addKunjunganmitraValidation
+  },
+  kunjunganForm : {
+    addKunjunganformValidation
   }
 };

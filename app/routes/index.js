@@ -877,7 +877,7 @@ router.get(
 
 router.post(
   "/api/v1/kunjunganmitraformv2/tambah",
-  adupi.validation.kunjunganmitra.addKunjunganmitraValidation,
+  adupi.validation.kunjunganForm.addKunjunganformValidation,
   validate,
   adupi.kunjunganForm.addkunjunganForm
 );

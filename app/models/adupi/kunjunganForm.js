@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import db from "../../config/database.js";
 const { DataTypes, literal } = Sequelize;
 export const kunjunganForm = db.define(
-    "kunjungan_form" , {
+    "Kunjungan_form" , {
         Kunjungan_formCode: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
