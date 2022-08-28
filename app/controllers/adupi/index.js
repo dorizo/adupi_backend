@@ -115,7 +115,10 @@ import {
   getDetailTransaksi,
 } from "./dashboard.js";
 import{getAllpembelian} from "./maps.js"
-
+import{
+addKunjunganAbsen , 
+viewKunjunganAbsen
+} from "./Kunjunganabsen.js";
 export const adupi = {
   dashboard: {
     getAllAnggotaForDashboard,
@@ -229,6 +232,10 @@ export const adupi = {
   },
   map : {
     getAllpembelian
+  },
+  kunjunganmitra :{
+    addKunjunganAbsen ,
+    viewKunjunganAbsen
   },
   validation: validation,
 };

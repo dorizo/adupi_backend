@@ -863,4 +863,15 @@ router.post(
   "/api/v1/maps/pembelian",
   adupi.map.getAllpembelian
 );
+
+router.post(
+  "/api/v1/kunjunganmitrav2/tambah",
+  adupi.validation.kunjunganmitra.addKunjunganmitraValidation,
+  validate,
+  adupi.kunjunganmitra.addKunjunganAbsen
+);
+router.get(
+  "/api/v1/kunjunganmitra/view/:mitraCode/:tanggal" , 
+  adupi.kunjunganmitra.viewKunjunganAbsen
+)
 export default router;
