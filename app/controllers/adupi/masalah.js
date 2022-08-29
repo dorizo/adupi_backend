@@ -39,6 +39,70 @@ export const getAllMasalah = async (req, res, next) => {
   }
 };
 
+
+export const getAllMasalahstatuscount = async (req, res, next) => {
+  const masalah = await model.adupi.masalah.count({
+    where: {
+      status: "dalam peninjauan",
+      deleteAt: null,
+    },
+    include :model.adupi.mitra
+  });
+  const masalahselesai = await model.adupi.masalah.count({
+    where: {
+      status: "selesai",
+      deleteAt: null,
+    },
+    include :model.adupi.mitra
+  });
+  return res.status(200).json({
+    status: 200,
+    message: "Masalah ditemukan",
+    data: {"selesai":masalahselesai , "belum": masalah},
+  });
+}
+
+export const getAllMasalahstatus = async (req, res, next) => {
+  console.log(req.params.status);
+  try {
+    let masalah;
+    if (req.params.status == "0") {
+      if (req.params.status == null) {
+        return res.status(400).json({
+          status: 400,
+          message: "Kode mitra dibutuhkan",
+        });
+      } else {
+        masalah = await model.adupi.masalah.findAll({
+          where: {
+            status: req.params.status,
+            deleteAt: null,
+          },
+          include :model.adupi.mitra
+        });
+      }
+    } else {
+      masalah = await model.adupi.masalah.findAll({
+        where: {
+          status: req.params.status,
+          deleteAt: null,
+        },
+        include :model.adupi.mitra
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      message: "Masalah ditemukan",
+      data: masalah,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json({
+      status: 404,
+      message: "Masalah tidak ditemukan",
+    });
+  }
+};
 export const getOneMasalah = async (req, res, next) => {
   try {
     const masalah = await model.adupi.masalah.findOne({

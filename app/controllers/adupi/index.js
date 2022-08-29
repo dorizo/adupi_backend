@@ -90,6 +90,8 @@ import {
   editMasalah,
   deleteMasalah,
   updateStatusMasalah,
+  getAllMasalahstatus,
+  getAllMasalahstatuscount,
 } from "./masalah.js";
 
 import {
@@ -221,6 +223,8 @@ export const adupi = {
     editMasalah,
     deleteMasalah,
     updateStatusMasalah,
+    getAllMasalahstatus,
+    getAllMasalahstatuscount
   },
 
   pembeli: {

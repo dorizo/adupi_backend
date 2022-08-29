@@ -533,6 +533,16 @@ router.delete(
 );
 
 //masalah
+
+router.get(
+  "/api/v1/masalah/allstatus/:status?",
+  adupi.masalah.getAllMasalahstatus
+);
+
+router.get(
+  "/api/v1/masalah/allstatuscount",
+  adupi.masalah.getAllMasalahstatuscount
+);
 router.get(
   "/api/v1/masalah/all/:mitraCode?",
   verifyToken(["RMASALAH"]),
