@@ -52,6 +52,8 @@ import {
 import {
   getDocBeliSampah,
   getDocJualSampah,
+  reportpembeliansampah,
+  reportpenjualansampah,
 } from "./export.js"
 
 import {
@@ -215,6 +217,8 @@ export const adupi = {
   export: {
     getDocBeliSampah,
     getDocJualSampah,
+    reportpembeliansampah,
+    reportpenjualansampah,
   },
   masalah: {
     getAllMasalah,

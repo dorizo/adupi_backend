@@ -901,4 +901,14 @@ router.get(
   "/api/v1/kunjunganmitraimage/view/:mitraCode/:status" , 
   adupi.kunjunganForm.viewkunjunganimagev2
 );
+
+router.post(
+  "/api/v1/report/allpembelian",
+  adupi.export.reportpembeliansampah
+);
+
+router.post(
+  "/api/v1/report/allpenjualan",
+  adupi.export.reportpenjualansampah
+);
 export default router;

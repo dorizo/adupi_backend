@@ -1,9 +1,44 @@
 import { model } from "../../models/index.js";
-import { Sequelize } from "sequelize";
+import { QueryTypes } from "sequelize";
 import ExcelJS from "exceljs";
 import fs from "fs";
+import db from "../../config/database.js"
 
-const op = Sequelize.Op;
+// const op = Sequelize.Op;
+
+export const reportpembeliansampah = async (req,res) => {
+
+  // Sequelize.query("select ") 
+  const fasilitator = await db.query(
+    'SELECT * FROM beli_sampah WHERE createAt BETWEEN :mulai AND :akhir',
+    {
+      replacements: { mulai: req.body.tanggalawal , akhir :  req.body.tanggalakhir+' 23:59:59' },
+      type: QueryTypes.SELECT
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Fasilitator ditemukan",
+    data: fasilitator,
+  });
+};
+
+export const reportpenjualansampah = async (req,res) => {
+
+  // Sequelize.query("select ") 
+  const fasilitator = await db.query(
+    'SELECT * FROM jual_sampah WHERE createAt BETWEEN :mulai AND :akhir',
+    {
+      replacements: { mulai: req.body.tanggalawal , akhir :  req.body.tanggalakhir+'  23:59:59' },
+      type: QueryTypes.SELECT
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Fasilitator ditemukan",
+    data: fasilitator,
+  });
+};
 
 export const getDocBeliSampah = (req, res) => {
   if (
