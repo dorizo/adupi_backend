@@ -10,7 +10,7 @@ export const reportpembeliansampah = async (req,res) => {
 
   // Sequelize.query("select ") 
   const fasilitator = await db.query(
-    'SELECT d.nama as nama_anggota ,  c.nama as nama_mitra , c.alamat, c.noHp , b.sumber , FORMAT(b.berat,0,"de_DE")  as berat, FORMAT(b.harga,0,"de_DE") as harga,FORMAT(b.total,0,"de_DE") as total , a.createAt as tanggal_pembelian  FROM beli_sampah a JOIN detail_beli_sampah b ON a.bsCode=b.bsCode JOIN mitra c ON c.mitraCode= a.mitraCode JOIN anggota d ON d.anggotaCode=a.anggotaCode WHERE a.createAt BETWEEN :mulai AND :akhir',
+    'SELECT d.nama as nama_anggota ,  c.nama as nama_mitra , e.jenis , f.kategori , c.alamat, c.noHp , b.sumber , FORMAT(b.berat,0,"de_DE")  as berat, FORMAT(b.harga,0,"de_DE") as harga,FORMAT(b.total,0,"de_DE") as total , a.createAt as tanggal_pembelian  FROM beli_sampah a JOIN detail_beli_sampah b ON a.bsCode=b.bsCode JOIN mitra c ON c.mitraCode= a.mitraCode JOIN anggota d ON d.anggotaCode=a.anggotaCode JOIN jenis_sampah e ON e.jsCode=b.jsCode JOIN kategori_sampah f ON f.ksCode=e.ksCode  WHERE a.createAt BETWEEN :mulai AND :akhir',
     {
       replacements: { mulai: req.body.tanggalawal , akhir :  req.body.tanggalakhir+' 23:59:59' },
       type: QueryTypes.SELECT
