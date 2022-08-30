@@ -2,11 +2,13 @@ import { model } from "../../models/index.js"
 import db from "../../config/database.js";
 import { Sequelize } from "sequelize";
 const op = Sequelize.Op;
-export const getAllpembelian = async (req, res, next) => {
 
+export const getAllpembelian = async (req, res, next) => {
+    console.log(req.body.mitraCode );
     try {
-    let params = [];
-     await model.adupi.mitra.findAll({
+    let nilai;
+    if(req.body.mitraCode === undefined || req.body.mitraCode === "" ){
+        nilai = model.adupi.mitra.findAll({
             attributes: [
                 "mitraCode",
                 "nama",
@@ -20,7 +22,31 @@ export const getAllpembelian = async (req, res, next) => {
                     } 
                 
             }
-    }).then(async(result) => {
+    }); 
+    }else{
+        nilai = model.adupi.mitra.findAll({
+            attributes: [
+                "mitraCode",
+                "nama",
+                "ktp",
+            ],
+            include:model.adupi.usaha,
+            where:{
+                    fasilitatorcode:{
+                        [op.ne]:null
+
+                    },mitraCode : req.body.mitraCode 
+                
+            }
+        });
+    }
+    console.log(nilai);
+    let params = [];
+     await nilai.then(async(result) => {
+        
+        for (let song of result) {
+            console.log(song.mitraCode);
+        }
             for (let song of result) {
                 try {
                     let cartItem3 = {}
