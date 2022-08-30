@@ -10,7 +10,7 @@ export const reportpembeliansampah = async (req,res) => {
 
   // Sequelize.query("select ") 
   const fasilitator = await db.query(
-    'SELECT * FROM beli_sampah WHERE createAt BETWEEN :mulai AND :akhir',
+    'SELECT d.nama as nama_anggota ,  c.nama as nama_mitra , c.alamat, c.noHp , b.sumber , FORMAT(b.berat,0,"de_DE")  as berat, FORMAT(b.harga,0,"de_DE") as harga,FORMAT(b.total,0,"de_DE") as total , a.createAt as tanggal_pembelian  FROM beli_sampah a JOIN detail_beli_sampah b ON a.bsCode=b.bsCode JOIN mitra c ON c.mitraCode= a.mitraCode JOIN anggota d ON d.anggotaCode=a.anggotaCode WHERE a.createAt BETWEEN :mulai AND :akhir',
     {
       replacements: { mulai: req.body.tanggalawal , akhir :  req.body.tanggalakhir+' 23:59:59' },
       type: QueryTypes.SELECT
@@ -27,7 +27,7 @@ export const reportpenjualansampah = async (req,res) => {
 
   // Sequelize.query("select ") 
   const fasilitator = await db.query(
-    'SELECT * FROM jual_sampah WHERE createAt BETWEEN :mulai AND :akhir',
+    'SELECT d.pembeli,c.nama as nama_mitra , e.jenis , f.kategori , FORMAT(b.berat,0,"de_DE")  as berat, FORMAT(b.harga,0,"de_DE") as harga,FORMAT(b.total,0,"de_DE") as total , a.createAt as tanggal_pembuatan   FROM jual_sampah a JOIN detail_jual_sampah b ON a.jsCode=b.jsCode JOIN pembeli d ON d.pembeliCode=a.pembeliCode JOIN mitra c ON c.mitraCode= a.mitraCode JOIN jenis_sampah e ON e.jsCode=b.jenisCode JOIN kategori_sampah f ON f.ksCode=e.ksCode WHERE a.createAt BETWEEN :mulai AND :akhir',
     {
       replacements: { mulai: req.body.tanggalawal , akhir :  req.body.tanggalakhir+'  23:59:59' },
       type: QueryTypes.SELECT
