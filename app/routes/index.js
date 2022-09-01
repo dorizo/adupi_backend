@@ -911,4 +911,9 @@ router.post(
   "/api/v1/report/allpenjualan",
   adupi.export.reportpenjualansampah
 );
+
+router.post(
+  "/api/v1/report/kunjunganmitraall",
+  adupi.export.kunjunganmitraall
+);
 export default router;

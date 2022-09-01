@@ -40,6 +40,34 @@ export const reportpenjualansampah = async (req,res) => {
   });
 };
 
+export const kunjunganmitraall = async (req,res) => {
+
+  // Sequelize.query("select ") 
+  let fasilitator;
+  if(req.body.single){
+    fasilitator = await db.query(
+      'SELECT a.kunjungan_absenCode , b.* , c.nama  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode where a.kunjungan_absenCode = :single',
+      {
+        replacements: { single: req.body.single},
+        type: QueryTypes.SELECT
+      }
+    );  
+  }else{
+    fasilitator = await db.query(
+      'SELECT a.kunjungan_absenCode , b.* , c.nama  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode',
+      {
+        type: QueryTypes.SELECT
+      }
+    );  
+  }
+  return res.status(200).json({
+    status: 200,
+    message: "Fasilitator ditemukan",
+    data: fasilitator,
+  });
+};
+
+
 export const getDocBeliSampah = (req, res) => {
   if (
     req.query.start == null ||
