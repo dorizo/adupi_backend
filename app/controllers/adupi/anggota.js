@@ -74,6 +74,7 @@ export const getAllAnggota = async (req, res, next) => {
               "updateAt",
               "wilayahCode",
               "deleteAt",
+              "ktp",
               [
                 db.literal(
                   "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,13)=anggota.wilayahCode AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah LIMIT 1)"
@@ -128,6 +129,7 @@ export const getAllAnggota = async (req, res, next) => {
             "updateAt",
             "wilayahCode",
             "deleteAt",
+            "ktp",
             [
               db.literal(
                 "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,13)=anggota.wilayahCode AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah LIMIT 1)"
@@ -175,6 +177,7 @@ export const getAllAnggota = async (req, res, next) => {
           "lat",
           "alamat",
           "wilayahCode",
+          "ktp",
           [
             db.literal(
               "(SELECT wilayah.wilayah FROM wilayah WHERE LEFT(wilayahCode,13)=anggota.wilayahCode AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah LIMIT 1)"
