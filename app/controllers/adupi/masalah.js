@@ -179,6 +179,38 @@ export const addMasalah = async (req, res, next) => {
   }
 };
 
+export const fasilitatoreditmasalah = async (req,res,next) =>{
+  console.log(req.body);
+  await model.adupi.masalah
+      .update(
+        {
+          note: req.body.note,
+          status: req.body.status,
+          updateAt: req.body.status=="selesai"?new Date():null,
+        },
+        {
+          where: {
+            masalahCode: req.body.masalahCode,
+            deleteAt: null,
+          },
+        }
+      )
+      .then(function (masalah) {
+        console.log(masalah);
+        if (masalah) {
+          return res.status(200).json({
+            status: 200,
+            message: "Berhasilr data masalah",
+          });
+        } else {
+          return res.status(400).json({
+            status: 400,
+            message: "Gagal merubah data masalah",
+          });
+        }
+      });
+}
+
 export const editMasalah = async (req, res, next) => {
   try {
     const masalah = await model.adupi.masalah.findOne({
@@ -226,7 +258,6 @@ export const editMasalah = async (req, res, next) => {
           foto: urlFoto,
           deskripsi: req.body.deskripsi,
           status: "Dalam peninjauan",
-          updateAt: new Date(),
         },
         {
           where: {

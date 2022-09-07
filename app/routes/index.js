@@ -611,6 +611,11 @@ router.post(
 );
 
 router.post(
+  "/api/v1/fasilitator/masalahnote",
+  adupi.masalah.fasilitatoreditmasalah
+)
+
+router.post(
   "/api/v1/su/activeAnggota/:anggotaCode",
   verifyToken(["ACTIVEANGGOTA"]),
   adupi.validation.anggota.verifAnggotaValidation,

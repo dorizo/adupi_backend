@@ -26,6 +26,10 @@ export const masalah = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    note: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     mitraCode: {
       type: DataTypes.INTEGER,
       allowNull: true,
