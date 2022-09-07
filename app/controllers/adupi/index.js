@@ -127,7 +127,7 @@ addKunjunganAbsen ,
 viewKunjunganAbsen,
 addKunjunganAbsenupdate,
 } from "./Kunjunganabsen.js";
-import{addkunjunganForm , viewkunjunganForm , addkunjunganFormupdate , viewkunjunganimagev2} from "./Kunjunganform.js";
+import{addkunjunganForm , viewkunjunganForm , addkunjunganFormupdate , viewkunjunganimagev2 , cekkunjungan} from "./Kunjunganform.js";
 export const adupi = {
   dashboard: {
     getAllAnggotaForDashboard,
@@ -259,6 +259,8 @@ export const adupi = {
     viewkunjunganForm ,
     addkunjunganFormupdate,
     viewkunjunganimagev2,
+    cekkunjungan,
+
   },
   validation: validation,
 };

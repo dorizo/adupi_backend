@@ -560,6 +560,11 @@ router.get(
   adupi.masalah.getOneMasalah
 );
 
+router.get(
+  "/api/v1/cekkunjungan/:kunjungan_absenCode",
+  adupi.kunjunganForm.cekkunjungan
+);
+
 router.post(
   "/api/v1/masalah/add",
   verifyToken(["CMASALAH"]),

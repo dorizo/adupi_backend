@@ -26,6 +26,27 @@ export const addkunjunganForm = async (req, res, next) => {
       });
 }
 
+export const cekkunjungan = async (req, res, next) => {
+  const masalahselesai = await model.adupi.kunjunganForm.count({
+    where: {
+      mitraCode : req.params.kunjungan_absenCode,
+    },
+  });
+  const image = await model.adupi.kunjunganimage.count({
+    where: {
+      kunjunganCode : req.params.kunjungan_absenCode,
+      status_foto : "mitra"
+    },
+  })
+  
+  return res.status(200).json({
+    status: 200,
+    message: "Masalah ditemukan",
+    data: {"masalahform":masalahselesai , "masalahfoto": image },
+  });
+
+}
+
 
 export const addkunjunganFormupdate = async (req, res, next) => {
   await model.adupi.kunjunganForm.update({
