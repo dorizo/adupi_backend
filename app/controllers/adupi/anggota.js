@@ -33,7 +33,7 @@ export const checkMitraOrNot = async (req, res, next) => {
 export const getAllAnggota = async (req, res, next) => {
   try {
     let condition;
-    if (req.mitraCode == "0") {
+    if (req.params.mitraCode) {
       if (req.params.mitraCode == null || req.params.status == null) {
         return res.status(400).json({
           status: 400,
@@ -163,7 +163,7 @@ export const getAllAnggota = async (req, res, next) => {
         }
       }
     } else {
-      condition = { ...condition, deleteAt: null, mitraCode: req.mitraCode };
+      condition = { ...condition, deleteAt: null, mitraCode: req.params.mitraCode };
       const anggota = await model.adupi.anggota.findAll({
         attributes: [
           "anggotaCode",
