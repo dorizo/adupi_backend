@@ -163,7 +163,7 @@ export const getAllAnggota = async (req, res, next) => {
         }
       }
     } else {
-      condition = { ...condition, deleteAt: null, mitraCode: req.params.mitraCode };
+      condition = { ...condition, deleteAt: null, mitraCode: req.mitraCode };
       const anggota = await model.adupi.anggota.findAll({
         attributes: [
           "anggotaCode",
