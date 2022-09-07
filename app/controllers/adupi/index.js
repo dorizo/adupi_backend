@@ -95,6 +95,7 @@ import {
   updateStatusMasalah,
   getAllMasalahstatus,
   getAllMasalahstatuscount,
+  getalllogfasilitator,
 } from "./masalah.js";
 
 import {
@@ -230,7 +231,8 @@ export const adupi = {
     deleteMasalah,
     updateStatusMasalah,
     getAllMasalahstatus,
-    getAllMasalahstatuscount
+    getAllMasalahstatuscount,
+    getalllogfasilitator
   },
 
   pembeli: {

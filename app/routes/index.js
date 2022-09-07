@@ -544,6 +544,10 @@ router.get(
   adupi.masalah.getAllMasalahstatuscount
 );
 router.get(
+  "/api/v1/logfasilitator",
+  adupi.masalah.getalllogfasilitator
+);
+router.get(
   "/api/v1/masalah/all/:mitraCode?",
   verifyToken(["RMASALAH"]),
   adupi.beliSampah.checkMitraOrNotBeliSampah,

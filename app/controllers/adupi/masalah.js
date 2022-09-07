@@ -1,3 +1,4 @@
+import db from "../../config/database.js";
 import { model } from "../../models/index.js";
 import { saveImage } from  "../../utils/saveImage.js"
 
@@ -55,13 +56,23 @@ export const getAllMasalahstatuscount = async (req, res, next) => {
     },
     include :model.adupi.mitra
   });
+  const faslitatorkunjungan = await db.query("select count(*) as total from fasilitator_logs WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d')  GROUP BY fasilitator_logmapping limit 1");
+  
   return res.status(200).json({
     status: 200,
     message: "Masalah ditemukan",
-    data: {"selesai":masalahselesai , "belum": masalah},
+    data: {"selesai":masalahselesai , "belum": masalah,  "faslilitator" :faslitatorkunjungan[0][0]?faslitatorkunjungan[0][0]?.total:0  },
   });
 }
-
+export const getalllogfasilitator = async (req,res,next) => {
+  const faslitatorkunjungan = await db.query("select a.* , b.nama  from fasilitator_logs a JOIN fasilitator b ON b.fasilitatorCode=a.fasilitatorCode  WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d')  GROUP BY fasilitator_logmapping");
+  
+  return res.status(200).json({
+    status: 200,
+    message: "Masalah ditemukan",
+    data: faslitatorkunjungan[0],
+  });
+}
 export const getAllMasalahstatus = async (req, res, next) => {
   console.log(req.params.status);
   try {
