@@ -28,7 +28,6 @@ export const masalah = db.define(
     },
     note: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     mitraCode: {
       type: DataTypes.INTEGER,
