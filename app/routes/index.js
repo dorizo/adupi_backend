@@ -930,4 +930,33 @@ router.post(
   "/api/v1/report/kunjunganmitraall",
   adupi.export.kunjunganmitraall
 );
+router.post(
+  "/api/v1/alltarget",
+  adupi.target.viewalltarget
+);
+router.post(
+  "/api/v1/singletarget",
+  adupi.target.viewsingle
+);
+
+router.post(
+  "/api/v1/savetarget",
+  adupi.target.savetarget
+);
+
+router.post(
+  "/api/v1/getsinglemitra",
+  adupi.target.getsinglemitra
+);
+
+router.post(
+  "/api/v1/updatetarget",
+  adupi.target.updatetarget
+);
+
+
+router.post(
+  "/api/v1/viewtargetpermitra",
+  adupi.target.viewtargetpermitra
+);
 export default router;
