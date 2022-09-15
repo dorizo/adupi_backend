@@ -959,4 +959,9 @@ router.post(
   "/api/v1/viewtargetpermitra",
   adupi.target.viewtargetpermitra
 );
+
+router.post(
+  "/api/v1/hapustarget",
+  adupi.target.deletetarget
+);
 export default router;

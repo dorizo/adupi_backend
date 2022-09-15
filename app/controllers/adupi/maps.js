@@ -4,26 +4,10 @@ import { Sequelize } from "sequelize";
 const op = Sequelize.Op;
 
 export const getAllpembelian = async (req, res, next) => {
-    console.log(req.body.mitraCode );
+    console.log("kok" ,req.body.mitraCode );
     try {
     let nilai;
-    if(req.body.mitraCode === undefined || req.body.mitraCode === "" ){
-        nilai = model.adupi.mitra.findAll({
-            attributes: [
-                "mitraCode",
-                "nama",
-                "ktp",
-            ],
-            include:model.adupi.usaha,
-            where:{
-                    fasilitatorcode:{
-                        [op.ne]:null
-
-                    } 
-                
-            }
-    }); 
-    }else{
+    if(req.body.mitraCode !== undefined &&  req.body.mitraCode !== "" &&  req.body.mitraCode !== null ){
         nilai = model.adupi.mitra.findAll({
             attributes: [
                 "mitraCode",
@@ -39,6 +23,36 @@ export const getAllpembelian = async (req, res, next) => {
                 
             }
         });
+    
+    }else if(req.body.Provinsi !== undefined && req.body.Provinsi !== "" ){
+
+        nilai = model.adupi.mitra.findAll({
+            attributes: [
+                "mitraCode",
+                "nama",
+                "ktp",
+            ],
+            include:model.adupi.usaha,
+            where:Sequelize.where(
+                Sequelize.fn('LEFT', db.col('mitra.wilayahCode'), 2), req.body.Provinsi //fn('left(,2)',)
+            )
+        });
+    }else{
+        nilai = model.adupi.mitra.findAll({
+            attributes: [
+                "mitraCode",
+                "nama",
+                "ktp",
+            ],
+            include:model.adupi.usaha,
+            where:{
+                    fasilitatorcode:{
+                        [op.ne]:null
+
+                    } 
+                
+            }
+    }); 
     }
     console.log(nilai);
     let params = [];
