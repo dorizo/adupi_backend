@@ -964,4 +964,20 @@ router.post(
   "/api/v1/hapustarget",
   adupi.target.deletetarget
 );
+
+
+router.get(
+  "/api/v1/lampiran/:MitraCode",
+  adupi.target.lampiran
+);
+
+router.post(
+  "/api/v1/savelampiran",
+  adupi.target.lampiransave
+);
+
+router.post(
+  "/api/v1/deletelampiran",
+  adupi.target.lampirandelete
+);
 export default router;

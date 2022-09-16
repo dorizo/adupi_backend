@@ -128,7 +128,7 @@ viewKunjunganAbsen,
 addKunjunganAbsenupdate,
 } from "./Kunjunganabsen.js";
 import{addkunjunganForm , viewkunjunganForm , addkunjunganFormupdate , viewkunjunganimagev2 , cekkunjungan} from "./Kunjunganform.js";
-import {viewalltarget , viewsingle,savetarget ,getsinglemitra,updatetarget ,viewtargetpermitra , deletetarget} from "./Target.js"
+import {viewalltarget , viewsingle,savetarget ,getsinglemitra,updatetarget ,viewtargetpermitra , deletetarget,lampiran,lampiransave,lampirandelete,} from "./Target.js"
 
 export const adupi = {
   dashboard: {
@@ -272,6 +272,9 @@ export const adupi = {
     updatetarget,
     viewtargetpermitra,
     deletetarget,
+    lampiran,
+    lampiransave,
+    lampirandelete,
 
   },
   validation: validation,
