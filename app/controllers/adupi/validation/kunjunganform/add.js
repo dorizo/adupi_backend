@@ -6,7 +6,6 @@ export const addKunjunganformValidation = [
   check("Kunjungan_formKeterlambatan", "Deskripsi tidak boleh kosong").notEmpty().trim().escape(),
   check("Kunjungan_formHargaPembelian", "Deskripsi tidak boleh kosong").notEmpty().trim().escape(),
   check("Kunjungan_formPekerja", "Deskripsi tidak boleh kosong").notEmpty().trim().escape(),
-  check("Kunjungan_formJumlahMesin", "Deskripsi tidak boleh kosong").notEmpty().trim().escape(),
   check("Kunjungan_formPendampingan", "Deskripsi tidak boleh kosong").notEmpty().trim().escape(),
   
   check("mitraCode", "Kode mitra tidak boleh kosong").notEmpty().trim().escape(),

@@ -8,7 +8,7 @@ export const addkunjunganForm = async (req, res, next) => {
         Kunjungan_formKeterlambatan: req.body.Kunjungan_formKeterlambatan,
         Kunjungan_formHargaPembelian: req.body.Kunjungan_formHargaPembelian,
         Kunjungan_formPekerja: req.body.Kunjungan_formPekerja,
-        Kunjungan_formJumlahMesin: req.body.Kunjungan_formJumlahMesin,
+        Kunjungan_formJumlahMesin: 0,
         Kunjungan_formPendampingan: req.body.Kunjungan_formPendampingan,
         mitraCode: req.body.mitraCode,
       }).then(function(hasil){
