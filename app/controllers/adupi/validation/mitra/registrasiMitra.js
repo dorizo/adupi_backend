@@ -176,25 +176,10 @@ export const registrasiMitraValidation = [
     .trim()
     .escape(),
   check(
-    "mesin.*.jenisMesin",
-    "Jenis mesin harus berisi 'Mesin Press' atau 'Mesin Giling'"
-  )
-    .isIn(["Mesin Press", "Mesin Giling"])
-    .trim()
-    .escape(),
-
-  check(
     "mesin.*.statusKepemilikanMesin",
     "Status kepemilikan mesin tidak boleh kosong"
   )
     .notEmpty()
-    .trim()
-    .escape(),
-  check(
-    "mesin.*.statusKepemilikanMesin",
-    "Status kepemilikan mesin harus berisi 'Milik Sendiri', 'Sewa' atau 'Hak Pakai'"
-  )
-    .isIn(["Milik Sendiri", "Sewa", "Hak Pakai"])
     .trim()
     .escape(),
   check("mesin.*.kapasitas", "Kapasitas tidak boleh kosong")
