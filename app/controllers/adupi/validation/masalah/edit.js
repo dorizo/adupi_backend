@@ -7,7 +7,7 @@ export const editMasalahValidation = [
     "jenisMasalah",
     "Jenis masalah harus berisi 'Kerusakan Mesin', 'Kerusakan Kendaraan', 'Kerusakan Peralatan', 'Masalah Ketenagakerjaan', 'Masalah Suplay' atau 'Kondisi Darurat'"
   )
-    .isIn(["Kerusakan Mesin", "Kerusakan Kendaraan", "Kerusakan Peralatan", "Masalah Ketenagakerjaan", "Masalah Suplay", "Kondisi Darurat"])
+    .isIn(["Kerusakan Mesin", "Kerusakan Kendaraan", "Kerusakan Peralatan", "Masalah Ketenagakerjaan", "Masalah Suplay", "Kondisi Darurat" ,"Masalah Lain Lain"])
     .trim()
     .escape(),
   check("deskripsi", "Deskripsi masalah tidak boleh kosong")
