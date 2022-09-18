@@ -101,6 +101,7 @@ export const getAllAnggota = async (req, res, next) => {
               ],
             ],
             where: condition,
+            order: [["anggotaCode", "DESC"]],
           });
           return res.status(200).json({
             status: 200,
@@ -156,6 +157,7 @@ export const getAllAnggota = async (req, res, next) => {
             ],
           ],
             where: condition,
+            order: [["anggotaCode", "DESC"]],
           });
           return res.status(200).json({
             status: 200,
@@ -204,6 +206,7 @@ export const getAllAnggota = async (req, res, next) => {
           ],
         ],
         where: condition,
+        order: [["anggotaCode", "DESC"]],
       });
       return res.status(200).json({
         status: 200,
