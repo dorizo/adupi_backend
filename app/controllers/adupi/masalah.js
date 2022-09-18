@@ -17,6 +17,7 @@ export const getAllMasalah = async (req, res, next) => {
             mitraCode: req.params.mitraCode,
             deleteAt: null,
           },
+          order: [["masalahCode", "DESC"]],
         });
       }
     } else {
@@ -25,6 +26,7 @@ export const getAllMasalah = async (req, res, next) => {
           mitraCode: req.mitraCode,
           deleteAt: null,
         },
+        order: [["masalahCode", "DESC"]],
       });
     }
     return res.status(200).json({

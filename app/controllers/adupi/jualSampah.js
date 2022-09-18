@@ -64,6 +64,7 @@ export const getJualSampah = (req, res) => {
       ],
       limit,
       offset,
+      order: [["jsCode", "DESC"]],
     })
     .then(async (data) => {
       const totalAll = await model.adupi.beliSampah.findAll({
