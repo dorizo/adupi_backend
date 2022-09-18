@@ -19,13 +19,6 @@ export const addMesinValidation = [
     .notEmpty()
     .trim()
     .escape(),
-  check(
-    "jenisMesin",
-    "Jenis mesin harus berisi 'Mesin Press' atau 'Mesin Giling'"
-  )
-    .isIn(["Mesin Press", "Mesin Giling"])
-    .trim()
-    .escape(),
 
   check("statusKepemilikanMesin", "Status kepemilikan mesin tidak boleh kosong")
     .notEmpty()
@@ -33,9 +26,9 @@ export const addMesinValidation = [
     .escape(),
   check(
     "statusKepemilikanMesin",
-    "Status kepemilikan mesin harus berisi 'Milik Sendiri', 'Sewa' atau 'Hak Pakai'"
+    "Status kepemilikan mesin harus berisi 'Milik Sendiri','Program GESN', 'Sewa' atau 'Hak Pakai'"
   )
-    .isIn(["Milik Sendiri", "Sewa", "Hak Pakai"])
+    .isIn(["Milik Sendiri", "Program GESN", "Hak Pakai","Sewa"])
     .trim()
     .escape(),
   check("kapasitas", "Kapasitas tidak boleh kosong").notEmpty().trim().escape(),
