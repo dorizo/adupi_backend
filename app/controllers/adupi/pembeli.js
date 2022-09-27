@@ -1,6 +1,6 @@
 import { model } from "../../models/index.js";
 import { saveImage } from "../../utils/saveImage.js";
-import { Sequelize } from "sequelize";
+import { Sequelize, where } from "sequelize";
 const op = Sequelize.Op;
 export const getAllPembeli = async (req, res, next) => {
   try {
@@ -110,11 +110,24 @@ export const addPembeli = async (req, res, next) => {
 };
 
 export const addPembeliJualSampah = async (req, res, next) => {
+  const name = await model.adupi.pembeli.findOne({
+      where :{
+        pembeli : req.body.pembeli
+      }
+    }
+  )
+  if(name){
+  return res.status(200).json({
+    status: 200,
+    message: "Berhasil menambah data pembeli",
+    data: name
+  });
+}
   await model.adupi.pembeli
     .create({
       status: "0",
       pembeli: req.body.pembeli,
-      parentCode: req.body.parentCode,
+      parentCode: req.userCode,
       createAt: new Date(),
     })
     .then(function (pembeli) {

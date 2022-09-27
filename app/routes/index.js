@@ -415,6 +415,14 @@ router.get(
   adupi.beliSampah.getBeliSampah
 );
 
+//admin beli sampah
+
+router.get(
+  "/api/v1/su/beli/sampah",
+  adupi.beliSampah.getSuperAdminBeliSampah
+);
+
+
 router.post(
   "/api/v1/beli/sampah",
   verifyToken(["BSAMPAH"]),
@@ -424,6 +432,14 @@ router.post(
   adupi.beliSampah.addBeliSampah
 );
 
+router.post(
+  "/api/v1/beli/editsampah",
+  verifyToken(["BSAMPAH"]),
+  adupi.anggota.checkMitraOrNot,
+  // adupi.validation.beliSampah.addBeliSampahValidation,
+  validate,
+  adupi.beliSampah.editBeliSampah
+);
 // jual sampah
 router.post(
   "/api/v1/jual/sampah/add/pembeli",
@@ -440,6 +456,12 @@ router.get(
 );
 
 router.get(
+  "/api/v1/su/jual/sampah",
+  verifyToken(["RJUALSAMPAH"]),
+  adupi.beliSampah.checkMitraOrNotBeliSampah,
+  adupi.jualSampah.getsuJualSampah
+);
+router.get(
   "/api/v1/jual/getPembeli",
   verifyToken(["RJUALSAMPAH"]),
   adupi.pembeli.getAllPembeliForPembelian
@@ -452,6 +474,15 @@ router.post(
   adupi.validation.jualSampah.addJualSampahValidation,
   validate,
   adupi.jualSampah.addJualSampah
+);
+
+router.post(
+  "/api/v1/jual/editsampah",
+  verifyToken(["JSAMPAH"]),
+  adupi.anggota.checkMitraOrNot,
+  adupi.validation.jualSampah.addJualSampahValidation,
+  validate,
+  adupi.jualSampah.editjualsampah
 );
 
 // anggota

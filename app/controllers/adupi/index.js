@@ -102,9 +102,11 @@ import {
 import {
   addBeliSampah,
   getBeliSampah,
+  editBeliSampah,
+  getSuperAdminBeliSampah,
   checkMitraOrNot as checkMitraOrNotBeliSampah,
 } from "./beliSampah.js";
-import { addJualSampah, getJualSampah } from "./jualSampah.js";
+import { addJualSampah, getJualSampah,editjualsampah ,getsuJualSampah } from "./jualSampah.js";
 
 import {
   addPembeli,
@@ -181,10 +183,14 @@ export const adupi = {
     checkMitraOrNotBeliSampah,
     getBeliSampah,
     addBeliSampah,
+    editBeliSampah,
+    getSuperAdminBeliSampah
   },
   jualSampah: {
     getJualSampah,
+    getsuJualSampah,
     addJualSampah,
+    editjualsampah,
   },
   fasilitator: {
     getAllFasilitator,
