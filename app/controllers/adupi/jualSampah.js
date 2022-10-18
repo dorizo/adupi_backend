@@ -49,12 +49,18 @@ export const getJualSampah = (req, res) => {
       include: [
         {
           model: model.adupi.detailJualSampah,
+          required: true,
           where: {
             deleteAt: null,
           },
           include: [
             {
               model: model.adupi.master.jenisSampah,
+              on: {
+                col1: Sequelize.where(Sequelize.col("detail_jual_sampahs.jenisCode"), "=", Sequelize.col("detail_jual_sampahs.jenis_sampah.jsCode")),
+              }
+              // where:["jsCode=jenisCode"]
+              
             },
           ],
         },
