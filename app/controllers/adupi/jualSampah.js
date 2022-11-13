@@ -317,7 +317,15 @@ export const getsuJualSampah = (req, res) => {
         },
         {
           model: model.adupi.pembeli,
-        }
+        },
+        {
+          model: model.adupi.mitra,
+          include:[
+            {
+              model:model.adupi.usaha
+            }
+          ]
+        },
       ],
       limit,
       offset,

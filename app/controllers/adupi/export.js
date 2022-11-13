@@ -46,7 +46,7 @@ export const kunjunganmitraall = async (req,res) => {
   let fasilitator;
   if(req.body.single){
     fasilitator = await db.query(
-      'SELECT a.kunjungan_absenCode , b.* , c.nama  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode where a.kunjungan_absenCode = :single',
+      'SELECT a.kunjungan_absenCode , b.* , c.nama ,u.namaUsaha  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode JOIN usaha u ON u.mitraCode=c.mitraCode where a.kunjungan_absenCode = :single order by kunjungan_absenCode Desc',
       {
         replacements: { single: req.body.single},
         type: QueryTypes.SELECT
@@ -54,7 +54,7 @@ export const kunjunganmitraall = async (req,res) => {
     );  
   }else{
     fasilitator = await db.query(
-      'SELECT a.kunjungan_absenCode , b.* , c.nama  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode',
+      'SELECT a.kunjungan_absenCode , b.* , c.nama ,u.namaUsaha  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode JOIN usaha u ON u.mitraCode=c.mitraCode order by kunjungan_absenCode Desc',
       {
         type: QueryTypes.SELECT
       }

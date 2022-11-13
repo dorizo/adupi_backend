@@ -14,7 +14,7 @@ export const getAllpembelian = async (req, res, next) => {
                 "nama",
                 "ktp",
             ],
-            include:model.adupi.usaha,
+            include:[{model : model.adupi.usaha}],
             where:{
                     fasilitatorcode:{
                         [op.ne]:null

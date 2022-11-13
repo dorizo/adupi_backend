@@ -738,6 +738,9 @@ export const getAllMitraVerified = async (req, res, next) => {
             deleteAt: null,
           },
         },
+        {
+          model : model.adupi.usaha
+        }
       ],
     });
     return res.status(200).json({
