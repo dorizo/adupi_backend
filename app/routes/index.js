@@ -458,7 +458,7 @@ router.get(
 router.get(
   "/api/v1/su/jual/sampah",
   verifyToken(["RJUALSAMPAH"]),
-  adupi.beliSampah.checkMitraOrNotBeliSampah,
+  // adupi.beliSampah.checkMitraOrNotBeliSampah,
   adupi.jualSampah.getsuJualSampah
 );
 router.get(
