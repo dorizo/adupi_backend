@@ -55,10 +55,12 @@ export const viewKunjunganAbsen = async (req , res , next) => {
  const kunjungan =  await model.adupi.kunjunganAbsen.findAll(
     {
       where:{
-      //  [Op.and]:[ 
+       [Op.and]:[ {
         mitraCode : req.params.mitraCode,
-        kunjungan_absen_date : req.params.tanggal
-      // ]
+        //  : 
+          },
+        Sequelize.where(Sequelize.cast(Sequelize.col('kunjungan_absen_date'), 'date'), '=', req.params.tanggal),
+        ]
       },
       order: [
         ['kunjungan_absenCode', 'DESC'],
