@@ -39,19 +39,19 @@ export const addAnggotaValidation = [
     .isIn(["L", "P"])
     .trim()
     .escape(),
-  check("wilayahCode", "Wilayah tidak boleh kosong").notEmpty().trim().escape(),
-  check("wilayahCode").custom(async (value) => {
-    const desa = await db.query(
-      "SELECT * FROM wilayah WHERE LEFT(wilayahCode,8)=? AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah",
-      {
-        replacements: [value],
-        type: QueryTypes.SELECT,
-      }
-    );
-    if (!desa) {
-      return Promise.reject("Wilayah tidak ditemukan");
-    }
-  }),
+  // check("wilayahCode", "Wilayah tidak boleh kosong").notEmpty().trim().escape(),
+  // check("wilayahCode").custom(async (value) => {
+  //   const desa = await db.query(
+  //     "SELECT * FROM wilayah WHERE LEFT(wilayahCode,8)=? AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah",
+  //     {
+  //       replacements: [value],
+  //       type: QueryTypes.SELECT,
+  //     }
+  //   );
+  //   if (!desa) {
+  //     return Promise.reject("Wilayah tidak ditemukan");
+  //   }
+  // }),
   check("ktp", "KTP tidak boleh kosong").notEmpty(),
   check("alamat", "Alamat tidak boleh kosong").notEmpty(),
 ]
