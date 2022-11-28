@@ -11,7 +11,7 @@ export const getAllUser = async (req, res, next) => {
     //     status: "Public",
     //   },
     // });
-    const user = await db.query("SELECT c.role, CASE WHEN c.role = 'Mitra' THEN (SELECT nama From mitra where userCode=a.userCode) WHEN c.role = 'Fasilitator' THEN (SELECT nama From fasilitator where userCode=a.userCode AND deleteAt is NULL) ELSE'SUPERADMIN'END AS userdata , a.*  FROM user a JOIN role_user b ON b.userCode=a.userCode JOIN role c ON b.roleCode=c.roleCode where a.deleteAt is NUll", {
+    const user = await db.query("SELECT c.role, CASE WHEN c.role = 'Mitra' THEN (SELECT concat(nama,'-',namaUsaha) From mitra JOIN usaha ON usaha.mitraCode=mitra.mitraCode where userCode=a.userCode) WHEN c.role = 'Fasilitator' THEN (SELECT nama From fasilitator where userCode=a.userCode AND deleteAt is NULL) ELSE'SUPERADMIN'END AS userdata , a.*  FROM user a JOIN role_user b ON b.userCode=a.userCode JOIN role c ON b.roleCode=c.roleCode where a.deleteAt is NUll", {
       nest: true,
       type: QueryTypes.SELECT
     });
