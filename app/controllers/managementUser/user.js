@@ -1,13 +1,19 @@
 import { model } from "../../models/index.js";
 import bcrypt from "bcrypt";
+import { QueryTypes } from "sequelize";
+import db from "../../config/database.js";
 
 export const getAllUser = async (req, res, next) => {
   try {
-    const user = await model.managementUser.user.findAll({
-      where: {
-        deleteAt: null,
-        status: "Public",
-      },
+    // const user = await model.managementUser.user.findAll({
+    //   where: {
+    //     deleteAt: null,
+    //     status: "Public",
+    //   },
+    // });
+    const user = await db.query("SELECT c.role, CASE WHEN c.role = 'Mitra' THEN (SELECT nama From mitra where userCode=a.userCode) WHEN c.role = 'Fasilitator' THEN (SELECT nama From fasilitator where userCode=a.userCode AND deleteAt is NULL) ELSE'SUPERADMIN'END AS userdata , a.*  FROM user a JOIN role_user b ON b.userCode=a.userCode JOIN role c ON b.roleCode=c.roleCode where a.deleteAt is NUll", {
+      nest: true,
+      type: QueryTypes.SELECT
     });
     return res.status(200).json({
       status: 200,
