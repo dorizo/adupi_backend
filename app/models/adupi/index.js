@@ -14,6 +14,7 @@ import { kunjungan } from "./kunjungan.js";
 import kunjunganimage from "./Kunjunganimage.js";
 import { kunjunganAbsen } from "./KunjunganAbsen.js";
 import { kunjunganForm } from "./kunjunganForm.js";
+import wilayah from "./wilayah.js";
 
 mitra.hasMany(usaha ,{
   foreignKey: "mitraCode",
@@ -22,6 +23,14 @@ usaha.belongsTo(mitra, {
   foreignKey: "mitraCode",
 });
 
+mitra.hasMany(wilayah ,{
+  foreignKey: "wilayahCode",
+});
+
+// wilayah.belongsTo(mitra, {
+//   foreignKey: "wilayahCode",
+// });
+mitra.hasMany(wilayah ,  { as: 'kabupaten', foreignKey: 'wilayahCode' })
 mitra.hasMany(mesin ,{
   foreignKey: "mitraCode",
 });
@@ -147,6 +156,7 @@ export const adupi = {
   master: master,
   mitra: mitra,
   anggota: anggota,
+  wilayah : wilayah,
   usaha: usaha,
   mesin: mesin,
   fasilitator: fasilitator,

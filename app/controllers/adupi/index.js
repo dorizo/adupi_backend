@@ -131,7 +131,7 @@ addKunjunganAbsenupdate,
 } from "./Kunjunganabsen.js";
 import{addkunjunganForm , viewkunjunganForm , addkunjunganFormupdate , viewkunjunganimagev2 , cekkunjungan} from "./Kunjunganform.js";
 import {viewalltarget , viewsingle,savetarget ,getsinglemitra,updatetarget ,viewtargetpermitra , deletetarget,lampiran,lampiransave,lampirandelete,} from "./Target.js"
-
+import {editMitra , editusaha} from "./revisiqc.js";
 export const adupi = {
   dashboard: {
     getAllAnggotaForDashboard,
@@ -282,6 +282,10 @@ export const adupi = {
     lampiransave,
     lampirandelete,
 
+  },
+  hasilqc :{
+    editMitra,
+    editusaha
   },
   validation: validation,
 };

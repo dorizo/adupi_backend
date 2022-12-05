@@ -1011,4 +1011,16 @@ router.post(
   "/api/v1/deletelampiran",
   adupi.target.lampirandelete
 );
+
+router.post(
+  "/api/v1/qc/editmitra",
+  verifyToken(["CROLEUSER"]),
+  adupi.hasilqc.editMitra
+);
+
+router.post(
+  "/api/v1/qc/editusaha",
+  verifyToken(["CROLEUSER"]),
+  adupi.hasilqc.editusaha
+);
 export default router;

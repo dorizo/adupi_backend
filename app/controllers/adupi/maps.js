@@ -4,7 +4,7 @@ import { Sequelize } from "sequelize";
 const op = Sequelize.Op;
 
 export const getAllpembelian = async (req, res, next) => {
-    console.log("kok" ,req.body.mitraCode );
+    // console.log("kok" ,req.body.mitraCode );
     try {
     let nilai;
     if(req.body.mitraCode !== undefined &&  req.body.mitraCode !== "" &&  req.body.mitraCode !== null ){
@@ -13,6 +13,10 @@ export const getAllpembelian = async (req, res, next) => {
                 "mitraCode",
                 "nama",
                 "ktp",
+                "wilayahCode",
+                [
+                    Sequelize.literal("SELECT * FROM wilayah LIMIT 1")
+                ]
             ],
             include:[{model : model.adupi.usaha}],
             where:{
@@ -31,6 +35,10 @@ export const getAllpembelian = async (req, res, next) => {
                 "mitraCode",
                 "nama",
                 "ktp",
+                "wilayahCode",
+                [
+                    Sequelize.literal("SELECT * FROM wilayah LIMIT 1")
+                ]
             ],
             include:model.adupi.usaha,
             where:Sequelize.where(
@@ -43,8 +51,40 @@ export const getAllpembelian = async (req, res, next) => {
                 "mitraCode",
                 "nama",
                 "ktp",
+                "wilayahCode",
+                [Sequelize.fn('LEFT', Sequelize.col('mitra.wilayahCode') ,8), "BBBB"]
+             
             ],
-            include:model.adupi.usaha,
+            include:[
+                {
+                model : model.adupi.usaha,
+                },
+                {
+                attributes:[
+                        "wilayah",
+                        "wilayahCode"
+                ],
+                model:model.adupi.wilayah,
+                as : 'wilayahs',
+                on: {
+                    col1: Sequelize.where(Sequelize.fn('LEFT',Sequelize.col("mitra.wilayahCode") ,2), "=", Sequelize.col("wilayahs.wilayahCode")),
+                  }, 
+                //   required: false, 
+                },
+                {
+                attributes:[
+                        "wilayah",
+                        "wilayahCode"
+                ],
+                model:model.adupi.wilayah,
+                as : 'kabupaten',
+                on: {
+                    col1: Sequelize.where(Sequelize.fn('LEFT',Sequelize.col("mitra.wilayahCode") ,5), "=", Sequelize.col("kabupaten.wilayahCode")),
+                  }, 
+                //   required: false, 
+                },
+                
+            ],
             where:{
                     fasilitatorcode:{
                         [op.ne]:null
@@ -54,7 +94,7 @@ export const getAllpembelian = async (req, res, next) => {
             }
     }); 
     }
-    console.log(nilai);
+    // console.log("mem",nilai);
     let params = [];
      await nilai.then(async(result) => {
         

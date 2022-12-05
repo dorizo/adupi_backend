@@ -739,6 +739,30 @@ export const getAllMitraVerified = async (req, res, next) => {
           },
         },
         {
+          attributes:[
+                  "wilayah",
+                  "wilayahCode"
+          ],
+          model:model.adupi.wilayah,
+          as : 'wilayahs',
+          on: {
+              col1: Sequelize.where(Sequelize.fn('LEFT',Sequelize.col("mitra.wilayahCode") ,2), "=", Sequelize.col("wilayahs.wilayahCode")),
+            }, 
+          //   required: false, 
+          },
+          {
+          attributes:[
+                  "wilayah",
+                  "wilayahCode"
+          ],
+          model:model.adupi.wilayah,
+          as : 'kabupaten',
+          on: {
+              col1: Sequelize.where(Sequelize.fn('LEFT',Sequelize.col("mitra.wilayahCode") ,5), "=", Sequelize.col("kabupaten.wilayahCode")),
+            }, 
+          //   required: false, 
+          },
+        {
           model : model.adupi.usaha
         }
       ],
