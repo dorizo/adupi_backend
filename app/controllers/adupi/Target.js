@@ -5,7 +5,7 @@ export const viewalltarget = async (req,res) => {
 
     // Sequelize.query("select ") 
     const targetmitra = await db.query(
-      'Select a.*, mt.* , ush.namaUsaha , DATE_FORMAT(MitraTargetTanggal,"%Y-%M") as targettangal ,(SELECT COALESCE(sum(b.totalBerat),0) FROM beli_sampah b WHERE b.mitraCode=a.mitraCode AND DATE_FORMAT(b.createAt,"%Y-%m") = DATE_FORMAT(a.MitraTargetTanggal,"%Y-%m")) x  FROM MitraTarget a JOIN mitra mt ON mt.mitraCode=a.mitraCode JOIN usaha ush ON ush.mitraCode=mt.mitraCode',
+      'Select a.*, mt.* , ush.namaUsaha , DATE_FORMAT(MitraTargetTanggal,"%Y-%M") as targettangal ,(SELECT COALESCE(sum(b.totalBerat),0) FROM beli_sampah b WHERE b.mitraCode=a.mitraCode AND DATE_FORMAT(b.createAt,"%Y-%m") = DATE_FORMAT(a.MitraTargetTanggal,"%Y-%m")) x  FROM MitraTarget a JOIN mitra mt ON mt.mitraCode=a.mitraCode JOIN usaha ush ON ush.mitraCode=mt.mitraCode  order by MitraTargetTanggal desc',
       {
         replacements: { tanggal: req.body.tanggal },
         type: QueryTypes.SELECT,
