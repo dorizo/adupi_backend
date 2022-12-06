@@ -450,14 +450,65 @@ export const getPembelianPermitraPerbulan = async (req, res) => {
     condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
   }
   const data = await db.query(
-    "SELECT * FROM report_pembelian_permitra_perbulan " +
+    "SELECT a.tahun , a.bulan,a.jumlah, sum(a.berat) as berat , a.nama,a.alamat, a.mitraCode  FROM report_pembelian_permitra_perbulan a " +
       condition +
-      " ORDER BY bulan",
+      " GROUP BY mitraCode ORDER BY bulan",
     {
       // replacements: [req.query.wilayahCode],
       type: QueryTypes.SELECT,
     }
   );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
+export const getPembelianPermitraPerbulanline = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  const data = [];
+  // const query =  await db.query(
+  //   "SELECT a.tahun , a.bulan,a.jumlah, berat , a.nama,a.alamat, a.mitraCode  FROM report_pembelian_permitra_perbulan a " +
+  //     condition +
+  //     "ORDER BY bulan",
+  //   {
+  //     // replacements: [req.query.wilayahCode],
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+  const query2 =   await db.query(
+    "select * from mitra",
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  for (var key in query2) {
+    const dataperbulan =Array();
+    for (let i = 0; i < 12; i++) {
+      const query =  await db.query(
+        "SELECT berat FROM report_pembelian_permitra_perbulan a "+
+          condition +" AND mitraCode="+query2[key].mitraCode + 
+          " AND bulan="+i +" ORDER BY bulan",
+        {
+          // replacements: [req.query.wilayahCode],
+          type: QueryTypes.SELECT,
+        }
+      );
+      dataperbulan[i]=query[0]?.berat==null?0:query[0]?.berat;
+    }
+    data[key] = {name :query2[key]?.nama ,data:dataperbulan};
+  };
   return res.status(200).json({
     status: 200,
     message: "Data ditemukan",
@@ -501,14 +552,55 @@ export const getPenjualanPermitraPerbulan = async (req, res) => {
     condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
   }
   const data = await db.query(
-    "SELECT * FROM report_penjualan_permitra_perbulan " +
-      condition +
-      " ORDER BY bulan",
+    "SELECT a.tahun , a.bulan,a.jumlah, sum(a.berat) as berat , a.nama,a.alamat, a.mitraCode  FROM report_penjualan_permitra_perbulan a " +
+    condition +
+    " GROUP BY mitraCode ORDER BY bulan",
     {
       // replacements: [req.query.wilayahCode],
       type: QueryTypes.SELECT,
     }
   );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
+
+export const getPenjualanPermitraPerbulanline = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  const data = [];
+  const query2 =   await db.query(
+    "select * from mitra",
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+  for (var key in query2) {
+    const dataperbulan =Array();
+    for (let i = 0; i < 12; i++) {
+      const query =  await db.query(
+        "SELECT berat FROM report_penjualan_permitra_perbulan a "+
+          condition +" AND mitraCode="+query2[key].mitraCode + 
+          " AND bulan="+i +" ORDER BY bulan",
+        {
+          type: QueryTypes.SELECT,
+        }
+      );
+      dataperbulan[i]=query[0]?.berat==null?0:query[0]?.berat;
+    }
+    data[key] = {name :query2[key]?.nama ,data:dataperbulan};
+  };
   return res.status(200).json({
     status: 200,
     message: "Data ditemukan",

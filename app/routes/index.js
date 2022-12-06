@@ -730,9 +730,20 @@ router.get(
 );
 
 router.get(
+  "/api/v1/report/pembelian/permitraPerbulanline",
+  verifyToken(["REPORT"]),
+  adupi.report.getPembelianPermitraPerbulanline
+);
+router.get(
   "/api/v1/report/penjualan/permitraPerbulan",
   verifyToken(["REPORT"]),
   adupi.report.getPenjualanPermitraPerbulan
+);
+
+router.get(
+  "/api/v1/report/penjualan/permitraPerbulanline",
+  verifyToken(["REPORT"]),
+  adupi.report.getPenjualanPermitraPerbulanline
 );
 
 router.get(
