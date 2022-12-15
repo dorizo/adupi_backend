@@ -133,7 +133,9 @@ addKunjunganAbsenupdate,
 } from "./Kunjunganabsen.js";
 import{addkunjunganForm , viewkunjunganForm , addkunjunganFormupdate , viewkunjunganimagev2 , cekkunjungan} from "./Kunjunganform.js";
 import {viewalltarget , viewsingle,savetarget ,getsinglemitra,updatetarget ,viewtargetpermitra , deletetarget,lampiran,lampiransave,lampirandelete,} from "./Target.js"
-import {editMitra , editusaha} from "./revisiqc.js";
+import {editMitra , editusaha,editnonmitra,editkunjunganmitra} from "./revisiqc.js";
+import{getAllwarna,addwarna,deletewarna,editwarna}from "./warna.js";
+
 export const adupi = {
   dashboard: {
     getAllAnggotaForDashboard,
@@ -154,6 +156,14 @@ export const adupi = {
     getAllMitraVerified,
     getDetailMitraVerified,
     activeAccountMitra,
+  },
+  
+
+  warna: {
+    getAllwarna,
+    addwarna,
+    deletewarna,
+    editwarna
   },
   anggota: {
     checkMitraOrNot,
@@ -289,7 +299,9 @@ export const adupi = {
   },
   hasilqc :{
     editMitra,
-    editusaha
+    editusaha,
+    editnonmitra,
+    editkunjunganmitra,
   },
   validation: validation,
 };

@@ -487,7 +487,7 @@ export const getPembelianPermitraPerbulanline = async (req, res) => {
   //   }
   // );
   const query2 =   await db.query(
-    "select * from mitra",
+    "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL ",
     {
       // replacements: [req.query.wilayahCode],
       type: QueryTypes.SELECT,
@@ -499,7 +499,7 @@ export const getPembelianPermitraPerbulanline = async (req, res) => {
       const query =  await db.query(
         "SELECT berat FROM report_pembelian_permitra_perbulan a "+
           condition +" AND mitraCode="+query2[key].mitraCode + 
-          " AND bulan="+i +" ORDER BY bulan",
+          " AND bulan="+(i+1) +" ORDER BY bulan",
         {
           // replacements: [req.query.wilayahCode],
           type: QueryTypes.SELECT,
@@ -581,7 +581,7 @@ export const getPenjualanPermitraPerbulanline = async (req, res) => {
   }
   const data = [];
   const query2 =   await db.query(
-    "select * from mitra",
+    "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL",
     {
       type: QueryTypes.SELECT,
     }
@@ -592,7 +592,7 @@ export const getPenjualanPermitraPerbulanline = async (req, res) => {
       const query =  await db.query(
         "SELECT berat FROM report_penjualan_permitra_perbulan a "+
           condition +" AND mitraCode="+query2[key].mitraCode + 
-          " AND bulan="+i +" ORDER BY bulan",
+          " AND bulan="+(i+1) +" ORDER BY bulan",
         {
           type: QueryTypes.SELECT,
         }

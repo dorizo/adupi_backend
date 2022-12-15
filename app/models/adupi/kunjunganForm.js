@@ -36,6 +36,9 @@ export const kunjunganForm = db.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        createAt: {
+          type: "DATETIME",
+        },
     },
     {
       freezeTableName: true,

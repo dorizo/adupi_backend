@@ -46,7 +46,7 @@ export const kunjunganmitraall = async (req,res) => {
   let fasilitator;
   if(req.body.single){
     fasilitator = await db.query(
-      'SELECT a.kunjungan_absenCode , b.* , c.nama ,u.namaUsaha  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode JOIN usaha u ON u.mitraCode=c.mitraCode where a.kunjungan_absenCode = :single order by kunjungan_absenCode Desc',
+      'SELECT a.kunjungan_absenCode , b.* , c.nama ,u.namaUsaha  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode JOIN usaha u ON u.mitraCode=c.mitraCode where b.createAt IS NULL AND  a.kunjungan_absenCode = :single order by kunjungan_absenCode Desc',
       {
         replacements: { single: req.body.single},
         type: QueryTypes.SELECT
@@ -54,7 +54,7 @@ export const kunjunganmitraall = async (req,res) => {
     );  
   }else{
     fasilitator = await db.query(
-      'SELECT G.*, (SELECT kunjungan_absen_date FROM kunjungan_absen where kunjungan_absen_status="checkout" AND  kunjungan_absen_name=G.kunjungan_absen_name AND DATE(kunjungan_absen_date)=DATE(G.kunjungan_absen_date) limit 1) as x  FROM (SELECT  a.kunjungan_absenCode , a.kunjungan_absen_name , a.kunjungan_absen_date ,a.kunjungan_absen_status, b.* , c.nama ,u.namaUsaha , e.nama as nama_fasilitator  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode JOIN usaha u ON u.mitraCode=c.mitraCode JOIN mitra d ON d.mitraCode=a.mitraCode JOIN fasilitator e ON e.fasilitatorCode=d.fasilitatorCode order by kunjungan_absenCode Desc) G order by kunjungan_absen_date DESC',
+      'SELECT G.*, (SELECT kunjungan_absen_date FROM kunjungan_absen where kunjungan_absen_status="checkout" AND  kunjungan_absen_name=G.kunjungan_absen_name AND DATE(kunjungan_absen_date)=DATE(G.kunjungan_absen_date) limit 1) as x  FROM (SELECT  a.kunjungan_absenCode , a.kunjungan_absen_name , a.kunjungan_absen_date ,a.kunjungan_absen_status, b.* , c.nama ,u.namaUsaha , e.nama as nama_fasilitator  FROM kunjungan_absen as a JOIN Kunjungan_form as b ON a.kunjungan_absenCode=b.mitraCode JOIN mitra c ON c.mitraCode=a.mitraCode JOIN usaha u ON u.mitraCode=c.mitraCode JOIN mitra d ON d.mitraCode=a.mitraCode JOIN fasilitator e ON e.fasilitatorCode=d.fasilitatorCode where  b.createAt IS NULL  order by kunjungan_absenCode Desc) G order by kunjungan_absen_date DESC',
       {
         type: QueryTypes.SELECT
       }

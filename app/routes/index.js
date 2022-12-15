@@ -1034,4 +1034,54 @@ router.post(
   verifyToken(["CROLEUSER"]),
   adupi.hasilqc.editusaha
 );
+
+router.post(
+  "/api/v1/qc/editnonkunjungan",
+  verifyToken(["CROLEUSER"]),
+  adupi.hasilqc.editnonmitra
+);
+
+
+router.post(
+  "/api/v1/qc/editkunjunganmitra",
+  verifyToken(["CROLEUSER"]),
+  adupi.hasilqc.editkunjunganmitra
+);
+
+
+
+// role
+router.get(
+  "/api/v1/warna/all",
+  verifyToken(["RROLE"]),
+  adupi.warna.getAllwarna
+);
+
+router.get(
+  "/api/v1/warna/one/:roleCode",
+  verifyToken(["RROLE"]),
+  managementUser.role.getOneRole
+);
+
+router.post(
+  "/api/v1/warna/add",
+  verifyToken(["CROLE"]),
+  // managementUser.validation.role.addRoleValidation,
+  // validate,
+  adupi.warna.addwarna
+);
+router.put(
+  "/api/v1/warna/edit/:roleCode",
+  verifyToken(["UROLE"]),
+  // managementUser.validation.role.editRoleValidation,
+  // validate,
+  adupi.warna.editwarna
+);
+router.delete(
+  "/api/v1/warna/delete/:roleCode",
+  verifyToken(["DROLE"]),
+  adupi.warna.deletewarna
+);
+
+
 export default router;

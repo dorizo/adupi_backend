@@ -8,6 +8,7 @@ import { masalah } from "./masalah.js";
 import { beliSampah } from "./beliSampah.js";
 import { detailBeliSampah } from "./detailBeliSampah.js";
 import { pembeli } from "./pembeli.js";
+import { warna } from "./warna.js";
 import { jualSampah } from "./jualSampah.js";
 import { detailJualSampah } from "./detailJualSampah.js";
 import { kunjungan } from "./kunjungan.js";
@@ -165,6 +166,7 @@ export const adupi = {
   detailBeliSampah: detailBeliSampah,
   jualSampah: jualSampah,
   pembeli: pembeli,
+  warna:warna,
   detailJualSampah: detailJualSampah,
   kunjungan:kunjungan,
   kunjunganimage : kunjunganimage,
