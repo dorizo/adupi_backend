@@ -625,6 +625,11 @@ router.get(
   adupi.masalah.updateStatusMasalah
 );
 
+router.post(
+  "/api/v1/masalah/rubahfasilitatormasalah",
+  // verifyToken(["CHANGESTATUSMASALAH"]),
+  adupi.masalah.updateStatusMasalahtanggal
+);
 //super admin
 router.get(
   "/api/v1/su/allMitra/:verified?",

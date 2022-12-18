@@ -99,7 +99,9 @@ export const getAllMasalahstatus = async (req, res, next) => {
         where: {
           status: req.params.status,
           deleteAt: null,
-        },
+        },order: [
+          ["createAt", "DESC"],
+        ],
         include :model.adupi.mitra
       });
     }
@@ -344,6 +346,37 @@ export const deleteMasalah = async (req, res, next) => {
   }
 };
 
+export const updateStatusMasalahtanggal =async (req, res, next) => {
+  try {
+    await model.adupi.masalah
+    .update(
+      req.body,
+      {
+        where: {
+          masalahCode: req.body.masalahCode,
+          deleteAt: null,
+        },
+      }
+    )
+    .then(function (masalah) {
+      if (masalah) {
+        return res.status(200).json({
+          status: 200,
+          message: "Berhasil merubah status data masalah",
+        });
+      } else {
+        return res.status(400).json({
+          status: 400,
+          message: "Gagal merubah status data masalah",
+        });
+      }
+    });
+
+  } catch (error) {
+    console.log(error)
+  }
+
+}
 export const updateStatusMasalah = async (req, res, next) => {
   try {
     const masalah = await model.adupi.masalah.findOne({
