@@ -14,9 +14,6 @@ export const getAllpembelian = async (req, res, next) => {
                 "nama",
                 "ktp",
                 "wilayahCode",
-                [
-                    Sequelize.literal("SELECT * FROM wilayah LIMIT 1")
-                ]
             ],
             include:[{model : model.adupi.usaha}],
             where:{
@@ -36,9 +33,6 @@ export const getAllpembelian = async (req, res, next) => {
                 "nama",
                 "ktp",
                 "wilayahCode",
-                [
-                    Sequelize.literal("SELECT * FROM wilayah LIMIT 1")
-                ]
             ],
             include:model.adupi.usaha,
             where:Sequelize.where(
@@ -144,6 +138,7 @@ export const getAllpembelian = async (req, res, next) => {
     
         
     } catch (error) {
+        console.log(error);
         return res.status(404).json({
             status: 404,
             message: error,
