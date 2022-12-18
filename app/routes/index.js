@@ -745,6 +745,11 @@ router.get(
   adupi.report.getPembelianPermitraPerbulanlinevsmitra
 );
 router.get(
+  "/api/v1/report/pembelian/totalmitravspembelian",
+  verifyToken(["REPORT"]),
+  adupi.report.getpembeliantotalmitravspembelian
+);
+router.get(
   "/api/v1/report/penjualan/permitraPerbulan",
   verifyToken(["REPORT"]),
   adupi.report.getPenjualanPermitraPerbulan
