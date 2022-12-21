@@ -561,7 +561,7 @@ export const getPembelianPermitraPerbulanlinevsmitra = async (req, res) => {
             }
           );
           const query2 =  await db.query(
-            "SELECT count(*) as total FROM (SELECT mitra.ktp , YEAR(createAt) as tahun , month(createAt) as bulan FROM `mitra`  where deleteAt IS NULL) as a WHERE tahun="+
+            "SELECT count(*) as total FROM (SELECT mitra.ktp , YEAR(createAt) as tahun , month(createAt) as bulan FROM `mitra`  where fasilitatorCode IS NOT NULL) as a WHERE tahun="+
             tahuns +" AND "+ 
               "bulan="+(i+1) +" ORDER BY bulan , tahun asc",
             {
@@ -625,7 +625,7 @@ export const getpembeliantotalmitravspembelian = async (req, res) => {
             }
           );
           const query2 =  await db.query(
-            "SELECT count(*) as total FROM (SELECT mitra.ktp , YEAR(createAt) as tahun , month(createAt) as bulan FROM `mitra` where deleteAt IS NULL) as a WHERE tahun="+
+            "SELECT count(*) as total FROM (SELECT mitra.ktp , YEAR(createAt) as tahun , month(createAt) as bulan FROM `mitra` where fasilitatorCode IS NOT NULL) as a WHERE tahun="+
             tahuns +" AND "+ 
               "bulan="+(i+1) +" ORDER BY bulan , tahun asc",
             {
