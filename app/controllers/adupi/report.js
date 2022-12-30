@@ -818,9 +818,9 @@ export const getMasalahSemuaMitraPerbulanPerjenisPerstatus = async (
     condition = condition + " AND status = '" + req.query.status + "'";
   }
   const data = await db.query(
-    "SELECT * FROM report_masalah_semua_mitra_perbulan_perjenis_perstatus " +
+    "SELECT jenisMasalah , sum(jumlah) as jumlah FROM report_masalah_semua_mitra_perbulan_perjenis_perstatus " +
       condition +
-      " ORDER BY bulan",
+      "  GROUP BY jenisMasalah",
     {
       // replacements: [req.query.wilayahCode],
       type: QueryTypes.SELECT,
@@ -833,6 +833,62 @@ export const getMasalahSemuaMitraPerbulanPerjenisPerstatus = async (
   });
 };
 
+
+export const getMasalahSemuaMitraPerbulanPerjenisPerstatusLine = async (
+  req,
+  res
+) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.jenisMasalah != null) {
+    condition =
+      condition + " AND jenisMasalah = '" + req.query.jenisMasalah + "'";
+  }
+  if (req.query.status != null) {
+    condition = condition + " AND status = '" + req.query.status + "'";
+  }
+  const data = await db.query(
+    "SELECT * FROM report_masalah_semua_mitra_perbulan_perjenis_perstatus " +
+      condition +
+      " GROUP BY jenisMasalah",
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  const dataviewall = [];
+  var ddd = 0;
+  for (const element of data) {
+        const dataview = [];
+       for (let index = 0; index < 12; index++) {
+     
+           const x = await db.query(
+            "SELECT  COALESCE(jumlah, 0) as jumlah FROM report_masalah_semua_mitra_perbulan_perjenis_perstatus " +
+              condition +
+              " AND BULAN="+(index+1)+" AND jenisMasalah='"+element.jenisMasalah+"'",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+
+          dataview[index] = x?.[0]?.jumlah==null?0:x?.[0]?.jumlah;
+        }
+        dataviewall[ddd] = {"name" : element.jenisMasalah , "data" : dataview}; 
+        ddd++;
+    };
+    
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: dataviewall,
+  });
+};
 export const getMasalahPermitraPerbulanPerjenisPerstatus = async (req, res) => {
   let date = new Date();
   let condition = "WHERE ";

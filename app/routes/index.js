@@ -780,6 +780,12 @@ router.get(
 );
 
 router.get(
+  "/api/v1/report/masalah/masalahmitraperbulanline",
+  verifyToken(["REPORT"]),
+  adupi.report.getMasalahSemuaMitraPerbulanPerjenisPerstatusLine
+);
+
+router.get(
   "/api/v1/report/masalah/permitraPerbulanPerjenisPerstatus",
   verifyToken(["REPORT"]),
   adupi.report.getMasalahPermitraPerbulanPerjenisPerstatus
