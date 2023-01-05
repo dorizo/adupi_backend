@@ -367,6 +367,26 @@ export const getJumlahMitraPerbulanPerkabupaten = async (req, res) => {
 };
 
 export const getJumlahLuasGudangPerbulan = async (req, res) => {
+  // let date = new Date();
+  // let condition = "WHERE ";
+  // if (req.query.tahun != null) {
+  //   condition = condition + " tahun = '" + req.query.tahun + "'";
+  // } else {
+  //   condition = condition + " tahun = '" + date.getFullYear() + "'";
+  // }
+  // const data = await db.query(
+  //   "SELECT * FROM report_jumlah_luas_gudang_perbulan " +
+  //     condition +
+  //     " ORDER BY bulan",
+  //   {
+  //     // replacements: [req.query.wilayahCode],
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+  // data.forEach((element,index) => {
+    
+  // });
+
   let date = new Date();
   let condition = "WHERE ";
   if (req.query.tahun != null) {
@@ -374,23 +394,69 @@ export const getJumlahLuasGudangPerbulan = async (req, res) => {
   } else {
     condition = condition + " tahun = '" + date.getFullYear() + "'";
   }
-  const data = await db.query(
-    "SELECT * FROM report_jumlah_luas_gudang_perbulan " +
-      condition +
-      " ORDER BY bulan",
-    {
-      // replacements: [req.query.wilayahCode],
-      type: QueryTypes.SELECT,
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  const data = [];
+  // const query2 =   await db.query(
+  //   "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL ",
+  //   {
+  //     // replacements: [req.query.wilayahCode],
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+   var count =0;
+   var penambahanpekerja =0;
+   var bulan = 1;
+   const dataperbulan =Array();
+    for (let tahuns = date.getFullYear()-1; tahuns <= date.getFullYear(); tahuns++) {
+      if(tahuns === date.getFullYear()){
+        console.log(date.getMonth());
+        bulan = date.getMonth()+1;
+      }else{
+        bulan = 12;
+      }
+      for (let i = 1; i <= bulan; i++) {
+        const data = await db.query(
+            "SELECT * FROM report_jumlah_luas_gudang_perbulan where tahun="+tahuns+" AND bulan= " +
+              i +
+              " ORDER BY bulan limit 1",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          var ssssss =data?.[0]?data?.[0].luasGudang:0;
+          penambahanpekerja= penambahanpekerja+ssssss;
+        dataperbulan[count] = {"bulan" : i , "tahun" : tahuns , "data" :penambahanpekerja}
+        count++;
+      }
     }
-  );
   return res.status(200).json({
     status: 200,
     message: "Data ditemukan",
-    data: data,
+    data: dataperbulan,
   });
 };
 
 export const getJumlahPekerjaPerbulan = async (req, res) => {
+  // let date = new Date();
+  // let condition = "WHERE ";
+  // if (req.query.tahun != null) {
+  //   condition = condition + " tahun = '" + req.query.tahun + "'";
+  // } else {
+  //   condition = condition + " tahun = '" + date.getFullYear() + "'";
+  // }
+  // const data = await db.query(
+  //   "SELECT * FROM report_jumlah_pekerja_perbulan " +
+  //     condition +
+  //     " ORDER BY bulan",
+  //   {
+  //     // replacements: [req.query.wilayahCode],
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+
   let date = new Date();
   let condition = "WHERE ";
   if (req.query.tahun != null) {
@@ -398,19 +464,48 @@ export const getJumlahPekerjaPerbulan = async (req, res) => {
   } else {
     condition = condition + " tahun = '" + date.getFullYear() + "'";
   }
-  const data = await db.query(
-    "SELECT * FROM report_jumlah_pekerja_perbulan " +
-      condition +
-      " ORDER BY bulan",
-    {
-      // replacements: [req.query.wilayahCode],
-      type: QueryTypes.SELECT,
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  const data = [];
+  // const query2 =   await db.query(
+  //   "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL ",
+  //   {
+  //     // replacements: [req.query.wilayahCode],
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+   var count =0;
+   var penambahanpekerja =0;
+   var bulan = 1;
+   const dataperbulan =Array();
+    for (let tahuns = date.getFullYear()-1; tahuns <= date.getFullYear(); tahuns++) {
+      if(tahuns === date.getFullYear()){
+        console.log(date.getMonth());
+        bulan = date.getMonth()+1;
+      }else{
+        bulan = 12;
+      }
+      for (let i = 1; i <= bulan; i++) {
+        const data = await db.query(
+            "SELECT * FROM report_jumlah_pekerja_perbulan where tahun="+tahuns+" AND bulan= " +
+              i +
+              " ORDER BY bulan limit 1",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          var ssssss =data?.[0]?data?.[0].jumlahPekerja:0;
+          penambahanpekerja= penambahanpekerja+ssssss;
+        dataperbulan[count] = {"bulan" : i , "tahun" : tahuns , "data" :penambahanpekerja}
+        count++;
+      }
     }
-  );
   return res.status(200).json({
     status: 200,
     message: "Data ditemukan",
-    data: data,
+    data: dataperbulan,
   });
 };
 
