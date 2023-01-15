@@ -87,8 +87,8 @@ export const getAllMasalahstatuscount = async (req, res, next) => {
   //     // ]
   //   },
   //   include :model.adupi.mitra
-  // });
-  const faslitatorkunjungan = await db.query("select count(*) as total from fasilitator_logs WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d')  GROUP BY fasilitator_logmapping");
+  // }); WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d')
+  const faslitatorkunjungan = await db.query("SELECT count(*) as total FROM (select * from fasilitator_logs WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d') GROUP BY fasilitator_logsDate , fasilitatorCode desc) x");
   
   return res.status(200).json({
     status: 200,
