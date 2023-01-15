@@ -1,3 +1,4 @@
+import { QueryTypes } from "sequelize";
 import db from "../../config/database.js";
 import { model } from "../../models/index.js";
 import { saveImage } from  "../../utils/saveImage.js"
@@ -43,6 +44,29 @@ export const getAllMasalah = async (req, res, next) => {
 };
 
 
+export const getAllMasalahAdmin = async (req, res, next) => {
+  try {
+    let masalah;
+    masalah = await model.adupi.masalah.findAll({
+          where: {
+            mitraCode: req.params.mitraCode,
+            deleteAt: null,
+          },
+          order: [["masalahCode", "DESC"]],
+        });
+    return res.status(200).json({
+      status: 200,
+      message: "Masalah ditemukan",
+      data: masalah,
+    });
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Masalah tidak ditemukan",
+    });
+  }
+};
+
 export const getAllMasalahstatuscount = async (req, res, next) => {
   const masalah = await model.adupi.masalah.count({
     where: {
@@ -51,19 +75,25 @@ export const getAllMasalahstatuscount = async (req, res, next) => {
     },
     include :model.adupi.mitra
   });
-  const masalahselesai = await model.adupi.masalah.count({
-    where: {
-      status: "selesai",
-      deleteAt: null,
-    },
-    include :model.adupi.mitra
-  });
-  const faslitatorkunjungan = await db.query("select count(*) as total from fasilitator_logs WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d')  GROUP BY fasilitator_logmapping limit 1");
+  const masalahselesai = await db.query("select count(*) as x from masalah where status='selesai' AND MONTH(updateAt) = DATE_FORMAT(NOW() ,'%m') AND YEAR(updateAt) = DATE_FORMAT(NOW() ,'%Y') ",{
+    type: QueryTypes.SELECT
+   });
+  //  model.adupi.masalah.count({
+  //   where: {
+  //     status: "selesai",
+  //     deleteAt: null,
+  //     // [
+  //     //   Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('updateAt')), 1),
+  //     // ]
+  //   },
+  //   include :model.adupi.mitra
+  // });
+  const faslitatorkunjungan = await db.query("select count(*) as total from fasilitator_logs WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d')  GROUP BY fasilitator_logmapping");
   
   return res.status(200).json({
     status: 200,
     message: "Masalah ditemukan",
-    data: {"selesai":masalahselesai , "belum": masalah,  "faslilitator" :faslitatorkunjungan[0][0]?faslitatorkunjungan[0][0]?.total:0  },
+    data: {"selesai":masalahselesai[0]?masalahselesai[0]?.x:0 , "belum": masalah,  "faslilitator" :faslitatorkunjungan[0][0]?faslitatorkunjungan[0][0]?.total:0  },
   });
 }
 export const getalllogfasilitator = async (req,res,next) => {

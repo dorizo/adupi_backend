@@ -586,6 +586,12 @@ router.get(
 );
 
 router.get(
+  "/api/v1/masalah/admin/:mitraCode?",
+  verifyToken(["RMASALAH"]),
+  adupi.beliSampah.checkMitraOrNotBeliSampah,
+  adupi.masalah.getAllMasalahAdmin
+);
+router.get(
   "/api/v1/masalah/one/:masalahCode",
   verifyToken(["RMASALAH"]),
   adupi.masalah.getOneMasalah

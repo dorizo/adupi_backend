@@ -93,6 +93,7 @@ import {
 
 import {
   getAllMasalah,
+  getAllMasalahAdmin,
   getOneMasalah,
   addMasalah,
   editMasalah,
@@ -255,6 +256,7 @@ export const adupi = {
   },
   masalah: {
     getAllMasalah,
+    getAllMasalahAdmin,
     getOneMasalah,
     addMasalah,
     editMasalah,
