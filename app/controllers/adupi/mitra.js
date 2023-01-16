@@ -869,6 +869,7 @@ export const getDetailMitraVerified = async (req, res, next) => {
         "long",
         "lat",
         "alamat",
+        "createAt",
         "wilayahCode",
         [
           db.literal(
@@ -950,6 +951,7 @@ export const getDetailMitraVerified = async (req, res, next) => {
       nik: mitra.nik,
       ktp: mitra.ktp,
       noHp: mitra.noHp,
+      createAt: mitra.createAt,
       jenisKelamin: mitra.jenisKelamin,
       wilayahCode: mitra.wilayahCode,
       wilayah: {
