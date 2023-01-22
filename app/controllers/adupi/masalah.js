@@ -97,7 +97,7 @@ export const getAllMasalahstatuscount = async (req, res, next) => {
   });
 }
 export const getalllogfasilitator = async (req,res,next) => {
-  const faslitatorkunjungan = await db.query("select a.* , b.nama  from fasilitator_logs a JOIN fasilitator b ON b.fasilitatorCode=a.fasilitatorCode  WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d')  GROUP BY fasilitator_logmapping");
+  const faslitatorkunjungan = await db.query("select a.* , b.nama  from fasilitator_logs a JOIN fasilitator b ON b.fasilitatorCode=a.fasilitatorCode  WHERE fasilitator_logsDate = DATE_FORMAT(NOW() ,'%Y-%m-%d')  GROUP BY b.nama");
   
   return res.status(200).json({
     status: 200,

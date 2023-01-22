@@ -755,6 +755,18 @@ router.get(
   verifyToken(["REPORT"]),
   adupi.report.getpembeliantotalmitravspembelian
 );
+
+
+router.get(
+  "/api/v1/report/penjualan/permitraPerbulanlinevsmitra",
+  verifyToken(["REPORT"]),
+  adupi.report.getPenjualanPermitraPerbulanlinevsmitra
+);
+router.get(
+  "/api/v1/report/penjualan/totalmitravspenjualan",
+  verifyToken(["REPORT"]),
+  adupi.report.getPenjualantotalmitravspembelian
+);
 router.get(
   "/api/v1/report/penjualan/permitraPerbulan",
   verifyToken(["REPORT"]),
