@@ -127,6 +127,7 @@ import {
   getOnePembeli,
   editPembeli,
   deletePembeli,
+  deletePembelipenjualan,
 } from "./pembeli.js";
 
 import {
@@ -285,6 +286,7 @@ export const adupi = {
     getOnePembeli,
     editPembeli,
     deletePembeli,
+    deletePembelipenjualan,
   },
   map : {
     getAllpembelian

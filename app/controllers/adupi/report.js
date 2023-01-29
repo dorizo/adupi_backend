@@ -679,6 +679,12 @@ export const getPembelianPermitraPerbulanlinevsmitra = async (req, res) => {
 export const getpembeliantotalmitravspembelian = async (req, res) => {
   let date = new Date();
   let condition = "WHERE ";
+  var awal = 2021;
+  var akhir = date.getFullYear();
+  if (req.query.tahun != date.getFullYear()) {
+    // awal = req.query.tahun;
+    akhir = req.query.tahun;
+  } 
   if (req.query.tahun != null) {
     condition = condition + " tahun = '" + req.query.tahun + "'";
   } else {
@@ -700,7 +706,7 @@ export const getpembeliantotalmitravspembelian = async (req, res) => {
    var penambahanberat =0;
    var bulan = 1;
    const dataperbulan =Array();
-    for (let tahuns = 2021; tahuns <= date.getFullYear(); tahuns++) {
+   for (let tahuns = awal; tahuns <= akhir; tahuns++) {
       if(tahuns === date.getFullYear()){
         console.log(date.getMonth());
         bulan = date.getMonth();
@@ -808,6 +814,12 @@ export const getPenjualanPermitraPerbulanlinevsmitra = async (req, res) => {
 export const getPenjualantotalmitravspembelian = async (req, res) => {
   let date = new Date();
   let condition = "WHERE ";
+  var awal = 2021;
+  var akhir = date.getFullYear();
+  if (req.query.tahun != date.getFullYear()) {
+    // awal = req.query.tahun;
+    akhir = req.query.tahun;
+  } 
   if (req.query.tahun != null) {
     condition = condition + " tahun = '" + req.query.tahun + "'";
   } else {
@@ -829,7 +841,7 @@ export const getPenjualantotalmitravspembelian = async (req, res) => {
    var penambahanberat =0;
    var bulan = 1;
    const dataperbulan =Array();
-    for (let tahuns = 2021; tahuns <= date.getFullYear(); tahuns++) {
+   for (let tahuns = awal; tahuns <= akhir; tahuns++) {
       if(tahuns === date.getFullYear()){
         console.log(date.getMonth());
         bulan = date.getMonth();

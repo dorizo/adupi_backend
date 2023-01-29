@@ -197,11 +197,10 @@ export const editPembeli = async (req, res, next) => {
 
 export const deletePembeli = async (req, res, next) => {
   try {
-    const pembeli = await model.adupi.pembeli.findOne({
+    const pembeli = await model.adupi.beliSampah.findOne({
       where: {
-        pembeliCode: req.params.pembeliCode,
-        status: "0",
-        deleteAt: null,
+        bsCode: req.params.pembeliCode,
+        // deleteAt: null,
       },
     });
     if (!pembeli) {
@@ -210,15 +209,59 @@ export const deletePembeli = async (req, res, next) => {
         message: "Pembeli tidak ditemukan",
       });
     }
-    await model.adupi.pembeli
-      .update(
-        {
-          deleteAt: new Date(),
-        },
+    
+  console.log(req.params);
+    await model.adupi.beliSampah
+      .destroy(
         {
           where: {
-            pembeliCode: req.params.pembeliCode,
-            deleteAt: null,
+            bsCode: req.params.pembeliCode,
+          },
+        }
+      )
+      .then(function (pembeli) {
+        if (pembeli) {
+          return res.status(200).json({
+            status: 200,
+            message: "Berhasil menghapus data pembeli",
+          });
+        } else {
+          return res.status(400).json({
+            status: 400,
+            message: "Gagal menghapus data pembeli",
+          });
+        }
+      });
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Pembeli tidak ditemukan",
+    });
+  }
+};
+
+
+export const deletePembelipenjualan = async (req, res, next) => {
+  try {
+    const pembeli = await model.adupi.jualSampah.findOne({
+      where: {
+        jsCode: req.params.pembeliCode,
+        // deleteAt: null,
+      },
+    });
+    if (!pembeli) {
+      return res.status(404).json({
+        status: 404,
+        message: "Pembeli tidak ditemukan",
+      });
+    }
+    
+  console.log(req.params);
+    await model.adupi.jualSampah
+      .destroy(
+        {
+          where: {
+            jsCode: req.params.pembeliCode,
           },
         }
       )

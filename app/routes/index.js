@@ -977,6 +977,12 @@ router.delete(
   adupi.pembeli.deletePembeli
 );
 
+router.delete(
+  "/api/v1/penjualan/delete/:pembeliCode",
+  verifyToken(["DPEMBELI"]),
+  adupi.pembeli.deletePembelipenjualan
+);
+
 router.post(
   "/api/v1/maps/pembelian",
   adupi.map.getAllpembelian
