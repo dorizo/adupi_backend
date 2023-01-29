@@ -778,6 +778,17 @@ router.get(
   verifyToken(["REPORT"]),
   adupi.report.getPenjualanPermitraPerbulanline
 );
+router.get(
+  "/api/v1/report/penjualan/permitraPerbulanlinecontinue",
+  verifyToken(["REPORT"]),
+  adupi.report.getpermitraPerbulanlinecontinue
+);
+
+router.get(
+  "/api/v1/report/pembelian/permitraPerbulanlinecontinue",
+  verifyToken(["REPORT"]),
+  adupi.report.getpembelianpermitraPerbulanlinecontinue
+);
 
 router.get(
   "/api/v1/report/penjualan/semuaMitraPerbulanPerpabrik",
