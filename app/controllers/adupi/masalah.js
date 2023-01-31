@@ -135,10 +135,30 @@ export const getAllMasalahstatus = async (req, res, next) => {
         include :model.adupi.mitra
       });
     }
+    const allmasalahku = Array();
+    masalah.forEach((element,index) => {
+     
+      // allmasalahku[index] = element;
+      allmasalahku[index] = ( {
+        "masalahCode": element.masalahCode,
+        "jenisMasalah": element.jenisMasalah,
+        "foto": element.foto,
+        "deskripsi": element.deskripsi,
+        "status": element.status,
+        "note": element.note,
+        "mitraCode": element.mitraCode,
+        "createAt": element.createAt,
+        "updateAt": element.updateAt,
+        "deleteAt": element.deleteAt,
+        "nama" : element.mitra.nama,
+        "mitra" : element.mitra,
+      });
+    });
+    console.log(allmasalahku);
     return res.status(200).json({
       status: 200,
-      message: "Masalah ditemukan",
-      data: masalah,
+      message: "Masalah ditemukanss",
+      data: allmasalahku,
     });
   } catch (error) {
     console.log(error);
