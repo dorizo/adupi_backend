@@ -307,9 +307,9 @@ router.get(
 // fasilitator
 router.get(
   "/api/v1/fasilitator/all",
-  verifyToken(["RFASILITATOR"]),
   adupi.fasilitator.getAllFasilitator
 );
+
 
 router.get(
   "/api/v1/fasilitator/one/:fasilitatorCode",
@@ -717,6 +717,11 @@ router.get(
 );
 
 router.get(
+  "/api/v1/report/jumlahLuasGudangPerbulanfasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getJumlahLuasGudangPerbulanfasilitator
+);
+router.get(
   "/api/v1/report/jumlahPekerjaPerbulan",
   verifyToken(["REPORT"]),
   adupi.report.getJumlahPekerjaPerbulan
@@ -750,11 +755,26 @@ router.get(
   verifyToken(["REPORT"]),
   adupi.report.getPembelianPermitraPerbulanlinevsmitra
 );
+
+router.get(
+  "/api/v1/report/pembelian/permitraPerbulanlinevsmitrafasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getPembelianPermitraPerbulanlinevsmitrafasilitator
+);
+
 router.get(
   "/api/v1/report/pembelian/totalmitravspembelian",
   verifyToken(["REPORT"]),
   adupi.report.getpembeliantotalmitravspembelian
 );
+
+router.get(
+  "/api/v1/report/pembelian/totalmitravspembelianfasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getpembeliantotalmitravspembelianfasilitator
+);
+
+
 
 
 router.get(
@@ -762,10 +782,23 @@ router.get(
   verifyToken(["REPORT"]),
   adupi.report.getPenjualanPermitraPerbulanlinevsmitra
 );
+
+
+router.get(
+  "/api/v1/report/penjualan/permitraPerbulanlinevsmitrafasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getPenjualanPermitraPerbulanlinevsmitrafasilitator
+);
 router.get(
   "/api/v1/report/penjualan/totalmitravspenjualan",
   verifyToken(["REPORT"]),
   adupi.report.getPenjualantotalmitravspembelian
+);
+
+router.get(
+  "/api/v1/report/penjualan/totalmitravspenjualanfasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getPenjualantotalmitravspembelianfasilitator
 );
 router.get(
   "/api/v1/report/penjualan/permitraPerbulan",

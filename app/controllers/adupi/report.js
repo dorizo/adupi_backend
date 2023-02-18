@@ -366,6 +366,60 @@ export const getJumlahMitraPerbulanPerkabupaten = async (req, res) => {
   });
 };
 
+
+export const getJumlahLuasGudangPerbulanfasilitator = async (req, res) => {
+  
+  let date = new Date();
+  let condition = "WHERE ";
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  const data = [];
+  
+   var count =0;
+   var penambahanpekerja =0;
+   var bulan = 1;
+   
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+   const dataperbulan =Array();
+    for (let tahuns = date.getFullYear()-1; tahuns <= date.getFullYear(); tahuns++) {
+      if(tahuns === date.getFullYear()){
+        console.log(date.getMonth());
+        bulan = date.getMonth()+1;
+      }else{
+        bulan = 12;
+      }
+      for (let i = 1; i <= bulan; i++) {
+        const data = await db.query(
+            "SELECT * FROM (select fasilitatorCode, year(`usaha`.`createAt`) AS `tahun`,month(`usaha`.`createAt`) AS `bulan`,count(0) AS `jumlah`,sum(`usaha`.`luasGudang`) AS `luasGudang` from (`usaha` join `mitra` on(`mitra`.`mitraCode` = `usaha`.`mitraCode`)) where `usaha`.`deleteAt` is null and `mitra`.`deleteAt` is null group by year(`usaha`.`createAt`),month(`usaha`.`createAt`),fasilitatorCode) x where tahun="+tahuns+" AND bulan= " +
+              i +
+              " AND fasilitatorCode IN("+faslitators+") ORDER BY bulan limit 1",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          var ssssss =data?.[0]?data?.[0].luasGudang:0;
+          penambahanpekerja= penambahanpekerja+ssssss;
+        dataperbulan[count] = {"bulan" : i , "tahun" : tahuns , "data" :penambahanpekerja}
+        count++;
+      }
+    }
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: dataperbulan,
+  });
+};
 export const getJumlahLuasGudangPerbulan = async (req, res) => {
   // let date = new Date();
   // let condition = "WHERE ";
@@ -676,6 +730,153 @@ export const getPembelianPermitraPerbulanlinevsmitra = async (req, res) => {
 };
 
 
+
+
+export const getPembelianPermitraPerbulanlinevsmitrafasilitator = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  var awal = 2021;
+  var vasilitator=0;
+  var akhir = date.getFullYear();
+  if (req.query.tahun != date.getFullYear()) {
+    // awal = req.query.tahun;
+    akhir = req.query.tahun;
+  } 
+  if (req.query.fasilitatorCode != date.getFullYear()) {
+    // awal = req.query.tahun;
+    vasilitator = req.query.fasilitatorCode;
+  } 
+  
+  const data = [];
+   var count =0;
+   var penambahanmitra =0;
+   var bulan = 1;
+   const dataperbulan =Array();
+    for (let tahuns = awal; tahuns <= akhir; tahuns++) {
+      if(tahuns === date.getFullYear()){
+        console.log(date.getMonth());
+        bulan = date.getMonth();
+      }else{
+        bulan = 12;
+      }
+        for (let i = 0; i < bulan; i++) {
+          const query =  await db.query(
+            "select  bulan,tahun,sum(berat) AS berat from (select fasilitatorCode, year(`beli_sampah`.`createAt`) AS `tahun`,month(`beli_sampah`.`createAt`) AS `bulan`,count(0) AS `jumlah`,sum(`beli_sampah`.`totalBerat`) AS `berat` from (`beli_sampah` join `mitra` on(`mitra`.`mitraCode` = `beli_sampah`.`mitraCode`)) where `beli_sampah`.`deleteAt` is null and `mitra`.`deleteAt` is null group by year(`beli_sampah`.`createAt`),month(`beli_sampah`.`createAt`)  , fasilitatorCode) x where fasilitatorCode IN("+vasilitator+") AND  tahun="+
+            tahuns +" AND "+ 
+              "bulan="+(i+1) +" ORDER BY bulan , tahun asc",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          const query2 =  await db.query(
+            "SELECT count(*) as total FROM (SELECT fasilitatorCode, mitra.ktp , YEAR(createAt) as tahun , month(createAt) as bulan FROM `mitra`  where fasilitatorCode IS NOT NULL) as a WHERE tahun="+
+            tahuns +" AND "+ 
+              "bulan="+(i+1) +" AND fasilitatorCode IN("+vasilitator+") ORDER BY bulan , tahun asc",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          penambahanmitra =  penambahanmitra + query2[0]?.total;
+          dataperbulan[count]={"tahun" : tahuns,"bulan": (i+1) ,"mitra" : penambahanmitra ,"data" : query[0]?.berat==null?0:query[0]?.berat};
+          count++;
+        }
+  };
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: dataperbulan,
+  });
+};
+
+
+
+
+
+
+
+
+
+export const getpembeliantotalmitravspembelianfasilitator = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  var awal = 2021;
+  var akhir = date.getFullYear();
+  var faslitators = 0;
+  if (req.query.tahun != date.getFullYear()) {
+    // awal = req.query.tahun;
+    akhir = req.query.tahun;
+  } 
+  
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+  
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  const data = [];
+  // const query2 =   await db.query(
+  //   "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL ",
+  //   {
+  //     // replacements: [req.query.wilayahCode],
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+   var count =0;
+   var penambahanmitra =0;
+   var penambahanberat =0;
+   var bulan = 1;
+   const dataperbulan =Array();
+   for (let tahuns = awal; tahuns <= akhir; tahuns++) {
+      if(tahuns === date.getFullYear()){
+        console.log(date.getMonth());
+        bulan = date.getMonth();
+      }else{
+        bulan = 12;
+      }
+      for (let i = 0; i < bulan; i++) {
+
+          const query =  await db.query(
+            "select  bulan,tahun,IFNULL(NULLIF(CAST(sum(berat) AS char), 0), 0) AS berat from (select fasilitatorCode, year(`beli_sampah`.`createAt`) AS `tahun`,month(`beli_sampah`.`createAt`) AS `bulan`,count(0) AS `jumlah`,sum(`beli_sampah`.`totalBerat`) AS `berat` from (`beli_sampah` join `mitra` on(`mitra`.`mitraCode` = `beli_sampah`.`mitraCode`)) where `beli_sampah`.`deleteAt` is null and `mitra`.`deleteAt` is null group by year(`beli_sampah`.`createAt`),month(`beli_sampah`.`createAt`)  , fasilitatorCode) x where fasilitatorCode IN("+faslitators+") AND  tahun="+
+            tahuns +" AND "+ 
+              "bulan="+(i+1) +" ORDER BY bulan , tahun asc",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          const query2 =  await db.query(
+            "SELECT count(*) as total FROM (SELECT fasilitatorCode, mitra.ktp , YEAR(createAt) as tahun , month(createAt) as bulan FROM `mitra` where fasilitatorCode IS NOT NULL) as a WHERE tahun="+
+            tahuns +" AND "+ 
+              "bulan="+(i+1) +"  AND fasilitatorCode IN("+faslitators+") ORDER BY bulan , tahun asc",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          penambahanberat =  penambahanberat + parseInt(query[0]?.berat);
+          penambahanmitra =  penambahanmitra + query2[0]?.total;
+          dataperbulan[count]={"tahun" : tahuns,"bulan": (i+1) ,"mitra" : penambahanmitra ,"data" : penambahanberat};
+          count++;
+        }
+
+  };
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: dataperbulan,
+  });
+};
+
+
 export const getpembeliantotalmitravspembelian = async (req, res) => {
   let date = new Date();
   let condition = "WHERE ";
@@ -761,13 +962,6 @@ export const getPenjualanPermitraPerbulanlinevsmitra = async (req, res) => {
   } 
   
   const data = [];
-  // const query2 =   await db.query(
-  //   "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL ",
-  //   {
-  //     // replacements: [req.query.wilayahCode],
-  //     type: QueryTypes.SELECT,
-  //   }
-  // );
    var count =0;
    var penambahanmitra =0;
    var bulan = 1;
@@ -802,6 +996,143 @@ export const getPenjualanPermitraPerbulanlinevsmitra = async (req, res) => {
           dataperbulan[count]={"tahun" : tahuns,"bulan": (i+1) ,"mitra" : penambahanmitra ,"data" : query[0]?.berat==null?0:query[0]?.berat};
           count++;
         }
+  };
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: dataperbulan,
+  });
+};
+
+export const getPenjualanPermitraPerbulanlinevsmitrafasilitator = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  var awal = 2021;
+  var akhir = date.getFullYear();
+  if (req.query.tahun != date.getFullYear()) {
+    // awal = req.query.tahun;
+    akhir = req.query.tahun;
+  } 
+  
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+  
+  
+  const data = [];
+   var count =0;
+   var penambahanmitra =0;
+   var bulan = 1;
+   const dataperbulan =Array();
+    for (let tahuns = awal; tahuns <= akhir; tahuns++) {
+      if(tahuns === date.getFullYear()){
+        console.log(date.getMonth());
+        bulan = date.getMonth();
+      }else{
+        bulan = 12;
+      }
+        for (let i = 0; i < bulan; i++) {
+          const query =  await db.query(
+            "SELECT berat FROM (select fasilitatorCode ,year(`jual_sampah`.`createAt`) AS `tahun`,month(`jual_sampah`.`createAt`) AS `bulan`,count(0) AS `jumlah`,sum(`jual_sampah`.`totalBerat`) AS `berat` from (`jual_sampah` join `mitra` on(`mitra`.`mitraCode` = `jual_sampah`.`mitraCode`)) where `jual_sampah`.`deleteAt` is null and `mitra`.`deleteAt` is null  group by year(`jual_sampah`.`createAt`),month(`jual_sampah`.`createAt`) , fasilitatorCode) x where tahun="+
+            tahuns +" AND "+ 
+              "bulan="+(i+1) +" AND fasilitatorCode IN("+faslitators+")  ORDER BY bulan , tahun asc",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          const query2 =  await db.query(
+            "SELECT count(*) as total FROM (SELECT fasilitatorCode, mitra.ktp , YEAR(createAt) as tahun , month(createAt) as bulan FROM `mitra` where fasilitatorCode IS NOT NULL) as a WHERE tahun="+
+            tahuns +" AND "+ 
+              "bulan="+(i+1) +"  AND fasilitatorCode IN("+faslitators+") ORDER BY bulan , tahun asc",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          penambahanmitra =  penambahanmitra + query2[0]?.total;
+          dataperbulan[count]={"tahun" : tahuns,"bulan": (i+1) ,"mitra" : penambahanmitra ,"data" : query[0]?.berat==null?0:query[0]?.berat};
+          count++;
+        }
+  };
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: dataperbulan,
+  });
+};
+
+export const getPenjualantotalmitravspembelianfasilitator = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  var awal = 2021;
+  var akhir = date.getFullYear();
+  if (req.query.tahun != date.getFullYear()) {
+    // awal = req.query.tahun;
+    akhir = req.query.tahun;
+  } 
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+  const data = [];
+  // const query2 =   await db.query(
+  //   "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL ",
+  //   {
+  //     // replacements: [req.query.wilayahCode],
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+   var count =0;
+   var penambahanmitra =0;
+   var penambahanberat =0;
+   var bulan = 1;
+   const dataperbulan =Array();
+   for (let tahuns = awal; tahuns <= akhir; tahuns++) {
+      if(tahuns === date.getFullYear()){
+        console.log(date.getMonth());
+        bulan = date.getMonth();
+      }else{
+        bulan = 12;
+      }
+      for (let i = 0; i < bulan; i++) {
+
+          const query =  await db.query(
+            "SELECT  IFNULL(NULLIF(CAST(sum(berat) AS char), 0), 0) as berat FROM (select fasilitatorCode ,year(`jual_sampah`.`createAt`) AS `tahun`,month(`jual_sampah`.`createAt`) AS `bulan`,count(0) AS `jumlah`,sum(`jual_sampah`.`totalBerat`) AS `berat` from (`jual_sampah` join `mitra` on(`mitra`.`mitraCode` = `jual_sampah`.`mitraCode`)) where `jual_sampah`.`deleteAt` is null and `mitra`.`deleteAt` is null  group by year(`jual_sampah`.`createAt`),month(`jual_sampah`.`createAt`) , fasilitatorCode) x where tahun="+
+            tahuns +" AND "+ 
+              "bulan="+(i+1) +" AND fasilitatorCode IN("+faslitators+")  ORDER BY bulan , tahun asc",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          const query2 =  await db.query(
+            "SELECT count(*) as total FROM (SELECT fasilitatorCode, mitra.ktp , YEAR(createAt) as tahun , month(createAt) as bulan FROM `mitra` where fasilitatorCode IS NOT NULL) as a WHERE tahun="+
+            tahuns +" AND "+ 
+              "bulan="+(i+1) +"  AND fasilitatorCode IN("+faslitators+") ORDER BY bulan , tahun asc",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          penambahanberat =  penambahanberat + parseInt(query[0]?.berat);
+          penambahanmitra =  penambahanmitra + query2[0]?.total;
+          dataperbulan[count]={"tahun" : tahuns,"bulan": (i+1) ,"mitra" : penambahanmitra ,"data" : penambahanberat};
+          count++;
+        }
+
   };
   return res.status(200).json({
     status: 200,
@@ -881,7 +1212,6 @@ export const getPenjualantotalmitravspembelian = async (req, res) => {
     data: dataperbulan,
   });
 };
-
 
 export const getPenjualanSemuaMitraPerbulan = async (req, res) => {
   let date = new Date();
