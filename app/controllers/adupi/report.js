@@ -754,6 +754,63 @@ export const getPembelianPermitraPerbulanline = async (req, res) => {
 
 
 
+export const getPembelianPermitraPerbulanlinefas = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  const data = [];
+  // const query =  await db.query(
+  //   "SELECT a.tahun , a.bulan,a.jumlah, berat , a.nama,a.alamat, a.mitraCode  FROM report_pembelian_permitra_perbulan a " +
+  //     condition +
+  //     "ORDER BY bulan",
+  //   {
+  //     // replacements: [req.query.wilayahCode],
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+  
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+  const query2 =   await db.query(
+    "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IN("+faslitators+")",
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  for (var key in query2) {
+    const dataperbulan =Array();
+    for (let i = 0; i < 12; i++) {
+      const query =  await db.query(
+        "SELECT berat FROM report_pembelian_permitra_perbulan a "+
+          condition +" AND mitraCode="+query2[key].mitraCode + 
+          " AND bulan="+(i+1) +" ORDER BY bulan",
+        {
+          // replacements: [req.query.wilayahCode],
+          type: QueryTypes.SELECT,
+        }
+      );
+      dataperbulan[i]=query[0]?.berat==null?0:query[0]?.berat;
+    }
+    data[key] = {name :query2[key]?.nama ,data:dataperbulan};
+  };
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
 
 
 export const getPembelianPermitraPerbulanlinevsmitra = async (req, res) => {
@@ -1428,6 +1485,55 @@ export const getPenjualanPermitraPerbulanline = async (req, res) => {
 };
 
 
+export const getPenjualanPermitraPerbulanlinefasilitat = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+  const data = [];
+  const query2 =   await db.query(
+    "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL AND fasilitatorCode IN("+faslitators+")",
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+  for (var key in query2) {
+    const dataperbulan =Array();
+    for (let i = 0; i < 12; i++) {
+      const query =  await db.query(
+        "SELECT berat FROM report_penjualan_permitra_perbulan a "+
+          condition +" AND mitraCode="+query2[key].mitraCode + 
+          " AND bulan="+(i+1) +" ORDER BY bulan",
+        {
+          type: QueryTypes.SELECT,
+        }
+      );
+      dataperbulan[i]=query[0]?.berat==null?0:query[0]?.berat;
+    }
+    data[key] = {name :query2[key]?.nama ,data:dataperbulan};
+  };
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
+
+
+
 export const getpermitraPerbulanlinecontinue = async (req, res) => {
   let date = new Date();
   let condition = "WHERE ";
@@ -1504,6 +1610,91 @@ export const getpermitraPerbulanlinecontinue = async (req, res) => {
     data: data,
   });
 };
+
+export const getpermitraPerbulanlinecontinuefasilitator = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  // if (req.query.tahun != null) {
+  //   condition = condition + " tahun = '" + req.query.tahun + "'";
+  // } else {
+  //   condition = condition + " tahun = '" + date.getFullYear() + "'";
+  // }
+  // if (req.query.mitraCode != null) {
+  //   condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  // }
+  const data = [];
+  var query2 = "";
+  
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+  if(req.query.mitraCode){
+
+     query2 =   await db.query(
+      "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL AND mitraCode="+req.query.mitraCode,
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
+
+    
+  }else{
+
+    query2 =   await db.query(
+      "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IN("+faslitators+") ",
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
+  }
+  
+  for (var key in query2) {
+    const dataperbulan =Array();
+    var number =0;
+    var xox =0;
+
+    for (let is = 2021; is <= req.query.tahun; is++) {
+       condition =  "WHERE tahun = '" + is + "'";
+       if (is == date.getFullYear()) {
+        xox = date.getMonth()+1;
+        }else{
+          xox=12;
+        }
+        console.log(xox);
+      for (let i = 0; i < xox; i++) {
+        const query =  await db.query(
+          "SELECT berat FROM report_penjualan_permitra_perbulan a "+
+            condition +" AND mitraCode="+query2[key].mitraCode + 
+            " AND bulan="+(i+1) +" ORDER BY bulan",
+          {
+            type: QueryTypes.SELECT,
+          }
+        );
+        dataperbulan[number] = {
+          "data" : query[0]?.berat==null?0:query[0]?.berat,
+          "tahun" : is,
+          "bulan" : i+1,
+          "mitra" : query2[key].mitraCode
+          };
+        // dataperbulan[number]["tahun"]=is;
+        // dataperbulan[number]["bulan"]=i;
+        // dataperbulan[number]["mitra"]=query2[key].mitraCode;
+        number++;
+      }
+    }
+    number = 0;
+    data[key] = {name :query2[key]?.nama ,data:dataperbulan};
+  };
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
+
 
 
 export const getpembelianpermitraPerbulanlinecontinue = async (req, res) => {
@@ -1583,6 +1774,88 @@ export const getpembelianpermitraPerbulanlinecontinue = async (req, res) => {
   });
 };
 
+export const getpembelianpermitraPerbulanlinecontinuefasilitator = async (req, res) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  // if (req.query.tahun != null) {
+  //   condition = condition + " tahun = '" + req.query.tahun + "'";
+  // } else {
+  //   condition = condition + " tahun = '" + date.getFullYear() + "'";
+  // }
+  // if (req.query.mitraCode != null) {
+  //   condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  // }
+  const data = [];
+  var query2 = "";
+  
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+  if(req.query.mitraCode){
+
+     query2 =   await db.query(
+      "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IS NOT NULL AND mitraCode="+req.query.mitraCode,
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
+
+    
+  }else{
+
+    query2 =   await db.query(
+      "SELECT * FROM `mitra` WHERE deleteAt IS NULL AND fasilitatorCode IN("+faslitators+")",
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
+  }
+  
+  for (var key in query2) {
+    const dataperbulan =Array();
+    var number =0;
+    var xox =0;
+
+    for (let is = 2021; is <= req.query.tahun; is++) {
+       condition =  "WHERE tahun = '" + is + "'";
+       if (is == date.getFullYear()) {
+        xox = date.getMonth()+1;
+        }else{
+          xox=12;
+        }
+        console.log(xox);
+      for (let i = 0; i < xox; i++) {
+        const query =  await db.query(
+          "SELECT berat FROM report_pembelian_permitra_perbulan a "+
+            condition +" AND mitraCode="+query2[key].mitraCode + 
+            " AND bulan="+(i+1) +" ORDER BY bulan",
+          {
+            type: QueryTypes.SELECT,
+          }
+        );
+        dataperbulan[number] = {
+          "data" : query[0]?.berat==null?0:query[0]?.berat,
+          "tahun" : is,
+          "bulan" : i+1,
+          "mitra" : query2[key].mitraCode
+          };
+        // dataperbulan[number]["tahun"]=is;
+        // dataperbulan[number]["bulan"]=i;
+        // dataperbulan[number]["mitra"]=query2[key].mitraCode;
+        number++;
+      }
+    }
+    number = 0;
+    data[key] = {name :query2[key]?.nama ,data:dataperbulan};
+  };
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
 
 
 
@@ -1680,6 +1953,66 @@ export const getMasalahSemuaMitraPerbulanPerjenisPerstatus = async (
 };
 
 
+
+export const getMasalahSemuaMitraPerbulanPerjenisPerstatusLinefas = async (
+  req,
+  res
+) => {
+  let date = new Date();
+  let condition = "WHERE ";
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.jenisMasalah != null) {
+    condition =
+      condition + " AND jenisMasalah = '" + req.query.jenisMasalah + "'";
+  }
+  if (req.query.status != null) {
+    condition = condition + " AND status = '" + req.query.status + "'";
+  }
+  
+  if (req.query.fasilitatorCode != null) {
+    condition = condition + " AND fasilitatorCode IN(" + req.query.fasilitatorCode + ")";
+  }
+  const data = await db.query(
+    "SELECT * FROM (select fasilitatorCode, year(`masalah`.`createAt`) AS `tahun`,month(`masalah`.`createAt`) AS `bulan`,count(0) AS `jumlah`,`masalah`.`status` AS `status`,`masalah`.`jenisMasalah` AS `jenisMasalah` from (`masalah` join `mitra` on(`mitra`.`mitraCode` = `masalah`.`mitraCode`)) where `masalah`.`deleteAt` is null and `mitra`.`deleteAt` is null group by year(`masalah`.`createAt`),month(`masalah`.`createAt`),`masalah`.`status`,`masalah`.`jenisMasalah`,fasilitatorCode) x " +
+      condition +
+      " GROUP BY jenisMasalah",
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  const dataviewall = [];
+  var ddd = 0;
+  for (const element of data) {
+        const dataview = [];
+       for (let index = 0; index < 12; index++) {
+     
+           const x = await db.query(
+            "SELECT  COALESCE(jumlah, 0) as jumlah FROM (select fasilitatorCode, year(`masalah`.`createAt`) AS `tahun`,month(`masalah`.`createAt`) AS `bulan`,count(0) AS `jumlah`,`masalah`.`status` AS `status`,`masalah`.`jenisMasalah` AS `jenisMasalah` from (`masalah` join `mitra` on(`mitra`.`mitraCode` = `masalah`.`mitraCode`)) where `masalah`.`deleteAt` is null and `mitra`.`deleteAt` is null group by year(`masalah`.`createAt`),month(`masalah`.`createAt`),`masalah`.`status`,`masalah`.`jenisMasalah`,fasilitatorCode) x  " +
+              condition +
+              " AND BULAN="+(index+1)+" AND jenisMasalah='"+element.jenisMasalah+"'",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+
+          dataview[index] = x?.[0]?.jumlah==null?0:x?.[0]?.jumlah;
+        }
+        dataviewall[ddd] = {"name" : element.jenisMasalah , "data" : dataview}; 
+        ddd++;
+    };
+    
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: dataviewall,
+  });
+};
 export const getMasalahSemuaMitraPerbulanPerjenisPerstatusLine = async (
   req,
   res

@@ -767,6 +767,12 @@ router.get(
   verifyToken(["REPORT"]),
   adupi.report.getPembelianPermitraPerbulanline
 );
+
+router.get(
+  "/api/v1/report/pembelian/permitraPerbulanlinefas",
+  verifyToken(["REPORT"]),
+  adupi.report.getPembelianPermitraPerbulanlinefas
+);
 router.get(
   "/api/v1/report/pembelian/permitraPerbulanlinevsmitra",
   verifyToken(["REPORT"]),
@@ -828,6 +834,14 @@ router.get(
   verifyToken(["REPORT"]),
   adupi.report.getPenjualanPermitraPerbulanline
 );
+
+
+router.get(
+  "/api/v1/report/penjualan/permitraPerbulanlinefasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getPenjualanPermitraPerbulanlinefasilitat
+);
+
 router.get(
   "/api/v1/report/penjualan/permitraPerbulanlinecontinue",
   verifyToken(["REPORT"]),
@@ -835,11 +849,21 @@ router.get(
 );
 
 router.get(
+  "/api/v1/report/penjualan/permitraPerbulanlinecontinuefasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getpermitraPerbulanlinecontinuefasilitator
+);
+router.get(
   "/api/v1/report/pembelian/permitraPerbulanlinecontinue",
   verifyToken(["REPORT"]),
   adupi.report.getpembelianpermitraPerbulanlinecontinue
 );
 
+router.get(
+  "/api/v1/report/pembelian/permitraPerbulanlinecontinuefasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getpembelianpermitraPerbulanlinecontinuefasilitator
+);
 router.get(
   "/api/v1/report/penjualan/semuaMitraPerbulanPerpabrik",
   verifyToken(["REPORT"]),
@@ -862,6 +886,12 @@ router.get(
   "/api/v1/report/masalah/masalahmitraperbulanline",
   verifyToken(["REPORT"]),
   adupi.report.getMasalahSemuaMitraPerbulanPerjenisPerstatusLine
+);
+
+router.get(
+  "/api/v1/report/masalah/masalahmitraperbulanlinefas",
+  verifyToken(["REPORT"]),
+  adupi.report.getMasalahSemuaMitraPerbulanPerjenisPerstatusLinefas
 );
 
 router.get(
