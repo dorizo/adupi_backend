@@ -728,11 +728,22 @@ router.get(
 );
 
 router.get(
+  "/api/v1/report/jumlahPekerjaPerbulanfasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getJumlahPekerjaPerbulanfasilitator
+);
+
+router.get(
   "/api/v1/report/pembelian/semuaMitraPerbulan",
   verifyToken(["REPORT"]),
   adupi.report.getPembelianSemuaMitraPerbulan
 );
 
+router.get(
+  "/api/v1/report/pembelian/semuaMitraPerbulanfasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getPembelianSemuaMitraPerbulanfasilitator
+);
 router.get(
   "/api/v1/report/penjualan/semuaMitraPerbulan",
   verifyToken(["REPORT"]),

@@ -391,7 +391,7 @@ export const getJumlahLuasGudangPerbulanfasilitator = async (req, res) => {
     faslitators = req.query.fasilitatorCode;
   } 
    const dataperbulan =Array();
-    for (let tahuns = date.getFullYear()-1; tahuns <= date.getFullYear(); tahuns++) {
+    for (let tahuns = 2021; tahuns <= date.getFullYear(); tahuns++) {
       if(tahuns === date.getFullYear()){
         console.log(date.getMonth());
         bulan = date.getMonth()+1;
@@ -493,6 +493,61 @@ export const getJumlahLuasGudangPerbulan = async (req, res) => {
   });
 };
 
+
+
+export const getJumlahPekerjaPerbulanfasilitator = async (req, res) => {
+ 
+  let date = new Date();
+  let condition = "WHERE ";
+  if (req.query.tahun != null) {
+    condition = condition + " tahun = '" + req.query.tahun + "'";
+  } else {
+    condition = condition + " tahun = '" + date.getFullYear() + "'";
+  }
+  if (req.query.mitraCode != null) {
+    condition = condition + " AND mitraCode = '" + req.query.mitraCode + "'";
+  }
+  const data = [];
+  
+   var count =0;
+   var penambahanpekerja =0;
+   var bulan = 1;
+   
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+   const dataperbulan =Array();
+    for (let tahuns = 2021; tahuns <= date.getFullYear(); tahuns++) {
+      if(tahuns === date.getFullYear()){
+        console.log(date.getMonth());
+        bulan = date.getMonth()+1;
+      }else{
+        bulan = 12;
+      }
+      for (let i = 1; i <= bulan; i++) {
+        const data = await db.query(
+            "SELECT * FROM (select fasilitatorCode, year(`usaha`.`createAt`) AS `tahun`,month(`usaha`.`createAt`) AS `bulan`,count(0) AS `jumlah`,sum(`usaha`.`jumlahPekerja`) AS `jumlahPekerja` from (`usaha` join `mitra` on(`mitra`.`mitraCode` = `usaha`.`mitraCode`)) where `usaha`.`deleteAt` is null and `mitra`.`deleteAt` is null group by year(`usaha`.`createAt`),month(`usaha`.`createAt`),fasilitatorCode) x where tahun="+tahuns+" AND bulan= " +
+              i +
+              " AND fasilitatorCode IN("+faslitators+") ORDER BY bulan limit 1",
+            {
+              // replacements: [req.query.wilayahCode],
+              type: QueryTypes.SELECT,
+            }
+          );
+          var ssssss =data?.[0]?data?.[0].jumlahPekerja:0;
+          penambahanpekerja= penambahanpekerja+ssssss;
+        dataperbulan[count] = {"bulan" : i , "tahun" : tahuns , "data" :penambahanpekerja}
+        count++;
+      }
+    }
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: dataperbulan,
+  });
+};
 export const getJumlahPekerjaPerbulan = async (req, res) => {
   // let date = new Date();
   // let condition = "WHERE ";
@@ -586,6 +641,38 @@ export const getPembelianSemuaMitraPerbulan = async (req, res) => {
     data: data,
   });
 };
+
+
+export const getPembelianSemuaMitraPerbulanfasilitator = async (req, res) => {
+  let date = new Date();
+  let tahuns = " ";
+  if (req.query.tahun != null) {
+    tahuns =  req.query.tahun;
+  } else {
+    tahuns = date.getFullYear();
+  }
+  
+  var faslitators = 0;
+  if (req.query.fasilitatorCode) {
+    // awal = req.query.tahun;
+    faslitators = req.query.fasilitatorCode;
+  } 
+  
+  const data = await db.query(
+    "select  bulan,tahun,berat,CONCAT(0) AS `jumlah`  from (select fasilitatorCode, year(`beli_sampah`.`createAt`) AS `tahun`,month(`beli_sampah`.`createAt`) AS `bulan`,count(0) AS `jumlah`,sum(`beli_sampah`.`totalBerat`) AS `berat` from (`beli_sampah` join `mitra` on(`mitra`.`mitraCode` = `beli_sampah`.`mitraCode`)) where `beli_sampah`.`deleteAt` is null and `mitra`.`deleteAt` is null group by year(`beli_sampah`.`createAt`),month(`beli_sampah`.`createAt`)  , fasilitatorCode) x where fasilitatorCode IN("+faslitators+") AND  tahun="+
+    tahuns +" ORDER BY bulan asc",
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
 
 export const getPembelianPermitraPerbulan = async (req, res) => {
   let date = new Date();
