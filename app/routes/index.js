@@ -751,6 +751,12 @@ router.get(
 );
 
 router.get(
+  "/api/v1/report/penjualan/semuaMitraPerbulanfasilitator",
+  verifyToken(["REPORT"]),
+  adupi.report.getPenjualanSemuaMitraPerbulanfasilitator
+);
+
+router.get(
   "/api/v1/report/pembelian/permitraPerbulan",
   verifyToken(["REPORT"]),
   adupi.report.getPembelianPermitraPerbulan
