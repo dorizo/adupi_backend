@@ -2236,6 +2236,29 @@ export const getNewPenjualanPerkategori = async (req, res) => {
   });
 };
 
+export const getNewPenjualanPerkategorifas = async (req, res) => {
+  let date = new Date();
+  let condition = "";
+  if (req.query.fasilitatorCode != null) {
+    condition = condition + "WHERE fasilitatorCode = '" + req.query.fasilitatorCode + "'";
+  }
+  
+  if (req.query.ksCode != null) {
+    condition = condition + " AND ksCode = '" + req.query.ksCode + "'";
+  }
+  const data = await db.query(
+    "SELECT * FROM (select fasilitatorCode, `jenis_sampah`.`ksCode` AS `ksCode`,`detail_jual_sampah`.`jenisCode` AS `jsCode`,`jenis_sampah`.`jenis` AS `jenis`,`kategori_sampah`.`kategori` AS `kategori`,count(0) AS `jumlah`,sum(`detail_jual_sampah`.`berat`) AS `berat` from (((`detail_jual_sampah` join `jenis_sampah` on(`jenis_sampah`.`jsCode` = `detail_jual_sampah`.`jenisCode`)) join `kategori_sampah` on(`kategori_sampah`.`ksCode` = `jenis_sampah`.`ksCode`)) join `jual_sampah` on(`jual_sampah`.`jsCode` = `detail_jual_sampah`.`jsCode`)) join `mitra` on(`mitra`.`MitraCode` = `jual_sampah`.`mitraCode`) where `jual_sampah`.`deleteAt` is null and `detail_jual_sampah`.`deleteAt` is null group by `kategori_sampah`.`ksCode`,fasilitatorCode) x  " + condition,
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
 export const getNewPembelianPerkategori = async (req, res) => {
   let date = new Date();
   let condition = "";
@@ -2244,6 +2267,32 @@ export const getNewPembelianPerkategori = async (req, res) => {
   }
   const data = await db.query(
     "SELECT * FROM new_report_pembelian_semua_mitra_perkategori " + condition,
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
+export const getNewPembelianPerkategorifas = async (req, res) => {
+  let date = new Date();
+  let condition = "";
+  
+  if (req.query.fasilitatorCode != null) {
+    condition = condition + "WHERE fasilitatorCode = '" + req.query.fasilitatorCode + "'";
+  }
+  
+  if (req.query.ksCode != null) {
+    condition = condition + " AND ksCode = '" + req.query.ksCode + "'";
+  }
+  const data = await db.query(
+    "SELECT ksCode,jsCode,jenis,kategori,jumlah , sum(berat) AS berat  FROM (select fasilitatorCode, `jenis_sampah`.`ksCode` AS `ksCode`,`detail_beli_sampah`.`jsCode` AS `jsCode`,`jenis_sampah`.`jenis` AS `jenis`,`kategori_sampah`.`kategori` AS `kategori`,count(0) AS `jumlah`,sum(`detail_beli_sampah`.`berat`) AS `berat` from (((`detail_beli_sampah` join `jenis_sampah` on(`jenis_sampah`.`jsCode` = `detail_beli_sampah`.`jsCode`)) join `kategori_sampah` on(`kategori_sampah`.`ksCode` = `jenis_sampah`.`ksCode`)) join `beli_sampah` on(`beli_sampah`.`bsCode` = `detail_beli_sampah`.`bsCode`)) join `mitra` on(`mitra`.`MitraCode` = `beli_sampah`.`mitraCode`) where `beli_sampah`.`deleteAt` is null and `detail_beli_sampah`.`deleteAt` is null group by `jenis_sampah`.`ksCode` , fasilitatorCode) s " + condition +
+    " GROUP BY ksCode",
     {
       // replacements: [req.query.wilayahCode],
       type: QueryTypes.SELECT,

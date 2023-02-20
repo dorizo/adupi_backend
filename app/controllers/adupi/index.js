@@ -68,7 +68,9 @@ import {
   getAnalisisPembelianDenganPekerjaPerbulan,
   getAnalisisPembelianDenganLuasGudangPerbulan,
   getNewPenjualanPerkategori,
+  getNewPenjualanPerkategorifas,
   getNewPembelianPerkategori,
+  getNewPembelianPerkategorifas,
 } from "./report.js";
 
 import {
@@ -280,7 +282,9 @@ export const adupi = {
     getAnalisisPembelianDenganPekerjaPerbulan,
     getAnalisisPembelianDenganLuasGudangPerbulan,
     getNewPenjualanPerkategori,
+    getNewPenjualanPerkategorifas,
     getNewPembelianPerkategori,
+    getNewPembelianPerkategorifas,
   },
   export: {
     getDocBeliSampah,

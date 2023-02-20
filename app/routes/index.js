@@ -919,9 +919,23 @@ router.get(
 );
 
 router.get(
+  "/api/v1/report/pembelian/newSemuaMitraPerkategorifas",
+  verifyToken(["REPORT"]),
+  adupi.report.getNewPembelianPerkategorifas
+);
+
+
+router.get(
   "/api/v1/report/penjualan/newSemuaMitraPerkategori",
   verifyToken(["REPORT"]),
   adupi.report.getNewPenjualanPerkategori
+);
+
+
+router.get(
+  "/api/v1/report/penjualan/newSemuaMitraPerkategorifas",
+  verifyToken(["REPORT"]),
+  adupi.report.getNewPenjualanPerkategorifas
 );
 
 
