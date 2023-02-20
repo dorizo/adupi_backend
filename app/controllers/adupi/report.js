@@ -2262,6 +2262,29 @@ export const getNewPenjualanPerkategori = async (req, res) => {
   });
 };
 
+
+export const fasilitatorDetect = async (req, res) => {
+  let date = new Date();
+  let condition = "";
+  if (req.query.email != null) {
+    condition = condition + "WHERE email = '" + req.query.email + "'";
+  }
+  const data = await db.query(
+    "SELECT  fasilitatorCode from user a JOIN fasilitator b ON b.userCode=a.userCode " + condition,
+    {
+      // replacements: [req.query.wilayahCode],
+      raw: true,
+
+      type: QueryTypes.SELECT,
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
 export const getNewPenjualanPerkategorifas = async (req, res) => {
   let date = new Date();
   let condition = "";

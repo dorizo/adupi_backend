@@ -944,6 +944,13 @@ router.get(
 );
 
 
+
+router.get(
+  "/api/v1/report/fasilitatordetect",
+  verifyToken(["REPORT"]),
+  adupi.report.fasilitatorDetect
+);
+
 router.get(
   "/api/v1/report/analisis/pembelianDenganMitraPerbulan",
   verifyToken(["REPORT"]),

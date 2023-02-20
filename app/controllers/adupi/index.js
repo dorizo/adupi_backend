@@ -70,6 +70,7 @@ import {
   getAnalisisPembelianDenganLuasGudangPerbulan,
   getNewPenjualanPerkategori,
   getNewPenjualanPerkategorifas,
+  fasilitatorDetect,
   getNewPembelianPerkategori,
   getNewPembelianPerkategorifas,
 } from "./report.js";
@@ -285,6 +286,7 @@ export const adupi = {
     getAnalisisPembelianDenganLuasGudangPerbulan,
     getNewPenjualanPerkategori,
     getNewPenjualanPerkategorifas,
+    fasilitatorDetect,
     getNewPembelianPerkategori,
     getNewPembelianPerkategorifas,
   },
