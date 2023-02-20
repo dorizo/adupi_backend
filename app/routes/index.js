@@ -907,6 +907,11 @@ router.get(
 );
 
 router.get(
+  "/api/v1/report/pembelian/semuaMitraPerkategorifas",
+  verifyToken(["REPORT"]),
+  adupi.report.getPembelianPerkategorifas
+);
+router.get(
   "/api/v1/report/penjualan/semuaMitraPerkategori",
   verifyToken(["REPORT"]),
   adupi.report.getPenjualanPerkategori

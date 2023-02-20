@@ -2142,6 +2142,32 @@ export const getPembelianPerkategori = async (req, res) => {
   });
 };
 
+export const getPembelianPerkategorifas = async (req, res) => {
+  let date = new Date();
+  let condition = "";
+  
+  if (req.query.fasilitatorCode != null) {
+    condition = condition + "WHERE fasilitatorCode IN(" + req.query.fasilitatorCode + ")";
+  }
+  
+  if (req.query.jsCode != null) {
+    condition = condition + " AND jsCode = '" + req.query.jsCode + "'";
+  }
+  const data = await db.query(
+    "SELECT * FROM (select fasilitatorCode,`detail_beli_sampah`.`jsCode` AS `jsCode`,`jenis_sampah`.`jenis` AS `jenis`,count(0) AS `jumlah`,sum(`detail_beli_sampah`.`berat`) AS `berat` from ((`detail_beli_sampah` join `jenis_sampah` on(`jenis_sampah`.`jsCode` = `detail_beli_sampah`.`jsCode`)) join `beli_sampah` on(`beli_sampah`.`bsCode` = `detail_beli_sampah`.`bsCode`)) join `mitra` on(`mitra`.`MitraCode` = `beli_sampah`.`mitraCode`) where `beli_sampah`.`deleteAt` is null and `detail_beli_sampah`.`deleteAt` is null group by `detail_beli_sampah`.`jsCode`,fasilitatorCode) x " + condition,
+    {
+      // replacements: [req.query.wilayahCode],
+      type: QueryTypes.SELECT,
+    }
+  );
+  return res.status(200).json({
+    status: 200,
+    message: "Data ditemukan",
+    data: data,
+  });
+};
+
+
 
 export const getAnalisisPembelianDenganMitraPerbulan = async (req, res) => {
   let date = new Date();
